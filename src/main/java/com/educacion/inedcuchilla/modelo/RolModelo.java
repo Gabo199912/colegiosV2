@@ -14,6 +14,9 @@ public class RolModelo {
     @Column(name = "tipo_usuario")
     private String tipoUsuario;
 
+    @Column(name = "estado")
+    private Boolean estado;
+
     public RolModelo() {
     }
 
@@ -23,6 +26,14 @@ public class RolModelo {
 
     public void setIdRol(Integer idRol) {
         this.idRol = idRol;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
 

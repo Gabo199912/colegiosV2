@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.modelo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -44,6 +45,7 @@ public class UsuarioModelo {
     private String codigoAlumno;
 
     @Column(name = "contrasenia")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String contrasenia;
 
     @ManyToOne

@@ -13,8 +13,8 @@ public class PagosModelo {
     @Column(name = "id_pago")
     private int idPago;
 
-    @Column(name = "mes_pagado")
-    private LocalDate mesPagado;
+    @Column(name = "fecha_pago")
+    private LocalDate fechaPago;
 
 
     @Column(name = "tipo_pago")
@@ -31,12 +31,13 @@ public class PagosModelo {
         this.idPago = idPago;
     }
 
-    public LocalDate getMesPagado() {
-        return mesPagado;
+
+    public LocalDate getFechaPago() {
+        return fechaPago;
     }
 
-    public void setMesPagado(LocalDate mesPagado) {
-        this.mesPagado = mesPagado;
+    public void setFechaPago(LocalDate fechaPago) {
+        this.fechaPago = fechaPago;
     }
 
     public String getTipoPago() {

@@ -47,4 +47,9 @@ public class RolControlador {
         return ResponseEntity.ok(rolServicio.guardarRol(rol));
     }
 
+    @PutMapping("/actualizar")
+    public ResponseEntity<?> actualizarRol(@RequestBody RolModelo rol){
+        return ResponseEntity.ok(rolServicio.guardarRol(rol));
+    }
+
 }
