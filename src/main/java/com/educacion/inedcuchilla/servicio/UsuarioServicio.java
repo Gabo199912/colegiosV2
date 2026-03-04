@@ -30,6 +30,10 @@ public class UsuarioServicio {
         return usuarioRepositorio.findByEmail(email);
     }
 
+    public UsuarioModelo buscarPorIdUsuario(Integer idUsuario){
+        return usuarioRepositorio.findByIdUsuario(idUsuario);
+    }
+
     public boolean existeUsuarioPorNombre(String nombre){
         return usuarioRepositorio.existsByNombre(nombre);
     }

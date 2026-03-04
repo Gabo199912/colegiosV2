@@ -7,12 +7,12 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "detalle_pago")
-public class DetallePago {
+public class DetallePagoModelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle_pago")
-    private int idDetallePago;
+    private Integer idDetallePago;
 
     @Column(name = "total")
     private BigDecimal total;
@@ -20,8 +20,8 @@ public class DetallePago {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "fecha_pago")
-    private LocalDate fechaPago;
+    @Column(name = "mes_pagado")
+    private LocalDate mesPagado;
 
 
     @ManyToOne
@@ -32,7 +32,7 @@ public class DetallePago {
     @JoinColumn(name = "fk_id_pago")
     private PagosModelo pagos;
 
-    public DetallePago() {
+    public DetallePagoModelo() {
     }
 
     public int getIdDetallePago() {
@@ -59,14 +59,13 @@ public class DetallePago {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaPago() {
-        return fechaPago;
+    public LocalDate getMesPagado() {
+        return mesPagado;
     }
 
-    public void setFechaPago(LocalDate fechaPago) {
-        this.fechaPago = fechaPago;
+    public void setMesPagado(LocalDate mesPagado) {
+        this.mesPagado = mesPagado;
     }
-
 
     public UsuarioModelo getUsuario() {
         return usuario;

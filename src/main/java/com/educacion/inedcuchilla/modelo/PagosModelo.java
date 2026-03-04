@@ -11,7 +11,7 @@ public class PagosModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pago")
-    private int idPago;
+    private Integer idPago;
 
     @Column(name = "fecha_pago")
     private LocalDate fechaPago;
@@ -23,14 +23,13 @@ public class PagosModelo {
     public PagosModelo() {
     }
 
-    public int getIdPago() {
+    public Integer getIdPago() {
         return idPago;
     }
 
-    public void setIdPago(int idPago) {
+    public void setIdPago(Integer idPago) {
         this.idPago = idPago;
     }
-
 
     public LocalDate getFechaPago() {
         return fechaPago;
