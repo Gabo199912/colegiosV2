@@ -11,5 +11,4 @@ import java.util.List;
 @Repository
 public interface DetallePagoRepositorio extends JpaRepository<DetallePagoModelo, Integer> {
     List<DetallePagoModelo> findByUsuario(UsuarioModelo usuario);
-    List<DetallePagoModelo> findByMesPagado(LocalDate mesPagado);
 }

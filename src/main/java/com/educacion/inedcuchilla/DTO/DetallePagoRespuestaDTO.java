@@ -7,14 +7,12 @@ public class DetallePagoRespuestaDTO {
     private String descripcion;
     private BigDecimal total;
     private String nombre;
-    private String seccion;
 
-    public DetallePagoRespuestaDTO(String tipoPago, String descripcion, BigDecimal total, String nombre, String seccion) {
+    public DetallePagoRespuestaDTO(String tipoPago, String descripcion, BigDecimal total, String nombre) {
         this.tipoPago = tipoPago;
         this.descripcion = descripcion;
         this.total = total;
         this.nombre = nombre;
-        this.seccion = seccion;
     }
 
     public String getTipoPago() {
@@ -49,11 +47,4 @@ public class DetallePagoRespuestaDTO {
         this.nombre = nombre;
     }
 
-    public String getSeccion() {
-        return seccion;
-    }
-
-    public void setSeccion(String seccion) {
-        this.seccion = seccion;
-    }
 }

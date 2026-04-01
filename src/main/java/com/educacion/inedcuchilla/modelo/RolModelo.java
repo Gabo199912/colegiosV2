@@ -1,6 +1,9 @@
 package com.educacion.inedcuchilla.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "rol")
@@ -16,6 +19,10 @@ public class RolModelo {
 
     @Column(name = "estado")
     private Boolean estado;
+
+    @OneToMany(mappedBy = "rol")
+    @JsonIgnore
+    private List<UsuarioModelo> usuarios;
 
     public RolModelo() {
     }
@@ -44,5 +51,13 @@ public class RolModelo {
 
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public List<UsuarioModelo> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<UsuarioModelo> usuarios) {
+        this.usuarios = usuarios;
     }
 }

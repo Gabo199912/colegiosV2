@@ -15,6 +15,9 @@ public class EncargadoModelo {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "apellido")
+    private String apellido;
+
     @Column(name = "tipo_familiar")
     private String tipoFamiliar;
 
@@ -24,9 +27,6 @@ public class EncargadoModelo {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_id_usuario")
-    private UsuarioModelo usuario;
 
     public EncargadoModelo() {
     }
@@ -45,6 +45,14 @@ public class EncargadoModelo {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getTipoFamiliar() {
@@ -69,13 +77,5 @@ public class EncargadoModelo {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public UsuarioModelo getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioModelo usuario) {
-        this.usuario = usuario;
     }
 }

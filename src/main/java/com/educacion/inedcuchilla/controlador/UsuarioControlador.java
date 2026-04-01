@@ -1,11 +1,14 @@
 package com.educacion.inedcuchilla.controlador;
 
 
+import com.educacion.inedcuchilla.SeguridadConfig.SecurityConfig;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.servicio.RolServicio;
 import com.educacion.inedcuchilla.servicio.UsuarioServicio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,9 +22,13 @@ public class UsuarioControlador {
     private final UsuarioServicio usuarioServicio;
     private final RolServicio rolServicio;
 
-    public UsuarioControlador(UsuarioServicio usuarioServicio, RolServicio rolServicio) {
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
+    public UsuarioControlador(UsuarioServicio usuarioServicio, RolServicio rolServicio, PasswordEncoder passwordEncoder) {
         this.usuarioServicio = usuarioServicio;
         this.rolServicio = rolServicio;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -42,8 +49,6 @@ public class UsuarioControlador {
         String nombre = usuarioModelo.getNombre();
         boolean existeEmail = usuarioServicio.existeUsuarioPorEmail(usuarioModelo.getEmail());
         String contrasenia = usuarioModelo.getContrasenia();
-        String seccion = usuarioModelo.getSeccion();
-        boolean existeRol = rolServicio.existePorId(usuarioModelo.getRol().getIdRol());
 
         if (usuarioServicio.existeUsuarioPorNombre(nombre)){
             Map<String, Object> respuesta = new HashMap<>();
@@ -65,21 +70,7 @@ public class UsuarioControlador {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(respuesta);
         }
 
-        if (seccion.length() > 1){
-            Map<String, Object> respuesta = new HashMap<>();
-            respuesta.put("mensaje", "la seccion es muy larga");
-            respuesta.put("seccion", "debe tener maximo de 1 caracter");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(respuesta);
-        }
-
-        if (!existeRol){
-            Map<String, Object> respuesta = new HashMap<>();
-            respuesta.put("mensaje", "el rol no existe");
-            respuesta.put("rol", "ingrese un rol valido");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(respuesta);
-        }
-
-
+        usuarioModelo.setContrasenia(passwordEncoder.encode(contrasenia));
 
         return ResponseEntity.ok(usuarioServicio.guardarUsuario(usuarioModelo));
     }

@@ -1,11 +1,13 @@
 package com.educacion.inedcuchilla.servicio;
 
 
+import com.educacion.inedcuchilla.SeguridadConfig.SecurityConfig;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioServicio {
@@ -20,6 +22,7 @@ public class UsuarioServicio {
     }
 
     public UsuarioModelo guardarUsuario(UsuarioModelo usuarioModelo){
+
         return usuarioRepositorio.save(usuarioModelo);
     }
 
@@ -42,7 +45,7 @@ public class UsuarioServicio {
         return usuarioRepositorio.existsByEmail(email);
     }
 
-    public UsuarioModelo buscarUsuarioPorNombre(String nombre){
+    public Optional<UsuarioModelo> buscarUsuarioPorNombre(String nombre){
         return usuarioRepositorio.findByNombre(nombre);
     }
 

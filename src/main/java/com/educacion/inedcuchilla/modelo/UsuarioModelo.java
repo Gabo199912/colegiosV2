@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -14,11 +16,8 @@ public class UsuarioModelo {
     @Column(name = "id_usuario")
     private Integer idUsuario;
 
-    @Column(name = "clave")
-    private Integer clave;
-
-    @Column(name = "seccion")
-    private String seccion;
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
 
     @Column(name = "nombre")
     private String nombre;
@@ -41,21 +40,16 @@ public class UsuarioModelo {
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
-    @Column(name = "codigo_alumno")
-    private String codigoAlumno;
-
     @Column(name = "contrasenia")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String contrasenia;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_id_usuario")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_id_rol")
     private RolModelo rol;
 
     public UsuarioModelo() {
     }
-
-
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -65,20 +59,12 @@ public class UsuarioModelo {
         this.idUsuario = idUsuario;
     }
 
-    public Integer getClave() {
-        return clave;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setClave(Integer clave) {
-        this.clave = clave;
-    }
-
-    public String getSeccion() {
-        return seccion;
-    }
-
-    public void setSeccion(String seccion) {
-        this.seccion = seccion;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNombre() {
@@ -135,14 +121,6 @@ public class UsuarioModelo {
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getCodigoAlumno() {
-        return codigoAlumno;
-    }
-
-    public void setCodigoAlumno(String codigoAlumno) {
-        this.codigoAlumno = codigoAlumno;
     }
 
     public String getContrasenia() {

@@ -14,15 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/detalle-pago")
 public class DetallePagoControlador {
-
-    private static final Logger logger = LoggerFactory.getLogger(DetallePagoControlador.class);
 
     private final DetallePagoServicio detallePagoServicio;
     private final PagosServicio pagosServicio;
@@ -37,9 +33,9 @@ public class DetallePagoControlador {
 
     @GetMapping("/listarPorUsuario/{nombre}")
     public ResponseEntity<?> listarPorUsuario(@PathVariable String nombre){
-        UsuarioModelo usuario = usuarioServicio.buscarUsuarioPorNombre(nombre);
+        Optional<UsuarioModelo> usuario = usuarioServicio.buscarUsuarioPorNombre(nombre);
 
-        if (usuario == null){
+        if (usuario.isEmpty()){
             Map<String, Object> respuesta = new HashMap<>();
             respuesta.put("mensaje", "El usuario no existe");
             respuesta.put("usuario", "ingrese un usuario valido");
@@ -47,7 +43,7 @@ public class DetallePagoControlador {
             return ResponseEntity.status(404).body(respuesta);
         }
 
-        List<DetallePagoModelo> detallePagos = detallePagoServicio.listarDetallePorNombreUsuario(usuario);
+        List<DetallePagoModelo> detallePagos = detallePagoServicio.listarDetallePorNombreUsuario(usuario.orElse(null));
 
         return ResponseEntity.ok(detallePagos);
     }
@@ -85,8 +81,7 @@ public class DetallePagoControlador {
                 detallePagoModelo.getPagos().getTipoPago(),
                 detallePagoModelo.getDescripcion(),
                 detallePagoModelo.getTotal(),
-                detallePagoModelo.getUsuario().getNombre(),
-                detallePagoModelo.getUsuario().getSeccion()
+                detallePagoModelo.getUsuario().getNombre()
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
