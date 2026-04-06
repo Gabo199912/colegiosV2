@@ -6,6 +6,7 @@ import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,10 +14,11 @@ public interface UsuarioRepositorio extends JpaRepository<UsuarioModelo, Integer
     boolean existsByEmail(String email);
     boolean existsByNombre(String nombre);
     boolean existsByApellido(String apellido);
+    boolean existsByNombreUsuario(String nombreUsuario);
 
     UsuarioModelo findByEmail(String email);
+    UsuarioModelo findByNombreUsuario(String nombreUsuario);
     Optional<UsuarioModelo> findByNombre(String nombre);
     UsuarioModelo findByApellido(String apellido);
     UsuarioModelo findByIdUsuario(Integer idUsuario);
-
 }

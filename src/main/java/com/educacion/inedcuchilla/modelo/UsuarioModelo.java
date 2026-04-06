@@ -25,9 +25,6 @@ public class UsuarioModelo {
     @Column(name = "apellido")
     private String apellido;
 
-    @Column(name = "identificacion")
-    private String identificacion;
-
     @Column(name = "email")
     private String email;
 
@@ -47,6 +44,9 @@ public class UsuarioModelo {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_id_rol")
     private RolModelo rol;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private AlumnoModelo alumno;
 
     public UsuarioModelo() {
     }
@@ -81,14 +81,6 @@ public class UsuarioModelo {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public String getIdentificacion() {
-        return identificacion;
-    }
-
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
     }
 
     public String getEmail() {
@@ -129,6 +121,14 @@ public class UsuarioModelo {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+
+    public AlumnoModelo getAlumno() {
+        return alumno;
+    }
+
+    public void setAlumno(AlumnoModelo alumno) {
+        this.alumno = alumno;
     }
 
     public RolModelo getRol() {

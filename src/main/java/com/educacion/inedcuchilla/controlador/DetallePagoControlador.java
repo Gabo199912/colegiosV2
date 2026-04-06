@@ -24,7 +24,9 @@ public class DetallePagoControlador {
     private final PagosServicio pagosServicio;
     private final UsuarioServicio usuarioServicio;
 
-    public DetallePagoControlador(DetallePagoServicio detallePagoServicio, PagosServicio pagosServicio, UsuarioServicio usuarioServicio) {
+    public DetallePagoControlador(DetallePagoServicio detallePagoServicio,
+                                  PagosServicio pagosServicio,
+                                  UsuarioServicio usuarioServicio) {
         this.detallePagoServicio = detallePagoServicio;
         this.pagosServicio = pagosServicio;
         this.usuarioServicio = usuarioServicio;

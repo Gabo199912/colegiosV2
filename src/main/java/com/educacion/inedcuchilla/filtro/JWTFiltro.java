@@ -46,6 +46,8 @@ public class JWTFiltro extends UsernamePasswordAuthenticationFilter {
             nombreUsuario = usuario.getNombreUsuario();
             contrasenia = usuario.getContrasenia();
 
+            System.out.println(nombreUsuario + " " + contrasenia);
+
         } catch (StreamReadException e) {
             throw new RuntimeException(e);
         }catch (IOException e) {

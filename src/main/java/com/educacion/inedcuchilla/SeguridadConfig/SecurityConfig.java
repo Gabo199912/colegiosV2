@@ -35,7 +35,12 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests( (authz) -> authz
-                        .requestMatchers("/usuarios/**").permitAll()
+                        .requestMatchers("/login").permitAll()
+//                        .requestMatchers("/usuarios/**").permitAll()
+                        .requestMatchers("/usuarios/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/pagos/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/detalle-pago/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/materias/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .anyRequest().authenticated())
                         .addFilter(new JWTFiltro(authenticationManager())) // comentar para crear usuario admin
                         .addFilter(new ValidacionFiltro(authenticationManager())) //comentar para crear usuario admin

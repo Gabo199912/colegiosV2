@@ -10,17 +10,8 @@ public class AlumnoModelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_alumno")
     private Integer idUsuario;
-
-    @Column(name = "fecha_nacimiento")
-    private String nombre;
-
-    @Column(name = "apellido")
-    private String apellido;
-
-    @Column(name = "identificacion")
-    private String identificacion;
-
 
     @Column(name = "genero")
     private String genero;
@@ -35,6 +26,9 @@ public class AlumnoModelo {
     @JoinColumn(name = "fk_id_usuario")
     private UsuarioModelo usuario;
 
+    @Column(name = "activo")
+    private boolean activo;
+
 
     public AlumnoModelo() {
     }
@@ -45,30 +39,6 @@ public class AlumnoModelo {
 
     public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getIdentificacion() {
-        return identificacion;
-    }
-
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getGenero() {
@@ -101,5 +71,13 @@ public class AlumnoModelo {
 
     public void setUsuario(UsuarioModelo usuario) {
         this.usuario = usuario;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }
