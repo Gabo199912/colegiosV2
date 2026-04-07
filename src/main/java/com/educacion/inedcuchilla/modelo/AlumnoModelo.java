@@ -19,15 +19,25 @@ public class AlumnoModelo {
     @Column(name = "codigo_alumno")
     private String codigoAlumno;
 
-    @Column(name = "seccion")
-    private String seccion;
-
     @OneToOne
     @JoinColumn(name = "fk_id_usuario")
     private UsuarioModelo usuario;
 
+
+    @ManyToOne
+    @JoinColumn(name = "fk_id_grado")
+    private GradoModelo grado;
+
     @Column(name = "activo")
     private boolean activo;
+
+    public GradoModelo getGrado() {
+        return grado;
+    }
+
+    public void setGrado(GradoModelo grado) {
+        this.grado = grado;
+    }
 
 
     public AlumnoModelo() {
@@ -57,13 +67,8 @@ public class AlumnoModelo {
         this.codigoAlumno = codigoAlumno;
     }
 
-    public String getSeccion() {
-        return seccion;
-    }
 
-    public void setSeccion(String seccion) {
-        this.seccion = seccion;
-    }
+
 
     public UsuarioModelo getUsuario() {
         return usuario;

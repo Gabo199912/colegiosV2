@@ -18,8 +18,8 @@ public class NotasModelo {
 
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_usuario")
-    private UsuarioModelo usuario;
+    @JoinColumn(name = "fk_id_alumno")
+    private AlumnoModelo alumno;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_materia")
@@ -61,12 +61,12 @@ public class NotasModelo {
         this.descripcion = descripcion;
     }
 
-    public UsuarioModelo getUsuario() {
-        return usuario;
+    public AlumnoModelo getAlumno() {
+        return alumno;
     }
 
-    public void setUsuario(UsuarioModelo usuario) {
-        this.usuario = usuario;
+    public void setAlumno(AlumnoModelo alumno) {
+        this.alumno = alumno;
     }
 
     public MateriasModelo getMateria() {

@@ -2,6 +2,8 @@ package com.educacion.inedcuchilla.modelo;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "grado")
 public class GradoModelo {
@@ -20,8 +22,8 @@ public class GradoModelo {
     @Column(name = "seccion")
     private char seccion;
 
-    @Column(name = "nota")
-    private Double nota;
+    @OneToMany(mappedBy = "grado", fetch = FetchType.LAZY)
+    private List<AlumnoModelo> alumnos;
 
 
     public GradoModelo() {
@@ -59,11 +61,11 @@ public class GradoModelo {
         this.seccion = seccion;
     }
 
-    public Double getNota() {
-        return nota;
+    public List<AlumnoModelo> getAlumnos() {
+        return alumnos;
     }
 
-    public void setNota(Double nota) {
-        this.nota = nota;
+    public void setAlumnos(List<AlumnoModelo> alumnos) {
+        this.alumnos = alumnos;
     }
 }

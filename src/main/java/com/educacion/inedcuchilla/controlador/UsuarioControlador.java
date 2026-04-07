@@ -1,34 +1,31 @@
 package com.educacion.inedcuchilla.controlador;
 
 
-import com.educacion.inedcuchilla.SeguridadConfig.SecurityConfig;
+import com.educacion.inedcuchilla.DTO.UsuarioAlumnoDTO;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
-import com.educacion.inedcuchilla.servicio.RolServicio;
+import com.educacion.inedcuchilla.servicio.AlumnoServicio;
 import com.educacion.inedcuchilla.servicio.UsuarioServicio;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioControlador {
 
     private final UsuarioServicio usuarioServicio;
+    private final AlumnoServicio alumnoServicio;
 
-    @Autowired
-    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioControlador(UsuarioServicio usuarioServicio, PasswordEncoder passwordEncoder) {
+    public UsuarioControlador(UsuarioServicio usuarioServicio, AlumnoServicio alumnoServicio) {
         this.usuarioServicio = usuarioServicio;
-        this.passwordEncoder = passwordEncoder;
+        this.alumnoServicio = alumnoServicio;
     }
 
 
@@ -67,8 +64,8 @@ public class UsuarioControlador {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
-        UsuarioModelo usuario = usuarioServicio.buscarPorNombreUsuario(nombreUsuario);
-        usuario.setActivo(false);
+        Optional<UsuarioModelo> usuario = usuarioServicio.buscarPorNombreUsuario(nombreUsuario);
+        usuario.get().setActivo(false);
 
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("mensaje", "Usuario desactivado");
@@ -85,7 +82,6 @@ public class UsuarioControlador {
     @PostMapping("/crear/masivo")
     public ResponseEntity<?> crearMasivamente(@RequestParam("alumnos") MultipartFile archivo){
             try {
-
                 usuarioServicio.cargarExcel(archivo);
                 Map<String, Object> respuesta = new HashMap<>();
                 respuesta.put("mensaje", "Archivo cargado correctamente");
@@ -94,6 +90,19 @@ public class UsuarioControlador {
             }catch (Exception e){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
             }
+    }
+
+    @PostMapping("/crear/usuario-con-alumno")
+    public ResponseEntity<?> crearUsuarioConAlumno(@RequestBody UsuarioAlumnoDTO usuarioAlumno){
+        try {
+            usuarioServicio.guardarUsuarioAlumno(usuarioAlumno);
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("mensaje", "Alumno y usuario cargado correctamente");
+            respuesta.put("STATUS", HttpStatus.OK);
+            return ResponseEntity.ok(respuesta);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
 

@@ -24,7 +24,7 @@ public class UsuarioLoginServicio implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String nombreUsuario) throws UsernameNotFoundException {
 
-        Optional<UsuarioModelo> usuarioOptional = usuarioRepositorio.findByNombre(nombreUsuario);
+        Optional<UsuarioModelo> usuarioOptional = usuarioRepositorio.findByNombreUsuario(nombreUsuario);
 
         if (usuarioOptional.isEmpty()){
             throw new UsernameNotFoundException("Usuario no encontrado");
@@ -37,6 +37,7 @@ public class UsuarioLoginServicio implements UserDetailsService {
         //pero spring siempre espera una lista de grantedAuthority
         String roles = usuario.getRol().getTipoUsuario().trim();
 
+        System.out.println(usuario.getNombreUsuario() + " " + "parte del usuarioLoginServicio");
 
         return new org.springframework.security.core.userdetails.User(
                 usuario.getNombreUsuario().trim(),

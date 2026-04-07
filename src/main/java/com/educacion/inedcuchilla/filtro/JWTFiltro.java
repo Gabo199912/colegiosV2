@@ -82,6 +82,7 @@ public class JWTFiltro extends UsernamePasswordAuthenticationFilter {
                 .signWith(JWTLlave.LLAVE_)
                 .compact();
 
+        System.out.println(usuario.getUsername() + " " +  " parte de JWTfiltro");
         response.addHeader(JWTLlave.CABECERA, JWTLlave.BEARER + token);
 
         Map<String, String> cuerpo = new HashMap<>();
