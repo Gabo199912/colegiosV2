@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.View;
 
 import java.text.Normalizer;
 import java.util.*;
@@ -34,6 +35,8 @@ public class UsuarioServicio {
 
     @Autowired
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private View error;
 
     public UsuarioServicio(UsuarioRepositorio usuarioRepositorio,
                            AlumnoRepositorio alumnoRepositorio,
@@ -125,66 +128,51 @@ public class UsuarioServicio {
         return usuarioRepositorio.findByNombre(nombre);
     }
 
-    @Transactional
-    public void cargarExcel(@NotNull MultipartFile archivo) throws Exception{
+    public Map<String, Object> cargarExcel(@NotNull MultipartFile archivo) throws Exception{
         Workbook excelAlumnos = new XSSFWorkbook(archivo.getInputStream());
+
         List<UsuarioModelo> listaUsuarios = new ArrayList<>();
+        List<String> errores = new ArrayList<>();
+
+        int procesados = 0;
+        int omitidos = 0;
+
+
         RolModelo rol = rolRepositorio.findByTipoUsuario("ALUMNO");
+
+        Set<String> usuariosExistentes = new HashSet<>(usuarioRepositorio.cargarNombrsUsuario());
+        Set<String> correosExistentes = new HashSet<>(usuarioRepositorio.cargarCorreo());
 
 
         for (int i = 0; i < excelAlumnos.getNumberOfSheets(); i++) {
             Sheet hoja = excelAlumnos.getSheetAt(i);
 
             String dato = hoja.getSheetName();
-            GradoModelo gradoModelo;
+            GradoModelo gradoModelo = new GradoModelo();
 
-
-            switch (dato){
-                    case "4CA":
-                        gradoModelo = gradoRepositorio.findById(1);
-                        break;
-
-                    case "4CB":
-                        gradoModelo = gradoRepositorio.findById(2);
-                        break;
-
-                    case "4MA":
-                        gradoModelo = gradoRepositorio.findById(3);
-                        break;
-
-                    case "4MB":
-                        gradoModelo = gradoRepositorio.findById(4);
-                        break;
-
-                    case "5CA":
-                        gradoModelo = gradoRepositorio.findById(5);
-                        break;
-
-                    case "5CB":
-                        gradoModelo = gradoRepositorio.findById(6);
-                        break;
-
-                    case "5MA":
-                        gradoModelo = gradoRepositorio.findById(7);
-                        break;
-
-                    case "5MB":
-                        gradoModelo = gradoRepositorio.findById(8);
-                        break;
-
-                    default:
-                        gradoModelo =  gradoRepositorio.findById(1);
-            }
-
+            GradoModelo gradoReal = verificarClase(dato, gradoModelo);
 
             for (Row fila : hoja){
-
 
                 try {
                     if (fila.getRowNum() == 0)continue;
 
+                    procesados++;
+
                     UsuarioModelo usuarios = new UsuarioModelo();
                     AlumnoModelo alumnos = new AlumnoModelo();
+
+                    if (usuariosExistentes.contains(fila.getCell(1).getStringCellValue())){
+                        errores.add("El usuario: " + fila.getCell(1).getStringCellValue() + " ya existe");
+                        omitidos++;
+                        continue;
+                    }
+
+                    if (correosExistentes.contains(fila.getCell(1).getStringCellValue()+ "@correo.com")){
+                        errores.add("El correo: " + fila.getCell(1).getStringCellValue()+ "@correo.com" + " ya existe");
+                        omitidos++;
+                        continue;
+                    }
 
                     usuarios.setNombreUsuario(fila.getCell(1).getStringCellValue());
                     usuarios.setNombre(fila.getCell(3).getStringCellValue());
@@ -195,8 +183,7 @@ public class UsuarioServicio {
 
                     usuarios.setRol(rol);
 
-                    String contraseniaLimpiada = limpiarContrasenia("" + fila.getCell(3).getStringCellValue().charAt(0) + fila.getCell(1).getStringCellValue().charAt(0));
-
+                    String contraseniaLimpiada = limpiarContrasenia(fila.getCell(1).getStringCellValue());
 
                     usuarios.setContrasenia(passwordEncoder.encode(contraseniaLimpiada));
 
@@ -204,7 +191,7 @@ public class UsuarioServicio {
                     alumnos.setGenero(String.valueOf(fila.getCell(6).getStringCellValue().charAt(0)));
                     alumnos.setActivo(true);
 
-                    alumnos.setGrado(gradoModelo);
+                    alumnos.setGrado(gradoReal);
                     alumnos.setUsuario(usuarios);
                     usuarios.setAlumno(alumnos);
 
@@ -220,16 +207,54 @@ public class UsuarioServicio {
         usuarioRepositorio.saveAll(listaUsuarios);
         excelAlumnos.close();
 
+
+
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("mensaje", "Se cargaron " + procesados + " alumnos correctamente");
+        respuesta.put("cargados correctamente", procesados);
+        respuesta.put("omitidos", omitidos);
+        return respuesta;
     }
 
-
-    public static String limpiarContrasenia(String contraseniaLimpiada){
+    public String limpiarContrasenia(String contraseniaLimpiada){
 
         contraseniaLimpiada = Normalizer.normalize(contraseniaLimpiada, Normalizer.Form.NFD);
-        contraseniaLimpiada = contraseniaLimpiada.replaceAll("[\\\\p{InCombiningDiacriticalMarks}]", "");
+        contraseniaLimpiada = contraseniaLimpiada.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
         contraseniaLimpiada = contraseniaLimpiada.replaceAll("\\s+", "");
-        contraseniaLimpiada.toLowerCase().trim();
+        contraseniaLimpiada = contraseniaLimpiada.toLowerCase().trim();
 
         return contraseniaLimpiada;
     }
+
+    public GradoModelo verificarClase(String dato, GradoModelo gradoModelo){
+        switch (dato){
+            case "4CA":
+                return gradoModelo = gradoRepositorio.findById(1);
+
+            case "4CB":
+                return gradoModelo = gradoRepositorio.findById(2);
+
+            case "4MA":
+                return gradoModelo = gradoRepositorio.findById(3);
+
+            case "4MB":
+                return gradoModelo = gradoRepositorio.findById(4);
+
+            case "5CA":
+                return gradoModelo = gradoRepositorio.findById(5);
+
+            case "5CB":
+                return gradoModelo = gradoRepositorio.findById(6);
+
+            case "5MA":
+                return gradoModelo = gradoRepositorio.findById(7);
+
+            case "5MB":
+                return gradoModelo = gradoRepositorio.findById(8);
+
+            default:
+                return gradoModelo =  gradoRepositorio.findById(1);
+        }
+    }
+
 }

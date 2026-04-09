@@ -46,8 +46,6 @@ public class JWTFiltro extends UsernamePasswordAuthenticationFilter {
             nombreUsuario = usuario.getNombreUsuario();
             contrasenia = usuario.getContrasenia();
 
-            System.out.println(nombreUsuario + " " + contrasenia);
-
         } catch (StreamReadException e) {
             throw new RuntimeException(e);
         }catch (IOException e) {
@@ -58,7 +56,6 @@ public class JWTFiltro extends UsernamePasswordAuthenticationFilter {
                 nombreUsuario,
                 contrasenia
         );
-
 
         return authenticationManager.authenticate(authenticationToken);
 
@@ -82,7 +79,6 @@ public class JWTFiltro extends UsernamePasswordAuthenticationFilter {
                 .signWith(JWTLlave.LLAVE_)
                 .compact();
 
-        System.out.println(usuario.getUsername() + " " +  " parte de JWTfiltro");
         response.addHeader(JWTLlave.CABECERA, JWTLlave.BEARER + token);
 
         Map<String, String> cuerpo = new HashMap<>();

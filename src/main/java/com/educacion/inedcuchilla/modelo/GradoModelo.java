@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class GradoModelo {
     private char seccion;
 
     @OneToMany(mappedBy = "grado", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<AlumnoModelo> alumnos;
 
 

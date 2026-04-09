@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class AlumnoModelo {
 
     @OneToOne
     @JoinColumn(name = "fk_id_usuario")
+    @JsonIgnore
     private UsuarioModelo usuario;
 
 

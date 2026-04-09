@@ -52,4 +52,10 @@ public class RolControlador {
         return ResponseEntity.ok(rolServicio.guardarRol(rol));
     }
 
+    @PutMapping("/desactivar/rol")
+    public ResponseEntity<?> desactivarRol(@RequestBody RolModelo rol){
+        rol.setEstado(false);
+        return ResponseEntity.ok(rolServicio.guardarRol(rol));
+    }
+
 }

@@ -4,6 +4,7 @@ package com.educacion.inedcuchilla.repositorio;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +22,12 @@ public interface UsuarioRepositorio extends JpaRepository<UsuarioModelo, Integer
     Optional<UsuarioModelo> findByNombre(String nombre);
     UsuarioModelo findByApellido(String apellido);
     UsuarioModelo findByIdUsuario(Integer idUsuario);
+
+
+    @Query("SELECT u.nombreUsuario FROM UsuarioModelo u")
+    List<String> cargarNombrsUsuario();
+
+
+    @Query("SELECT u.email FROM UsuarioModelo u")
+    List<String> cargarCorreo();
 }

@@ -82,8 +82,8 @@ public class UsuarioControlador {
     @PostMapping("/crear/masivo")
     public ResponseEntity<?> crearMasivamente(@RequestParam("alumnos") MultipartFile archivo){
             try {
-                usuarioServicio.cargarExcel(archivo);
-                Map<String, Object> respuesta = new HashMap<>();
+
+                Map<String, Object> respuesta = usuarioServicio.cargarExcel(archivo);
                 respuesta.put("mensaje", "Archivo cargado correctamente");
                 respuesta.put("STATUS", HttpStatus.OK);
                 return ResponseEntity.ok(respuesta);
@@ -95,7 +95,7 @@ public class UsuarioControlador {
     @PostMapping("/crear/usuario-con-alumno")
     public ResponseEntity<?> crearUsuarioConAlumno(@RequestBody UsuarioAlumnoDTO usuarioAlumno){
         try {
-            usuarioServicio.guardarUsuarioAlumno(usuarioAlumno);
+             usuarioServicio.guardarUsuarioAlumno(usuarioAlumno);
             Map<String, Object> respuesta = new HashMap<>();
             respuesta.put("mensaje", "Alumno y usuario cargado correctamente");
             respuesta.put("STATUS", HttpStatus.OK);

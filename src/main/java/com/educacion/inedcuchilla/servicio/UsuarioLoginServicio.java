@@ -37,8 +37,6 @@ public class UsuarioLoginServicio implements UserDetailsService {
         //pero spring siempre espera una lista de grantedAuthority
         String roles = usuario.getRol().getTipoUsuario().trim();
 
-        System.out.println(usuario.getNombreUsuario() + " " + "parte del usuarioLoginServicio");
-
         return new org.springframework.security.core.userdetails.User(
                 usuario.getNombreUsuario().trim(),
                 usuario.getContrasenia().trim(),
