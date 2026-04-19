@@ -19,7 +19,7 @@ public class BimestreModelo {
     @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
 
-    @Column(name = "fecha_fin")
+    @Column(name = "fecha_finalizacion")
     private LocalDate fechaFin;
 
     @Column(name = "activo")

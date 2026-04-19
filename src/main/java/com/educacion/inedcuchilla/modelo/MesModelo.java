@@ -3,7 +3,7 @@ package com.educacion.inedcuchilla.modelo;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "mes")
+@Table(name = "detalle_mes")
 public class MesModelo {
 
     @Id

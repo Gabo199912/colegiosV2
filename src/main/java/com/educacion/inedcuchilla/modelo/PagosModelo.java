@@ -13,12 +13,12 @@ public class PagosModelo {
     @Column(name = "id_pago")
     private Integer idPago;
 
-    @Column(name = "fecha_pago")
-    private LocalDate fechaPago;
-
-
     @Column(name = "tipo_pago")
     private String tipoPago;
+
+
+    @Column(name = "activo")
+    private boolean activo;
 
     public PagosModelo() {
     }
@@ -31,12 +31,12 @@ public class PagosModelo {
         this.idPago = idPago;
     }
 
-    public LocalDate getFechaPago() {
-        return fechaPago;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setFechaPago(LocalDate fechaPago) {
-        this.fechaPago = fechaPago;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public String getTipoPago() {

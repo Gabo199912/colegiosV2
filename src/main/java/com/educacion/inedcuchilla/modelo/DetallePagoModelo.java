@@ -29,9 +29,15 @@ public class DetallePagoModelo {
     @JoinColumn(name = "fk_id_pago")
     private PagosModelo pagos;
 
+    @Column(name = "fecha_pago")
+    private LocalDate fechaPago;
+
     @OneToMany
     @JoinColumn(name = "fk_id_mes")
     private List<MesModelo> mes;
+
+    @Column(name = "pagado")
+    private boolean pagado;
 
     public DetallePagoModelo() {
     }
@@ -83,5 +89,25 @@ public class DetallePagoModelo {
 
     public void setMes(List<MesModelo> mes) {
         this.mes = mes;
+    }
+
+    public void setIdDetallePago(Integer idDetallePago) {
+        this.idDetallePago = idDetallePago;
+    }
+
+    public LocalDate getFechaPago() {
+        return fechaPago;
+    }
+
+    public void setFechaPago(LocalDate fechaPago) {
+        this.fechaPago = fechaPago;
+    }
+
+    public boolean isPagado() {
+        return pagado;
+    }
+
+    public void setPagado(boolean pagado) {
+        this.pagado = pagado;
     }
 }

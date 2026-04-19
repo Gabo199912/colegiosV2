@@ -43,6 +43,7 @@ public class UsuarioModelo {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_id_rol")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private RolModelo rol;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)

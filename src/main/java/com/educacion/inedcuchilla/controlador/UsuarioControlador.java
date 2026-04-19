@@ -41,6 +41,22 @@ public class UsuarioControlador {
         return ResponseEntity.ok(usuarios);
     }
 
+    @GetMapping("/buscar/{nombreUsuario}")
+    public ResponseEntity<?> buscarUsuarioPorNombre(@PathVariable String nombreUsuario){
+        Optional<UsuarioModelo> usuario = usuarioServicio.buscarPorNombreUsuario(nombreUsuario);
+        if (usuario.isEmpty()){
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("mensaje", "El usuario no existe");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+        return ResponseEntity.ok(usuario);
+    }
+
+//    @GetMapping("/buscar/usuario-alumno/{nombreUsuario}")
+//    public ResponseEntity<?> buscarUsuarioPorNombreAlumno(@PathVariable String nombreUsuario){
+//
+//    }
+
     @PostMapping("/crear")
     public ResponseEntity<?> crearUsuario(@RequestBody UsuarioModelo usuarioModelo){
         try {
