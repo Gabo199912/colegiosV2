@@ -148,9 +148,9 @@ public class UsuarioServicio {
             Sheet hoja = excelAlumnos.getSheetAt(i);
 
             String dato = hoja.getSheetName();
-            GradoModelo gradoModelo = new GradoModelo();
+            System.out.println(dato);
 
-            GradoModelo gradoReal = verificarClase(dato, gradoModelo);
+            GradoModelo gradoReal = verificarClase(dato);
 
             for (Row fila : hoja){
 
@@ -226,34 +226,34 @@ public class UsuarioServicio {
         return contraseniaLimpiada;
     }
 
-    public GradoModelo verificarClase(String dato, GradoModelo gradoModelo){
+    public GradoModelo verificarClase(String dato){
         switch (dato){
             case "4CA":
-                return gradoModelo = gradoRepositorio.findById(1);
+                return gradoRepositorio.findById(5);
 
             case "4CB":
-                return gradoModelo = gradoRepositorio.findById(2);
+                return gradoRepositorio.findById(4);
 
             case "4MA":
-                return gradoModelo = gradoRepositorio.findById(3);
+                return gradoRepositorio.findById(7);
 
             case "4MB":
-                return gradoModelo = gradoRepositorio.findById(4);
+                return gradoRepositorio.findById(6);
 
             case "5CA":
-                return gradoModelo = gradoRepositorio.findById(5);
+                return gradoRepositorio.findById(2);
 
             case "5CB":
-                return gradoModelo = gradoRepositorio.findById(6);
+                return gradoRepositorio.findById(1);
 
             case "5MA":
-                return gradoModelo = gradoRepositorio.findById(7);
+                return gradoRepositorio.findById(3);
 
             case "5MB":
-                return gradoModelo = gradoRepositorio.findById(8);
+                return gradoRepositorio.findById(8);
 
             default:
-                return gradoModelo =  gradoRepositorio.findById(1);
+                return   gradoRepositorio.findById(1);
         }
     }
 
