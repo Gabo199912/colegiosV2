@@ -54,6 +54,8 @@ public class UsuarioServicio {
         return usuarioRepositorio.findAll();
     }
 
+
+
     @Transactional
     public UsuarioModelo guardarUsuario(@NotNull UsuarioModelo usuarioModelo){
 

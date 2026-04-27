@@ -52,11 +52,6 @@ public class UsuarioControlador {
         return ResponseEntity.ok(usuario);
     }
 
-//    @GetMapping("/buscar/usuario-alumno/{nombreUsuario}")
-//    public ResponseEntity<?> buscarUsuarioPorNombreAlumno(@PathVariable String nombreUsuario){
-//
-//    }
-
     @PostMapping("/crear")
     public ResponseEntity<?> crearUsuario(@RequestBody UsuarioModelo usuarioModelo){
         try {

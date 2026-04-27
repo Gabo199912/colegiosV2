@@ -1,5 +1,7 @@
 package com.educacion.inedcuchilla.DTO;
 
+import com.educacion.inedcuchilla.modelo.GradoModelo;
+
 public class AlumnoDTO {
     private String nombre;
     private String apellido;
@@ -10,7 +12,7 @@ public class AlumnoDTO {
     private String especialidad;
     private char secicon;
 
-    public AlumnoDTO(String nombre, String apellido, String email, String telefono, String genero, String nombreGrado, String especialidad, char secicon) {
+    public AlumnoDTO(String nombre, String apellido, String email, String telefono, String genero, String nombreGrado, String especialidad, char seccion) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -18,8 +20,9 @@ public class AlumnoDTO {
         this.genero = genero;
         this.nombreGrado = nombreGrado;
         this.especialidad = especialidad;
-        this.secicon = secicon;
+        this.secicon = seccion;
     }
+
 
     public String getEmail() {
         return email;

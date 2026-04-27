@@ -1,8 +1,11 @@
 package com.educacion.inedcuchilla.controlador;
 
+import com.educacion.inedcuchilla.DTO.AlumnoDTO;
 import com.educacion.inedcuchilla.modelo.AlumnoModelo;
+import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.servicio.AlumnoServicio;
 import com.educacion.inedcuchilla.servicio.UsuarioServicio;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,22 +21,26 @@ import java.util.Map;
 @RequestMapping("/alumno")
 public class AlumnoControlador {
     private final AlumnoServicio alumnoServicio;
+    private final UsuarioServicio usuarioServicio;
 
     public AlumnoControlador(AlumnoServicio alumnoServicio, UsuarioServicio usuarioServicio) {
         this.alumnoServicio = alumnoServicio;
+        this.usuarioServicio = usuarioServicio;
     }
 
     @GetMapping("/listar")
     public ResponseEntity<?> listarAlumnos(){
-        List<AlumnoModelo> listaAlumnos = alumnoServicio.listarAlumnos();
+        Map<String, Object> alumnos = new HashMap<>();
 
-        if (listaAlumnos.isEmpty()){
-            Map<String, Object> respuesta = new HashMap<>();
-            respuesta.put("mensaje", "No hay alumnos registrados");
-            return ResponseEntity.status(404).body(respuesta);
+        alumnos = alumnoServicio.listarAlumnosCompleto();
+
+        if (alumnos.isEmpty()){
+            Map<String, Object> respuesta = null;
+            respuesta.put("ALUMNOS", "alumnos no encontrados");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
         }
 
-        return ResponseEntity.ok(listaAlumnos);
+        return ResponseEntity.status(HttpStatus.OK).body(alumnos);
     }
 
     @GetMapping("/buscar/{codigoAlumno}")

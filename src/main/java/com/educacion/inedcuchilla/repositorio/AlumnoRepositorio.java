@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AlumnoRepositorio extends JpaRepository<AlumnoModelo, Integer> {
 
@@ -18,5 +20,12 @@ public interface AlumnoRepositorio extends JpaRepository<AlumnoModelo, Integer> 
             "JOIN a.grado g " +
             "WHERE a.codigoAlumno = :codigoAlumno")
     AlumnoDTO buscarAlumnoPorCodigo(@Param("codigoAlumno") String codigoAlumno);
+
+    @Query("SELECT new com.educacion.inedcuchilla.DTO.AlumnoDTO(" +
+            "u.nombre, u.apellido, u.email, u.telefono, a.genero, g.nombreGrado, g.especialidad, g.seccion) " +
+            "FROM AlumnoModelo a " +
+            "JOIN a.usuario u " +
+            "JOIN a.grado g")
+    List<AlumnoDTO> listarAlumnos();
 
 }
