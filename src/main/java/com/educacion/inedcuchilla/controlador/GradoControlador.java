@@ -2,6 +2,7 @@ package com.educacion.inedcuchilla.controlador;
 
 import com.educacion.inedcuchilla.modelo.GradoModelo;
 import com.educacion.inedcuchilla.servicio.GradoServicio;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,9 +37,13 @@ public class GradoControlador {
     public ResponseEntity<?> crearGrado(@RequestBody GradoModelo gradoModelo){
 
         try {
-            gradoServicio.guardarGrado(gradoModelo);
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta = gradoServicio.guardarGrado(gradoModelo);
+            respuesta.put("OK", gradoModelo);
+            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         }catch (RuntimeException e){
             return ResponseEntity.status(409).body(e.getMessage());
+
         }
     }
 

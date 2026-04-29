@@ -9,5 +9,8 @@ import java.util.Optional;
 @Repository
 public interface GradoRepositorio extends JpaRepository<GradoModelo,  Integer> {
     GradoModelo findById(int id);
+    boolean existsBynombreGrado(String nombreMateria);
+    boolean existsByEspecialidad(String especialidad);
+    boolean existsBySeccion(String seccion);
 
 }

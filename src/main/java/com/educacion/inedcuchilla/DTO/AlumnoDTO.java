@@ -10,9 +10,9 @@ public class AlumnoDTO {
     private String genero;
     private String nombreGrado;
     private String especialidad;
-    private char secicon;
+    private String secicon;
 
-    public AlumnoDTO(String nombre, String apellido, String email, String telefono, String genero, String nombreGrado, String especialidad, char seccion) {
+    public AlumnoDTO(String nombre, String apellido, String email, String telefono, String genero, String nombreGrado, String especialidad, String seccion) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -80,11 +80,11 @@ public class AlumnoDTO {
         this.especialidad = especialidad;
     }
 
-    public char getSecicon() {
+    public String getSecicon() {
         return secicon;
     }
 
-    public void setSecicon(char secicon) {
+    public void setSecicon(String secicon) {
         this.secicon = secicon;
     }
 }

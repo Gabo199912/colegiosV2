@@ -21,7 +21,7 @@ public class GradoModelo {
     private String especialidad;
 
     @Column(name = "seccion")
-    private char seccion;
+    private String seccion;
 
     @OneToMany(mappedBy = "grado", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -55,11 +55,11 @@ public class GradoModelo {
         this.especialidad = especialidad;
     }
 
-    public char getSeccion() {
+    public String getSeccion() {
         return seccion;
     }
 
-    public void setSeccion(char seccion) {
+    public void setSeccion(String seccion) {
         this.seccion = seccion;
     }
 
