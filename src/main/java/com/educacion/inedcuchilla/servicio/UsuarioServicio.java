@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -228,19 +229,19 @@ public class UsuarioServicio {
         return contraseniaLimpiada;
     }
 
-    public GradoModelo verificarClase(String dato){
+    public GradoModelo verificarClase(@NonNull String dato){
         switch (dato){
             case "4CA":
                 return gradoRepositorio.findById(5);
 
             case "4CB":
-                return gradoRepositorio.findById(4);
+                return gradoRepositorio.findById(6);
 
             case "4MA":
                 return gradoRepositorio.findById(7);
 
             case "4MB":
-                return gradoRepositorio.findById(6);
+                return gradoRepositorio.findById(8);
 
             case "5CA":
                 return gradoRepositorio.findById(2);
@@ -252,7 +253,7 @@ public class UsuarioServicio {
                 return gradoRepositorio.findById(3);
 
             case "5MB":
-                return gradoRepositorio.findById(8);
+                return gradoRepositorio.findById(4);
 
             default:
                 return   gradoRepositorio.findById(1);

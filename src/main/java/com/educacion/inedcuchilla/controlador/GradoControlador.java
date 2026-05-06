@@ -2,6 +2,7 @@ package com.educacion.inedcuchilla.controlador;
 
 import com.educacion.inedcuchilla.modelo.GradoModelo;
 import com.educacion.inedcuchilla.servicio.GradoServicio;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,25 @@ public class GradoControlador {
             return ResponseEntity.status(409).body(e.getMessage());
 
         }
+    }
+
+    @PutMapping("/actualizar")
+    public ResponseEntity<?> actualizarGrado(@RequestBody GradoModelo gradoModelo){
+        GradoModelo grado = gradoServicio.buscarPorId(gradoModelo.getIdGrado());
+        if (grado == null){
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("MENSAJE", "PARA ACTUALIZAR NO EL GRADO NO DEBE IR NULO");
+            respuesta.put("STATUS", HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(409).body(respuesta);
+        }
+
+        gradoServicio.guardarGrado(grado);
+
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("MENSAJE", "El grado se actualizo correctamente.");
+        respuesta.put("GRADO", grado);
+
+        return ResponseEntity.ok(respuesta);
     }
 
 }
