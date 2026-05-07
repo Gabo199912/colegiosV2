@@ -99,10 +99,9 @@ public class JWTFiltro extends UsernamePasswordAuthenticationFilter {
             throws IOException, ServletException {
 
         Map<String, String> cuerpo = new HashMap<>();
-        cuerpo.put("mensaje", "ERROR EN LA AUTENTICACION");
-        cuerpo.put("error", failed.getMessage());
-        cuerpo.put("request", request.getRequestURL().toString());
-        cuerpo.put("response", String.valueOf(response.getStatus()));
+        cuerpo.put("mensaje", "ERROR EN LA AUTENTICACION " + failed.getMessage());
+        cuerpo.put("usuario", "credenciales incorrectas. ");
+        cuerpo.put("token", String.valueOf(response.getStatus()));
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(cuerpo));
         response.setContentType(JWTLlave.TIPO_CONTENIDO);
