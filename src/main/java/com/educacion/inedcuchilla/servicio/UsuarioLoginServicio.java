@@ -35,7 +35,18 @@ public class UsuarioLoginServicio implements UserDetailsService {
 
         //segun la logica de la bd, utilizamos slo uno
         //pero spring siempre espera una lista de grantedAuthority
-        String roles = usuario.getRol().getTipoUsuario().trim();
+        List<SimpleGrantedAuthority> roles =
+                usuario.getUsuarioRol()
+                        .stream()
+                        .map(usuarioRol ->
+                                new SimpleGrantedAuthority(
+                                        "ROLE_" +
+                                                usuarioRol.getRoles()
+                                                        .getTipoUsuario()
+                                                        .trim()
+                                )
+                        )
+                        .toList();
 
         return new org.springframework.security.core.userdetails.User(
                 usuario.getNombreUsuario().trim(),
@@ -44,7 +55,8 @@ public class UsuarioLoginServicio implements UserDetailsService {
                 true,
                 true,
                 true,
-                List.of(new SimpleGrantedAuthority("ROLE_" +  roles.trim())));
+                roles
+        );
 
     }
 

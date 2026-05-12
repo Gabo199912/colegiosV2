@@ -90,6 +90,7 @@ public class UsuarioControlador {
         return ResponseEntity.ok(usuarioServicio.guardarUsuario(usuarioModelo));
     }
 
+    //se crea el usuario y el alumno masivamente.
     @PostMapping("/crear/masivo")
     public ResponseEntity<?> crearMasivamente(@RequestParam("alumnos") MultipartFile archivo){
             try {
@@ -103,6 +104,7 @@ public class UsuarioControlador {
             }
     }
 
+    //se crea el usuario y el alumno
     @PostMapping("/crear/usuario-con-alumno")
     public ResponseEntity<?> crearUsuarioConAlumno(@RequestBody UsuarioAlumnoDTO usuarioAlumno){
         try {

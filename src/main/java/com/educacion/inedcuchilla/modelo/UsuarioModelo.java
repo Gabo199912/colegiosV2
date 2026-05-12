@@ -41,10 +41,8 @@ public class UsuarioModelo {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String contrasenia;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_id_rol")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private RolModelo rol;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<UsuarioRol> usuarioRol = new ArrayList<>();
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private AlumnoModelo alumno;
@@ -132,11 +130,11 @@ public class UsuarioModelo {
         this.alumno = alumno;
     }
 
-    public RolModelo getRol() {
-        return rol;
+    public List<UsuarioRol> getUsuarioRol() {
+        return usuarioRol;
     }
 
-    public void setRol(RolModelo rol) {
-        this.rol = rol;
+    public void setUsuarioRol(List<UsuarioRol> usuarioRol) {
+        this.usuarioRol = usuarioRol;
     }
 }

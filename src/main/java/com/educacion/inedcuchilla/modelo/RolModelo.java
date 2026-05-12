@@ -20,9 +20,8 @@ public class RolModelo {
     @Column(name = "estado")
     private Boolean estado;
 
-    @OneToMany(mappedBy = "rol")
-    @JsonIgnore
-    private List<UsuarioModelo> usuarios;
+    @OneToMany(mappedBy = "roles")
+    private List<UsuarioRol> usuarioRol;
 
     public RolModelo() {
     }
@@ -53,11 +52,11 @@ public class RolModelo {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public List<UsuarioModelo> getUsuarios() {
-        return usuarios;
+    public List<UsuarioRol> getUsuarioRol() {
+        return usuarioRol;
     }
 
-    public void setUsuarios(List<UsuarioModelo> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuarioRol(List<UsuarioRol> usuarioRol) {
+        this.usuarioRol = usuarioRol;
     }
 }

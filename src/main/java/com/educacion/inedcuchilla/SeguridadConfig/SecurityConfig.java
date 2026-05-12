@@ -36,13 +36,13 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests( (authz) -> authz
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/usuarios/**").permitAll()
+//                        .requestMatchers("/usuarios/**").permitAll()
                         .requestMatchers("/alumno/**").hasAnyRole("MAESTRO", "ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/usuarios/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/pagos/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/detalle-pago/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/materias/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
-                        .anyRequest().authenticated())
+                          .anyRequest().authenticated())
                         .addFilter(new JWTFiltro(authenticationManager())) // comentar para crear usuario admin
                         .addFilter(new ValidacionFiltro(authenticationManager())) //comentar para crear usuario admin
                         .csrf(config -> config.disable())

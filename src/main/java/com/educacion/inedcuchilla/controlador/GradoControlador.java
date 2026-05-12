@@ -14,7 +14,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/grado")
 public class GradoControlador {
-    Map<String, Object> respuesta = new HashMap<>();
     private final GradoServicio gradoServicio;
 
     public GradoControlador(GradoServicio gradoServicio) {

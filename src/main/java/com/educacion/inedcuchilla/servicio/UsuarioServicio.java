@@ -2,10 +2,7 @@ package com.educacion.inedcuchilla.servicio;
 
 
 import com.educacion.inedcuchilla.DTO.UsuarioAlumnoDTO;
-import com.educacion.inedcuchilla.modelo.AlumnoModelo;
-import com.educacion.inedcuchilla.modelo.GradoModelo;
-import com.educacion.inedcuchilla.modelo.RolModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.modelo.*;
 import com.educacion.inedcuchilla.repositorio.AlumnoRepositorio;
 import com.educacion.inedcuchilla.repositorio.GradoRepositorio;
 import com.educacion.inedcuchilla.repositorio.RolRepositorio;
@@ -86,6 +83,9 @@ public class UsuarioServicio {
     public void guardarUsuarioAlumno(@NotNull UsuarioAlumnoDTO usuarioAlumnoDTO){
             UsuarioModelo usuario = usuarioAlumnoDTO.getUsuario();
             AlumnoModelo alumno = usuarioAlumnoDTO.getAlumno();
+            RolModelo rol = rolRepositorio.findByTipoUsuario("ALUMNO");
+
+
 
         String nombreUsuario = usuario.getNombreUsuario();
         boolean existeEmail = existeUsuarioPorEmail(usuario.getEmail());
@@ -107,6 +107,12 @@ public class UsuarioServicio {
 
         alumno.setUsuario(usuario);
         usuario.setAlumno(alumno);
+
+        UsuarioRol usuarioRol = new UsuarioRol();
+        usuarioRol.setUsuario(usuario);
+        usuarioRol.setRoles(rol);
+
+        usuario.getUsuarioRol().add(usuarioRol);
 
         usuarioRepositorio.save(usuario);
     }
@@ -164,6 +170,7 @@ public class UsuarioServicio {
 
                     UsuarioModelo usuarios = new UsuarioModelo();
                     AlumnoModelo alumnos = new AlumnoModelo();
+                    UsuarioRol usuarioRol = new UsuarioRol();
 
                     if (usuariosExistentes.contains(fila.getCell(1).getStringCellValue())){
                         errores.add("El usuario: " + fila.getCell(1).getStringCellValue() + " ya existe");
@@ -184,11 +191,15 @@ public class UsuarioServicio {
                     usuarios.setActivo(true);
                     usuarios.setFechaNacimiento(fila.getCell(4).getLocalDateTimeCellValue().toLocalDate());
 
-                    usuarios.setRol(rol);
 
                     String contraseniaLimpiada = limpiarContrasenia(fila.getCell(1).getStringCellValue());
 
                     usuarios.setContrasenia(passwordEncoder.encode(contraseniaLimpiada));
+
+                    usuarioRol.setUsuario(usuarios);
+                    usuarioRol.setRoles(rol);
+
+                    usuarios.getUsuarioRol().add(usuarioRol);
 
                     alumnos.setCodigoAlumno(fila.getCell(1).getStringCellValue());
                     alumnos.setGenero(String.valueOf(fila.getCell(6).getStringCellValue().charAt(0)));

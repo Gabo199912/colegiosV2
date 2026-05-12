@@ -15,8 +15,10 @@ public class MateriasModelo {
     private String nombreMateria;
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_usuario")
-    private UsuarioModelo usuario;
+    @JoinColumn(name = "fk_id_maestro")
+    private MaestroModelo maestro;
+
+
 
     public MateriasModelo() {
     }
@@ -37,11 +39,12 @@ public class MateriasModelo {
         this.nombreMateria = nombreMateria;
     }
 
-    public UsuarioModelo getUsuario() {
-        return usuario;
+
+    public MaestroModelo getMaestro() {
+        return maestro;
     }
 
-    public void setUsuario(UsuarioModelo usuario) {
-        this.usuario = usuario;
+    public void setMaestro(MaestroModelo maestro) {
+        this.maestro = maestro;
     }
 }
