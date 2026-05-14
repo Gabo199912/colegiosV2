@@ -33,8 +33,7 @@ public class UsuarioLoginServicio implements UserDetailsService {
         UsuarioModelo usuario = usuarioOptional.orElseThrow();
 
 
-        //segun la logica de la bd, utilizamos slo uno
-        //pero spring siempre espera una lista de grantedAuthority
+
         List<SimpleGrantedAuthority> roles =
                 usuario.getUsuarioRol()
                         .stream()

@@ -2,11 +2,9 @@ package com.educacion.inedcuchilla.modelo;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "usuario_rol")
-public class UsuarioRol {
+public class UsuarioRolModelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

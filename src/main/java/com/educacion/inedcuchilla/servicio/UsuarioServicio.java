@@ -2,12 +2,9 @@ package com.educacion.inedcuchilla.servicio;
 
 
 import com.educacion.inedcuchilla.DTO.UsuarioAlumnoDTO;
+import com.educacion.inedcuchilla.DTO.UsuarioDTO;
 import com.educacion.inedcuchilla.modelo.*;
-import com.educacion.inedcuchilla.repositorio.AlumnoRepositorio;
-import com.educacion.inedcuchilla.repositorio.GradoRepositorio;
-import com.educacion.inedcuchilla.repositorio.RolRepositorio;
-import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
-import jakarta.persistence.Cache;
+import com.educacion.inedcuchilla.repositorio.*;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -30,6 +27,7 @@ public class UsuarioServicio {
     private final AlumnoRepositorio alumnoRepositorio;
     private final RolRepositorio rolRepositorio;
     private final GradoRepositorio gradoRepositorio;
+    private final UsuarioRolRepositorio usuarioRolRepositorio;
 
     @Autowired
     private final PasswordEncoder passwordEncoder;
@@ -40,12 +38,14 @@ public class UsuarioServicio {
                            AlumnoRepositorio alumnoRepositorio,
                            RolRepositorio rolRepositorio,
                            PasswordEncoder passwordEncoder,
-                           GradoRepositorio gradoRepositorio) {
+                           GradoRepositorio gradoRepositorio,
+                           UsuarioRolRepositorio usuarioRolRepositorio) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.alumnoRepositorio = alumnoRepositorio;
         this.rolRepositorio = rolRepositorio;
         this.passwordEncoder = passwordEncoder;
         this.gradoRepositorio = gradoRepositorio;
+        this.usuarioRolRepositorio = usuarioRolRepositorio;
     }
 
     public List<UsuarioModelo> listarUsuarios(){
@@ -55,11 +55,11 @@ public class UsuarioServicio {
 
 
     @Transactional
-    public UsuarioModelo guardarUsuario(@NotNull UsuarioModelo usuarioModelo){
+    public UsuarioModelo guardarUsuario(@NotNull UsuarioDTO usuarioDTO){
 
-        String nombreUsuario = usuarioModelo.getNombreUsuario();
-        boolean existeEmail = existeUsuarioPorEmail(usuarioModelo.getEmail());
-        String contrasenia = usuarioModelo.getContrasenia();
+        String nombreUsuario = usuarioDTO.getUsuario().getNombreUsuario();
+        boolean existeEmail = existeUsuarioPorEmail(usuarioDTO.getUsuario().getEmail());
+        String contrasenia = usuarioDTO.getUsuario().getContrasenia();
 
         System.out.println(nombreUsuario + " " + "el servicio de usuarioServicio");
 
@@ -75,8 +75,22 @@ public class UsuarioServicio {
             throw new RuntimeException("La contraseña es muy corta");
         }
 
-        usuarioModelo.setContrasenia(passwordEncoder.encode(contrasenia));
-        return usuarioRepositorio.save(usuarioModelo);
+        usuarioDTO.getUsuario().setContrasenia(passwordEncoder.encode(contrasenia));
+
+        UsuarioModelo usuarioGuardado = usuarioRepositorio.save(usuarioDTO.getUsuario());
+
+        for (RolModelo rol: usuarioDTO.getRoles()){
+            if (rolRepositorio.existsByIdRol(rol.getIdRol())){
+                UsuarioRolModelo usuarioRol = new UsuarioRolModelo();
+
+                usuarioRol.setRoles(rol);
+                usuarioRol.setUsuario(usuarioGuardado);
+                usuarioRolRepositorio.save(usuarioRol);
+            }
+        }
+
+
+        return usuarioGuardado;
     }
 
     @Transactional
@@ -108,11 +122,11 @@ public class UsuarioServicio {
         alumno.setUsuario(usuario);
         usuario.setAlumno(alumno);
 
-        UsuarioRol usuarioRol = new UsuarioRol();
-        usuarioRol.setUsuario(usuario);
-        usuarioRol.setRoles(rol);
+        UsuarioRolModelo usuarioRolModelo = new UsuarioRolModelo();
+        usuarioRolModelo.setUsuario(usuario);
+        usuarioRolModelo.setRoles(rol);
 
-        usuario.getUsuarioRol().add(usuarioRol);
+        usuario.getUsuarioRol().add(usuarioRolModelo);
 
         usuarioRepositorio.save(usuario);
     }
@@ -166,11 +180,10 @@ public class UsuarioServicio {
                 try {
                     if (fila.getRowNum() == 0)continue;
 
-                    procesados++;
 
                     UsuarioModelo usuarios = new UsuarioModelo();
                     AlumnoModelo alumnos = new AlumnoModelo();
-                    UsuarioRol usuarioRol = new UsuarioRol();
+                    UsuarioRolModelo usuarioRolModelo = new UsuarioRolModelo();
 
                     if (usuariosExistentes.contains(fila.getCell(1).getStringCellValue())){
                         errores.add("El usuario: " + fila.getCell(1).getStringCellValue() + " ya existe");
@@ -196,10 +209,10 @@ public class UsuarioServicio {
 
                     usuarios.setContrasenia(passwordEncoder.encode(contraseniaLimpiada));
 
-                    usuarioRol.setUsuario(usuarios);
-                    usuarioRol.setRoles(rol);
+                    usuarioRolModelo.setUsuario(usuarios);
+                    usuarioRolModelo.setRoles(rol);
 
-                    usuarios.getUsuarioRol().add(usuarioRol);
+                    usuarios.getUsuarioRol().add(usuarioRolModelo);
 
                     alumnos.setCodigoAlumno(fila.getCell(1).getStringCellValue());
                     alumnos.setGenero(String.valueOf(fila.getCell(6).getStringCellValue().charAt(0)));
@@ -210,6 +223,7 @@ public class UsuarioServicio {
                     usuarios.setAlumno(alumnos);
 
                     listaUsuarios.add(usuarios);
+                    procesados++;
 
                 }catch (Exception e){
                     System.out.println("Error en la fila: " + fila.getRowNum() + " - " + e.getMessage());

@@ -43,11 +43,20 @@ public class ValidacionFiltro extends BasicAuthenticationFilter {
         try {
             Claims claims = Jwts.parser().verifyWith(LLAVE_).build().parseClaimsJws(token).getBody();
             String nombreUsuario = claims.getSubject();
-            String rol = claims.get("rol").toString();
+            List<String> roles = claims.get("roles", List.class);
 
-            GrantedAuthority authority = new SimpleGrantedAuthority(rol);
+            List<GrantedAuthority> authorities = roles.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .map(authority -> (GrantedAuthority) authority)
+                    .toList();
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(nombreUsuario, null, List.of(authority));
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(
+                            nombreUsuario,
+                            null,
+                            authorities
+                    );
+
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             chain.doFilter(request, response);
 

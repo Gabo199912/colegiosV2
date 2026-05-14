@@ -42,7 +42,7 @@ public class UsuarioModelo {
     private String contrasenia;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<UsuarioRol> usuarioRol = new ArrayList<>();
+    private List<UsuarioRolModelo> usuarioRolModelo = new ArrayList<>();
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private AlumnoModelo alumno;
@@ -130,11 +130,11 @@ public class UsuarioModelo {
         this.alumno = alumno;
     }
 
-    public List<UsuarioRol> getUsuarioRol() {
-        return usuarioRol;
+    public List<UsuarioRolModelo> getUsuarioRol() {
+        return usuarioRolModelo;
     }
 
-    public void setUsuarioRol(List<UsuarioRol> usuarioRol) {
-        this.usuarioRol = usuarioRol;
+    public void setUsuarioRol(List<UsuarioRolModelo> usuarioRolModelo) {
+        this.usuarioRolModelo = usuarioRolModelo;
     }
 }

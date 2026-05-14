@@ -2,6 +2,7 @@ package com.educacion.inedcuchilla.controlador;
 
 
 import com.educacion.inedcuchilla.DTO.UsuarioAlumnoDTO;
+import com.educacion.inedcuchilla.DTO.UsuarioDTO;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.servicio.AlumnoServicio;
 import com.educacion.inedcuchilla.servicio.UsuarioServicio;
@@ -53,9 +54,9 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<?> crearUsuario(@RequestBody UsuarioModelo usuarioModelo){
+    public ResponseEntity<?> crearUsuario(@RequestBody UsuarioDTO usuarioDTO){
         try {
-            UsuarioModelo usuario = usuarioServicio.guardarUsuario(usuarioModelo);
+            UsuarioModelo usuario = usuarioServicio.guardarUsuario(usuarioDTO);
             return ResponseEntity.ok(usuario);
         } catch (RuntimeException e) {
             Map<String, Object> respuesta = new HashMap<>();
@@ -66,7 +67,7 @@ public class UsuarioControlador {
         }
     }
 
-    @PostMapping("/desactivar/{nombreUsuario}")
+    @PostMapping("/desactivar/{nombreUsuario}")// falta terminar.
     public ResponseEntity<?> desactivarUsuario(@PathVariable String nombreUsuario){
 
         if (nombreUsuario.isEmpty()){
@@ -86,8 +87,8 @@ public class UsuarioControlador {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<?> modificarUsuario(@RequestBody UsuarioModelo usuarioModelo){
-        return ResponseEntity.ok(usuarioServicio.guardarUsuario(usuarioModelo));
+    public ResponseEntity<?> modificarUsuario(@RequestBody UsuarioDTO usuarioDTO){
+        return ResponseEntity.ok(usuarioServicio.guardarUsuario(usuarioDTO));
     }
 
     //se crea el usuario y el alumno masivamente.

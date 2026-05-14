@@ -20,6 +20,7 @@ import tools.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JWTFiltro extends UsernamePasswordAuthenticationFilter {
@@ -68,8 +69,16 @@ public class JWTFiltro extends UsernamePasswordAuthenticationFilter {
             throws IOException, ServletException {
 
         User usuario = (User) authResult.getPrincipal();
-        String rol = authResult.getAuthorities().iterator().next().getAuthority();
-        Claims claims = Jwts.claims().add("rol", rol).build();
+
+        List<String> roles = authResult.getAuthorities()
+                .stream()
+                .map(grantedAuthority -> grantedAuthority.getAuthority())
+                .filter(authority -> authority.startsWith("ROLE_"))
+                .toList();
+
+        Claims claims = Jwts.claims()
+                .add("roles", roles)
+                .build();
 
         String token = Jwts.builder()
                 .subject(usuario.getUsername())

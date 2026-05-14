@@ -1,6 +1,5 @@
 package com.educacion.inedcuchilla.modelo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class RolModelo {
     private Boolean estado;
 
     @OneToMany(mappedBy = "roles")
-    private List<UsuarioRol> usuarioRol;
+    private List<UsuarioRolModelo> usuarioRolModelo;
 
     public RolModelo() {
     }
@@ -52,11 +51,11 @@ public class RolModelo {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public List<UsuarioRol> getUsuarioRol() {
-        return usuarioRol;
+    public List<UsuarioRolModelo> getUsuarioRol() {
+        return usuarioRolModelo;
     }
 
-    public void setUsuarioRol(List<UsuarioRol> usuarioRol) {
-        this.usuarioRol = usuarioRol;
+    public void setUsuarioRol(List<UsuarioRolModelo> usuarioRolModelo) {
+        this.usuarioRolModelo = usuarioRolModelo;
     }
 }
