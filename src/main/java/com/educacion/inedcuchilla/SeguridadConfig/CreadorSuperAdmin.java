@@ -21,11 +21,9 @@ public class CreadorSuperAdmin implements CommandLineRunner {
 
     private final UsuarioServicio usuarioServicio;
     private final RolServicio rolServicio;
-    private final PasswordEncoder passwordEncoder;
 
-    public CreadorSuperAdmin(UsuarioServicio usuarioServicio, PasswordEncoder passwordEncoder, RolServicio rolServicio){
+    public CreadorSuperAdmin(UsuarioServicio usuarioServicio, RolServicio rolServicio){
         this.usuarioServicio = usuarioServicio;
-        this.passwordEncoder = passwordEncoder;
         this.rolServicio = rolServicio;
 
     }
@@ -57,7 +55,7 @@ public class CreadorSuperAdmin implements CommandLineRunner {
         usuario.setUsuario(superUsuario);
         usuarioServicio.guardarUsuario(usuario);
 
-        System.out.println("EL USUARIO SE ADMIN SE GUARDO CORRECTAMENTE.");
+        System.out.println("EL USUARIO SUPER ADMIN SE GUARDO CORRECTAMENTE.");
 
     }
 }

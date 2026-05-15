@@ -171,7 +171,6 @@ public class UsuarioServicio {
             Sheet hoja = excelAlumnos.getSheetAt(i);
 
             String dato = hoja.getSheetName();
-            System.out.println(dato);
 
             GradoModelo gradoReal = verificarClase(dato);
 
@@ -241,6 +240,7 @@ public class UsuarioServicio {
         respuesta.put("mensaje", "Se cargaron " + procesados + " alumnos correctamente");
         respuesta.put("cargados correctamente", procesados);
         respuesta.put("omitidos", omitidos);
+        respuesta.put("errores", errores);
         return respuesta;
     }
 
