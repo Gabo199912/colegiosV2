@@ -1,11 +1,14 @@
 package com.educacion.inedcuchilla.controlador;
 
 
+import com.educacion.inedcuchilla.DTO.ListaUsuarioDTO;
 import com.educacion.inedcuchilla.DTO.UsuarioAlumnoDTO;
 import com.educacion.inedcuchilla.DTO.UsuarioDTO;
+import com.educacion.inedcuchilla.DTO.UsuariosConRolDTO;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.servicio.AlumnoServicio;
 import com.educacion.inedcuchilla.servicio.UsuarioServicio;
+import com.educacion.inedcuchilla.servicio.UsuarioServicioJDBC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,24 +25,35 @@ public class UsuarioControlador {
 
     private final UsuarioServicio usuarioServicio;
     private final AlumnoServicio alumnoServicio;
+    private final UsuarioServicioJDBC usuarioServicioJDBC;
 
-
-    public UsuarioControlador(UsuarioServicio usuarioServicio, AlumnoServicio alumnoServicio) {
+    public UsuarioControlador(UsuarioServicio usuarioServicio, AlumnoServicio alumnoServicio, UsuarioServicioJDBC usuarioServicioJDBC) {
         this.usuarioServicio = usuarioServicio;
         this.alumnoServicio = alumnoServicio;
+        this.usuarioServicioJDBC = usuarioServicioJDBC;
     }
-
 
     @GetMapping("/listar")
     public ResponseEntity<?> listarUsuarios(){
-        List<UsuarioModelo> usuarios = usuarioServicio.listarUsuarios();
-
-        if (usuarios.isEmpty()){
+        List<ListaUsuarioDTO> listaUsuarios = usuarioServicioJDBC.obtenerUsuarios();
+        if (listaUsuarios == null){
             Map<String, Object> respuesta = new HashMap<>();
-            respuesta.put("mensaje", "No hay usuarios registrados");
+            respuesta.put("MENSAJE", "NO HAY USUARIOS CREADOS");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
-        return ResponseEntity.ok(usuarios);
+        return ResponseEntity.status(HttpStatus.OK).body(listaUsuarios);
+    }
+
+    @GetMapping("/listar-por-rol/{tipoRol}")
+    public ResponseEntity<?> listarPorRol(@PathVariable String tipoRol){
+        List<UsuariosConRolDTO> usuarios = usuarioServicioJDBC.obtenerUsuarioConRol(tipoRol.toUpperCase().trim());
+        if (usuarios == null){
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("MENSAJE", "NO HAY USUARIOS CREADOS");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(usuarios);
     }
 
     @GetMapping("/buscar/{nombreUsuario}")
@@ -59,6 +73,7 @@ public class UsuarioControlador {
             UsuarioModelo usuario = usuarioServicio.guardarUsuario(usuarioDTO);
             return ResponseEntity.ok(usuario);
         } catch (RuntimeException e) {
+            System.out.println(usuarioDTO.getUsuario().getNombreUsuario());
             Map<String, Object> respuesta = new HashMap<>();
             respuesta.put("mensaje", e.getMessage());
             respuesta.put("STATUS", HttpStatus.CONFLICT);

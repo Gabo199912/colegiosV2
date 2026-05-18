@@ -1,6 +1,7 @@
 package com.educacion.inedcuchilla.servicio;
 
 
+import com.educacion.inedcuchilla.DTO.ListaUsuarioDTO;
 import com.educacion.inedcuchilla.DTO.UsuarioAlumnoDTO;
 import com.educacion.inedcuchilla.DTO.UsuarioDTO;
 import com.educacion.inedcuchilla.modelo.*;
@@ -48,10 +49,6 @@ public class UsuarioServicio {
         this.usuarioRolRepositorio = usuarioRolRepositorio;
     }
 
-    public List<UsuarioModelo> listarUsuarios(){
-        return usuarioRepositorio.findAll();
-    }
-
 
 
     @Transactional
@@ -60,8 +57,6 @@ public class UsuarioServicio {
         String nombreUsuario = usuarioDTO.getUsuario().getNombreUsuario();
         boolean existeEmail = existeUsuarioPorEmail(usuarioDTO.getUsuario().getEmail());
         String contrasenia = usuarioDTO.getUsuario().getContrasenia();
-
-        System.out.println(nombreUsuario + " " + "el servicio de usuarioServicio");
 
         if (existeUsuarioPorNombreUsuario(nombreUsuario)){
             throw new RuntimeException("El usuario ya existe");

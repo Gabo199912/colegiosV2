@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class RolModelo {
     @Column(name = "estado")
     private Boolean estado;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "roles")
     private List<UsuarioRolModelo> usuarioRolModelo;
 

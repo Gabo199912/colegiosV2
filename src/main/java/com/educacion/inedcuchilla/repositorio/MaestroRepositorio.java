@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface MaestroRepositorio extends JpaRepository<MaestroModelo,Integer > {
-    List<MaestroModelo> findAll();
 }

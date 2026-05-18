@@ -1,10 +1,12 @@
 package com.educacion.inedcuchilla.controlador;
 
 import com.educacion.inedcuchilla.DTO.AlumnoDTO;
+import com.educacion.inedcuchilla.DTO.AlumnoJdbcDTO;
 import com.educacion.inedcuchilla.DTO.UsuarioAlumnoDTO;
 import com.educacion.inedcuchilla.modelo.AlumnoModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.servicio.AlumnoServicio;
+import com.educacion.inedcuchilla.servicio.AlumnoServicioiJDBC;
 import com.educacion.inedcuchilla.servicio.UsuarioServicio;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +23,11 @@ import java.util.Map;
 public class AlumnoControlador {
     private final AlumnoServicio alumnoServicio;
     private final UsuarioServicio usuarioServicio;
-
-    public AlumnoControlador(AlumnoServicio alumnoServicio, UsuarioServicio usuarioServicio) {
+    private final AlumnoServicioiJDBC alumnoServicioiJDBC;
+    public AlumnoControlador(AlumnoServicio alumnoServicio, UsuarioServicio usuarioServicio, AlumnoServicioiJDBC alumnoServicioiJDBC) {
         this.alumnoServicio = alumnoServicio;
         this.usuarioServicio = usuarioServicio;
+        this.alumnoServicioiJDBC = alumnoServicioiJDBC;
     }
 
     @GetMapping("/listar")
@@ -43,12 +46,25 @@ public class AlumnoControlador {
     }
 
     @GetMapping("/buscar/{codigoAlumno}")
-    public ResponseEntity<?> buscarPorNombre(@PathVariable String codigoAlumno){
+    public ResponseEntity<?> buscarPorCodigo(@PathVariable String codigoAlumno){
         try{
             return ResponseEntity.ok(alumnoServicio.buscarPorCodigo(codigoAlumno));
         }catch (Exception e){
             return ResponseEntity.status(404).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/buscar-por-nombre/{nombreUsuario}")
+    public ResponseEntity<?> buscarPorNombre(@PathVariable String nombreUsuario){
+        List<AlumnoJdbcDTO> alumno = alumnoServicioiJDBC.obtenerAlumnoConNombre(nombreUsuario);
+
+        if (alumno.isEmpty()){
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("MENSAJE", "NO SE ENCONTRO NINGUN ALUMNO CON ESE NOMBRE");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(alumno);
     }
 
     //se crea el usuario y el alumno masivamente.

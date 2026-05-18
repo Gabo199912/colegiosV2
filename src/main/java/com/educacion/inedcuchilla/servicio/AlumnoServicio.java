@@ -24,6 +24,20 @@ public class AlumnoServicio {
         return alumnoRepositorio.findAll();
     }
 
+    public Map<String, Object> buscarPOrNombre(String nombreUsuario){
+        if (nombreUsuario.isEmpty()){
+            Map<String, Object> respuesta = Map.of("mensaje", "El codigo del alumno no puede estar vacio");
+            return respuesta;
+        }
+        AlumnoDTO alumno = alumnoRepositorio.buscarAlumnoPorNombre(nombreUsuario);
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("MENSAJE", "USUARIO ENCONTRADO.");
+        respuesta.put("USUARIO", alumno);
+
+        return respuesta;
+
+    }
+
     public Map<String, Object> buscarPorCodigo(String codigoAlumno){
         if (codigoAlumno.isEmpty()){
             Map<String, Object> respuesta = Map.of("mensaje", "El codigo del alumno no puede estar vacio");
@@ -53,7 +67,5 @@ public class AlumnoServicio {
         return respuesta;
 
     }
-
-
 
 }

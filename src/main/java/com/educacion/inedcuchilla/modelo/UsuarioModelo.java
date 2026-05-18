@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
@@ -41,8 +42,10 @@ public class UsuarioModelo {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String contrasenia;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<UsuarioRolModelo> usuarioRolModelo = new ArrayList<>();
+
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private AlumnoModelo alumno;

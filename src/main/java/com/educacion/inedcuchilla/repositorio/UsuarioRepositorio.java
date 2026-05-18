@@ -20,7 +20,6 @@ public interface UsuarioRepositorio extends JpaRepository<UsuarioModelo, Integer
     Optional<UsuarioModelo> findByNombre(String nombre);
     UsuarioModelo findByIdUsuario(Integer idUsuario);
 
-
     @Query("SELECT u.nombreUsuario FROM UsuarioModelo u")
     List<String> cargarNombrsUsuario();
 

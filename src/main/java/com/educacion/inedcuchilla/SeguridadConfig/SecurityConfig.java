@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
 //                        .requestMatchers("/usuarios/**").permitAll()
                         .requestMatchers("/alumno/**").hasAnyRole("MAESTRO", "ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/maestros/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/usuarios/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/pagos/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/detalle-pago/**").hasAnyRole("ADMIN", "SUPER_ADMIN")

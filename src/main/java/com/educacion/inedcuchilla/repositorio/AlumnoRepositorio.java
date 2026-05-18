@@ -25,7 +25,16 @@ public interface AlumnoRepositorio extends JpaRepository<AlumnoModelo, Integer> 
             "u.nombre, u.apellido, u.email, u.telefono, a.genero, g.nombreGrado, g.especialidad, g.seccion) " +
             "FROM AlumnoModelo a " +
             "JOIN a.usuario u " +
+            "JOIN a.grado g " +
+            "WHERE a.codigoAlumno = :codigoAlumno")
+    AlumnoDTO buscarAlumnoPorNombre(@Param("nombreAlumno") String nombreAlumno);
+
+    @Query("SELECT new com.educacion.inedcuchilla.DTO.AlumnoDTO(" +
+            "u.nombre, u.apellido, u.email, u.telefono, a.genero, g.nombreGrado, g.especialidad, g.seccion) " +
+            "FROM AlumnoModelo a " +
+            "JOIN a.usuario u " +
             "JOIN a.grado g")
     List<AlumnoDTO> listarAlumnos();
+
 
 }

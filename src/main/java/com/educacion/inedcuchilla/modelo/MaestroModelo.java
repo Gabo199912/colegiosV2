@@ -12,10 +12,10 @@ public class MaestroModelo {
     private Integer idMaestro;
 
     @Column(name = "codigo_empleado")
-    private int codigoEmpleado;
+    private String codigoEmpleado;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "fk_id_usuario")
     private UsuarioModelo fkIdUsuario;
 
     public Integer getIdMaestro() {
@@ -26,11 +26,11 @@ public class MaestroModelo {
         this.idMaestro = idMaestro;
     }
 
-    public int getCodigoEmpleado() {
+    public String getCodigoEmpleado() {
         return codigoEmpleado;
     }
 
-    public void setCodigoEmpleado(int codigoEmpleado) {
+    public void setCodigoEmpleado(String codigoEmpleado) {
         this.codigoEmpleado = codigoEmpleado;
     }
 

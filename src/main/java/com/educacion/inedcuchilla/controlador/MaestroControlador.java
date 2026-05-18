@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.controlador;
 
+import com.educacion.inedcuchilla.DTO.MaestroDTO;
 import com.educacion.inedcuchilla.modelo.MaestroModelo;
 import com.educacion.inedcuchilla.servicio.MaestroServicio;
 import org.apache.coyote.Response;
@@ -24,34 +25,42 @@ public class MaestroControlador {
     public ResponseEntity<?> listarMaestros(){
         List<MaestroModelo> listaMaestros = maestroServicio.listarMaestros();
 
-        if(listaMaestros == null){
-            Map<String, Object> respuesta = new HashMap<>();
-            respuesta.put("MENSAJE", "crea minimo un maestro");
-            respuesta.put("Status", HttpStatus.NOT_FOUND);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        if(listaMaestros.isEmpty()){
+            String error = "debe crear minimo un usuario que sea maestro.";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseError(HttpStatus.NOT_FOUND, error));
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(listaMaestros);
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<?> crearMaestro(@RequestBody MaestroModelo maestro){
+    public ResponseEntity<?> crearMaestro(@RequestBody MaestroDTO maestro){
         if (maestro == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError());
+            String error = "complete todos los campos.";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError(HttpStatus.BAD_REQUEST, error));
+        }
+        Map<String, Object> respuesta = maestroServicio.crearUsuarioMaestro(maestro);
+        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+
+    }
+
+    @PostMapping("/asignar-maestro")
+    public ResponseEntity<?> agregarRolMaestro(@RequestBody MaestroDTO maestro){
+        if (maestro == null){
+            String error = "complete todos los campos.";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError(HttpStatus.BAD_REQUEST, error));
         }
 
-        maestroServicio.crearMaestro(maestro);
-        Map<String, Object> respuesta = new HashMap<>();
-        respuesta.put("MENSAJE", "Maestro creado correctamente");
-        respuesta.put("Status", maestro);
-
+        Map<String, Object> respuesta = maestroServicio.asignarMaestroUsuario(maestro);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
+
 
     @PostMapping("/actualizar")
     public ResponseEntity<?> actualizar(@RequestBody MaestroModelo maestro){
         if (maestro == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError());
+            String error = "debe de llenar todo correctamente.";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError(HttpStatus.BAD_REQUEST, error));
         }
 
         maestroServicio.crearMaestro(maestro);
@@ -71,11 +80,11 @@ public class MaestroControlador {
 //
 //    }
 
-    public static Map<String, Object> responseError(){
+    public static Map<String, Object> responseError(HttpStatus status, String error){
 
         Map<String, Object> respuesta = new HashMap<>();
-        respuesta.put("MENSAJE", "Maestro actualizado correctamente.");
-        respuesta.put("Status", HttpStatus.NOT_FOUND);
+        respuesta.put("MENSAJE", error);
+        respuesta.put("Status", status);
 
         return respuesta;
     }

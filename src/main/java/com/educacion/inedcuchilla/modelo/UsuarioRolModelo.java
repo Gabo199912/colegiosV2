@@ -1,20 +1,24 @@
 package com.educacion.inedcuchilla.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuario_rol")
 public class UsuarioRolModelo {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer idUsuarioRol;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_id_usuario")
     private UsuarioModelo usuario;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_id_rol")
     private RolModelo roles;
