@@ -2,7 +2,10 @@ package com.educacion.inedcuchilla.controlador;
 
 import com.educacion.inedcuchilla.DTO.MaestroDTO;
 import com.educacion.inedcuchilla.modelo.MaestroModelo;
+import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.servicio.MaestroServicio;
+import com.educacion.inedcuchilla.servicio.MaestroservicioJDBC;
+import com.educacion.inedcuchilla.servicio.UsuarioServicio;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +14,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/maestros")
 public class MaestroControlador {
     public final MaestroServicio maestroServicio;
+    public final UsuarioServicio usuarioServicio;
+    public final MaestroservicioJDBC maestroservicioJDBC;
 
-    public MaestroControlador(MaestroServicio maestroServicio){
+    public MaestroControlador(MaestroServicio maestroServicio, UsuarioServicio usuarioServicio, MaestroservicioJDBC maestroservicioJDBC){
         this.maestroServicio = maestroServicio;
+        this.usuarioServicio = usuarioServicio;
+        this.maestroservicioJDBC = maestroservicioJDBC;
     }
 
     @GetMapping("/listar")
@@ -46,7 +54,9 @@ public class MaestroControlador {
 
     @PostMapping("/asignar-maestro")
     public ResponseEntity<?> agregarRolMaestro(@RequestBody MaestroDTO maestro){
-        if (maestro == null){
+        Optional<UsuarioModelo> usuario  = usuarioServicio.buscarPorNombreUsuario(maestro.getUsuario().getNombreUsuario());
+
+        if (usuario.isEmpty()){
             String error = "complete todos los campos.";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError(HttpStatus.BAD_REQUEST, error));
         }

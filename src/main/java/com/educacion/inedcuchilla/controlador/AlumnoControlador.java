@@ -24,6 +24,7 @@ public class AlumnoControlador {
     private final AlumnoServicio alumnoServicio;
     private final UsuarioServicio usuarioServicio;
     private final AlumnoServicioiJDBC alumnoServicioiJDBC;
+
     public AlumnoControlador(AlumnoServicio alumnoServicio, UsuarioServicio usuarioServicio, AlumnoServicioiJDBC alumnoServicioiJDBC) {
         this.alumnoServicio = alumnoServicio;
         this.usuarioServicio = usuarioServicio;

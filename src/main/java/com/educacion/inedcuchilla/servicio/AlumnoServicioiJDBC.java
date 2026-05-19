@@ -17,12 +17,12 @@ public class AlumnoServicioiJDBC {
     }
 
     public List<AlumnoJdbcDTO> obtenerAlumnoConNombre(String nombreUsuario){
-        String sql = "select u.nombre, u.apellido, u.telefono, u.email, a.codigo_alumno, g.especialidad, g.nombre_grado, g.seccion from usuario u " +
+        String sql = "SELECT u.nombre, u.apellido, u.telefono, u.email, a.codigo_alumno, g.especialidad, g.nombre_grado, g.seccion FROM usuario u " +
                 "INNER JOIN usuario_rol ur ON u.id_usuario = ur.fk_id_usuario " +
                 "INNER JOIN rol r ON ur.fk_id_rol = r.id_rol " +
                 "INNER JOIN alumno a ON u.id_usuario = a.fk_id_usuario " +
                 "INNER JOIN grado g ON a.fk_id_grado = g.id_grado " +
-                "where r.tipo_usuario = 'ALUMNO' AND u.nombre LIKE CONCAT(?, '%');";
+                "WHERE r.tipo_usuario = 'ALUMNO' AND u.nombre LIKE CONCAT(?, '%');";
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             AlumnoJdbcDTO alumno = new AlumnoJdbcDTO(
