@@ -20,10 +20,11 @@ public class MaestroservicioJDBC {
                 "    inner join usuario_rol ur on u.id_usuario = ur.fk_id_usuario " +
                 "    inner join rol r on ur.fk_id_rol = r.id_rol where tipo_usuario = 'MAESTRO' and u.nombre_usuario = ?;";
 
-        return jdbcTemplate.query(sql, (rs, rowNum) ->{
-            String tipoUsuario = rs.getArray("tipo_usuario"));
-        return tipoUsuario;
-        }, nombreUsuario);
+        return jdbcTemplate.queryForObject(
+                sql,
+                String.class,
+                nombreUsuario
+        );
     }
 
 }
