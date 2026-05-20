@@ -4,9 +4,8 @@ import com.educacion.inedcuchilla.DTO.MaestroDTO;
 import com.educacion.inedcuchilla.modelo.MaestroModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.servicio.MaestroServicio;
-import com.educacion.inedcuchilla.servicio.MaestroservicioJDBC;
+import com.educacion.inedcuchilla.servicio.MaestroServicioJDBC;
 import com.educacion.inedcuchilla.servicio.UsuarioServicio;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +20,9 @@ import java.util.Optional;
 public class MaestroControlador {
     public final MaestroServicio maestroServicio;
     public final UsuarioServicio usuarioServicio;
-    public final MaestroservicioJDBC maestroservicioJDBC;
+    public final MaestroServicioJDBC maestroservicioJDBC;
 
-    public MaestroControlador(MaestroServicio maestroServicio, UsuarioServicio usuarioServicio, MaestroservicioJDBC maestroservicioJDBC){
+    public MaestroControlador(MaestroServicio maestroServicio, UsuarioServicio usuarioServicio, MaestroServicioJDBC maestroservicioJDBC){
         this.maestroServicio = maestroServicio;
         this.usuarioServicio = usuarioServicio;
         this.maestroservicioJDBC = maestroservicioJDBC;
@@ -84,10 +83,10 @@ public class MaestroControlador {
 //    @PostMapping("/buscar-por-nombre/{nombreMaestro}")
 //    public ResponseEntity<?> buscarPorNombre(@PathVariable String nombreMaestro){
 //        if (nombreMaestro.isEmpty()){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError());
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError( HttpStatus.BAD_REQUEST, "el nombre no debe ir vacío"));
 //        }
 //
-//
+//        String tipoMaestro = maestroservicioJDBC.obtenerTipoUsuario(nombreMaestro);
 //    }
 
     public static Map<String, Object> responseError(HttpStatus status, String error){
