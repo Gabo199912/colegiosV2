@@ -1,6 +1,7 @@
 package com.educacion.inedcuchilla.controlador;
 
 import com.educacion.inedcuchilla.DTO.MaestroDTO;
+import com.educacion.inedcuchilla.DTO.MaestroJdbcDTO;
 import com.educacion.inedcuchilla.modelo.MaestroModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.servicio.MaestroServicio;
@@ -80,14 +81,19 @@ public class MaestroControlador {
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
-//    @PostMapping("/buscar-por-nombre/{nombreMaestro}")
-//    public ResponseEntity<?> buscarPorNombre(@PathVariable String nombreMaestro){
-//        if (nombreMaestro.isEmpty()){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError( HttpStatus.BAD_REQUEST, "el nombre no debe ir vacío"));
-//        }
-//
-//        String tipoMaestro = maestroservicioJDBC.obtenerTipoUsuario(nombreMaestro);
-//    }
+    @PostMapping("/buscar-por-nombre/{nombreMaestro}")
+    public ResponseEntity<?> buscarPorNombre(@PathVariable String nombreMaestro){
+        if (nombreMaestro.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError( HttpStatus.BAD_REQUEST, "el nombre no debe ir vacío"));
+        }
+
+        List<MaestroJdbcDTO> listaMaestros = maestroservicioJDBC.obtenerMaestrosPornombre(nombreMaestro);
+        if (listaMaestros.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseError(HttpStatus.NOT_FOUND, "no se encontraron maestros con ese nombre"));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(listaMaestros);
+    }
 
     public static Map<String, Object> responseError(HttpStatus status, String error){
 

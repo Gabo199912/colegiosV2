@@ -8,14 +8,18 @@ import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
 import com.educacion.inedcuchilla.repositorio.MaestroRepositorio;
 import com.educacion.inedcuchilla.repositorio.RolRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 @Service
 public class MaestroServicio {
@@ -104,6 +108,24 @@ public class MaestroServicio {
         return respuesta;
 
     }
+
+//    public Map<String, Object> cargarMasivo(@NonNull MultipartFile archivo) throws IOException {
+//        Workbook excelMaestros = new XSSFWorkbook(archivo.getInputStream());
+//        List<MaestroModelo> listaMaestros = new ArrayList<>();
+//        List<String> errores = new ArrayList<>();
+//
+//        int procesados = 0;
+//        int omitidos = 0;
+//
+//        Set<String> nombresUsuario = new HashSet<>(usuarioRepositorio.cargarNombrsUsuario());
+//        Set<String> correosUsuario = new HashSet<>(usuarioRepositorio.cargarCorreo());
+//
+//        for (int i = 0; i <= excelMaestros.getNumberOfSheets(); i++){
+//            Sheet hoja = excelMaestros.getSheetAt(i);
+//            String nombreHoja = hoja.getSheetName();
+//        }
+//
+//    }
 
 
 

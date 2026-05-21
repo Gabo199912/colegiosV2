@@ -175,7 +175,7 @@ public class UsuarioServicio {
                     if (fila.getRowNum() == 0)continue;
 
 
-                    UsuarioModelo usuarios = new UsuarioModelo();
+
                     AlumnoModelo alumnos = new AlumnoModelo();
                     UsuarioRolModelo usuarioRolModelo = new UsuarioRolModelo();
 
@@ -191,12 +191,14 @@ public class UsuarioServicio {
                         continue;
                     }
 
-                    usuarios.setNombreUsuario(fila.getCell(1).getStringCellValue());
-                    usuarios.setNombre(fila.getCell(3).getStringCellValue());
-                    usuarios.setApellido(fila.getCell(2).getStringCellValue());
-                    usuarios.setEmail(fila.getCell(1).getStringCellValue()+ "@correo.com");
-                    usuarios.setActivo(true);
-                    usuarios.setFechaNacimiento(fila.getCell(4).getLocalDateTimeCellValue().toLocalDate());
+                    UsuarioModelo usuarios = new UsuarioModelo(
+                            fila.getCell(1).getStringCellValue(),
+                            fila.getCell(3).getStringCellValue(),
+                            fila.getCell(2).getStringCellValue(),
+                            fila.getCell(1).getStringCellValue()+ "@correo.com",
+                            true,
+                            fila.getCell(4).getLocalDateTimeCellValue().toLocalDate()
+                    );
 
 
                     String contraseniaLimpiada = limpiarContrasenia(fila.getCell(1).getStringCellValue());
