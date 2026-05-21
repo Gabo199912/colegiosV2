@@ -192,12 +192,13 @@ public class UsuarioServicio {
                     }
 
                     UsuarioModelo usuarios = new UsuarioModelo(
-                            fila.getCell(1).getStringCellValue(),
-                            fila.getCell(3).getStringCellValue(),
-                            fila.getCell(2).getStringCellValue(),
-                            fila.getCell(1).getStringCellValue()+ "@correo.com",
+                            fila.getCell(1).getStringCellValue(), // codigo personal
+                            fila.getCell(3).getStringCellValue(), // nombre
+                            fila.getCell(2).getStringCellValue(), // apellido
+                            fila.getCell(1).getStringCellValue()+ "@correo.com", // codigo personal + @correo.com
                             true,
-                            fila.getCell(4).getLocalDateTimeCellValue().toLocalDate()
+                            fila.getCell(4).getLocalDateTimeCellValue().toLocalDate(), // fecha nacimiento
+                            fila.getCell(7).getStringCellValue() // telefono en caso tengan
                     );
 
 

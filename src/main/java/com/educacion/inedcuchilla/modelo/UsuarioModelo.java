@@ -53,13 +53,14 @@ public class UsuarioModelo {
     public UsuarioModelo() {
     }
 
-    public UsuarioModelo(String nombreUsuario, String nombre, String apellido, String email, boolean activo, LocalDate fechaNacimiento) {
+    public UsuarioModelo(String nombreUsuario, String nombre, String apellido, String email, boolean activo, LocalDate fechaNacimiento, String telefono) {
         this.nombreUsuario = nombreUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.activo = activo;
         this.fechaNacimiento = fechaNacimiento;
+        this.telefono = telefono;
     }
 
     public UsuarioModelo(String nombreUsuario, String nombre, String apellido, String email, String telefono, LocalDate fechaNacimiento, String contrasenia) {

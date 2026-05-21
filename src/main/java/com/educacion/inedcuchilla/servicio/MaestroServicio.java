@@ -1,6 +1,7 @@
 package com.educacion.inedcuchilla.servicio;
 
 import com.educacion.inedcuchilla.DTO.MaestroDTO;
+import com.educacion.inedcuchilla.DTO.MaestroJdbcDTO;
 import com.educacion.inedcuchilla.modelo.MaestroModelo;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
@@ -8,6 +9,7 @@ import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
 import com.educacion.inedcuchilla.repositorio.MaestroRepositorio;
 import com.educacion.inedcuchilla.repositorio.RolRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.*;
 
 @Service
@@ -123,19 +126,49 @@ public class MaestroServicio {
 //        for (int i = 0; i <= excelMaestros.getNumberOfSheets(); i++){
 //            Sheet hoja = excelMaestros.getSheetAt(i);
 //            String nombreHoja = hoja.getSheetName();
+//
+//            for (Row fila: hoja){
+//                try {
+//                    if (fila.getRowNum() == 0)continue;
+//                    UsuarioModelo usuario = new UsuarioModelo();
+//                    MaestroModelo maestro = new MaestroModelo();
+//                    UsuarioRolModelo usuarioRol = new UsuarioRolModelo();
+//                    RolModelo rol = rolRepositorio.findByTipoUsuario("MAESTRO");
+//
+//                    // verifica el nombre de usuario
+//                    if (nombresUsuario.contains(fila.getCell(0).getStringCellValue())){
+//                        errores.add("El usuario: " + fila.getCell(0).getStringCellValue() + " ya existe.");
+//                        omitidos++;
+//                        continue;
+//                    }
+//
+//                    //verifica el correo del usuario
+//                    if (correosUsuario.contains(fila.getCell(3).getStringCellValue())){
+//                        errores.add("el correo: " + fila.getCell(3).getStringCellValue() + " ya existe");
+//                        omitidos++;
+//                        continue;
+//                    }
+//
+//
+//
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
 //        }
 //
 //    }
 
+    public String limpiarContrasenia(String contraseniaLimpiada){
 
+        contraseniaLimpiada = Normalizer.normalize(contraseniaLimpiada, Normalizer.Form.NFD);
+        contraseniaLimpiada = contraseniaLimpiada.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        contraseniaLimpiada = contraseniaLimpiada.replaceAll("\\s+", "");
+        contraseniaLimpiada = contraseniaLimpiada.toLowerCase().trim();
 
-    public static Map<String, Object> responseError(HttpStatus status){
-
-        Map<String, Object> respuesta = new HashMap<>();
-        respuesta.put("MENSAJE", "Maestro actualizado correctamente.");
-        respuesta.put("Status", status);
-
-        return respuesta;
+        return contraseniaLimpiada;
     }
+
+
 
 }
