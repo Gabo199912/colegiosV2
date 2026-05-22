@@ -10,6 +10,7 @@ import com.educacion.inedcuchilla.servicio.UsuarioServicio;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,21 @@ public class MaestroControlador {
         Map<String, Object> respuesta = maestroServicio.crearUsuarioMaestro(maestro);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
 
+    }
+
+
+    @PostMapping("/crear/masivo")
+    public ResponseEntity<?> crearMaestroMasivo(@RequestParam("maestros") MultipartFile archivo){
+        try {
+            Map<String, Object> respuesta = maestroServicio.cargarMasivo(archivo);
+            respuesta.put("mensaje", "Archivo cargado correctamente");
+            respuesta.put("STATUS", HttpStatus.OK);
+            return ResponseEntity.ok(respuesta);
+
+        }catch (Exception e){
+            System.out.println("error en el archivo " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PostMapping("/asignar-maestro")

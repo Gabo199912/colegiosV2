@@ -72,7 +72,6 @@ public class AlumnoControlador {
     @PostMapping("/crear/masivo")
     public ResponseEntity<?> crearMasivamente(@RequestParam("alumnos") MultipartFile archivo){
         try {
-
             Map<String, Object> respuesta = usuarioServicio.cargarExcel(archivo);
             respuesta.put("mensaje", "Archivo cargado correctamente");
             respuesta.put("STATUS", HttpStatus.OK);
