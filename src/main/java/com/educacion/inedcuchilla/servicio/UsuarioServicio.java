@@ -191,6 +191,7 @@ public class UsuarioServicio {
                         continue;
                     }
 
+
                     UsuarioModelo usuarios = new UsuarioModelo(
                             fila.getCell(1).getStringCellValue(), // codigo personal
                             fila.getCell(3).getStringCellValue(), // nombre
