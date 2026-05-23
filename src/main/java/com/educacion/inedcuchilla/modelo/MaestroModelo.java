@@ -18,6 +18,14 @@ public class MaestroModelo {
     @JoinColumn(name = "fk_id_usuario")
     private UsuarioModelo fkIdUsuario;
 
+    public MaestroModelo() {
+    }
+
+    public MaestroModelo(String codigoEmpleado, UsuarioModelo fkIdUsuario) {
+        this.codigoEmpleado = codigoEmpleado;
+        this.fkIdUsuario = fkIdUsuario;
+    }
+
     public Integer getIdMaestro() {
         return idMaestro;
     }

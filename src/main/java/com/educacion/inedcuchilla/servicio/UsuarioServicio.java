@@ -1,7 +1,6 @@
 package com.educacion.inedcuchilla.servicio;
 
 
-import com.educacion.inedcuchilla.DTO.ListaUsuarioDTO;
 import com.educacion.inedcuchilla.DTO.UsuarioAlumnoDTO;
 import com.educacion.inedcuchilla.DTO.UsuarioDTO;
 import com.educacion.inedcuchilla.modelo.*;
