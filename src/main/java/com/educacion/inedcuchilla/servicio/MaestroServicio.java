@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jspecify.annotations.NonNull;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -145,32 +146,37 @@ public class MaestroServicio {
 
                     UsuarioRolModelo usuarioRol = new UsuarioRolModelo();
 
-                    // verifica el nombre de usuario
-                    if (nombresUsuario.contains(fila.getCell(0).getStringCellValue())){
-                        errores.add("El usuario: " + fila.getCell(0).getStringCellValue() + " ya existe.");
+                    String nombreUsuario = formateador.formatCellValue(fila.getCell(0));// nombre usuario
+                    String nombre = formateador.formatCellValue(fila.getCell(1));// nombre
+                    String apellido = formateador.formatCellValue(fila.getCell(2));//apellido
+                    String correo = formateador.formatCellValue(fila.getCell(3));//correo
+                    String telefono = formateador.formatCellValue(fila.getCell(4));//telefono
+                    String contrasenia = formateador.formatCellValue(fila.getCell(7));
+                    LocalDate fechas = formateadorFechas.formatearFecha(formateador.formatCellValue(fila.getCell(5)));
+
+                    String contraseniaLimpia = limpiarContrasenia(contrasenia);
+
+
+                    if (nombresUsuario.contains(nombreUsuario)){
+                        errores.add("El usuario: " + nombreUsuario + " ya existe.");
                         omitidos++;
                         continue;
                     }
 
                     //verifica el correo del usuario
-                    if (correosUsuario.contains(fila.getCell(3).getStringCellValue())){
-                        errores.add("el correo: " + fila.getCell(3).getStringCellValue() + " ya existe");
+                    if (correosUsuario.contains(correo)){
+                        errores.add("el correo: " + correo + " ya existe");
                         omitidos++;
                         continue;
                     }
 
-                    String contraseniaLimpia = limpiarContrasenia(fila.getCell(7).getStringCellValue());
-                    LocalDate fechas = formateadorFechas.formatearFecha(fila.getCell(5).getStringCellValue());
-
-
-
                     UsuarioModelo usuarioCreado = new UsuarioModelo(
-                            formateador.formatCellValue(fila.getCell(0)),// nombre usuario
-                            fila.getCell(1).getStringCellValue(),// nombre
-                            fila.getCell(2).getStringCellValue(),// apellido
-                            fila.getCell(3).getStringCellValue(),// correo
+                            nombreUsuario,
+                            nombre,
+                            apellido,
+                            correo,
                             true,
-                            fila.getCell(4).getStringCellValue(), // telefono
+                            telefono,
                             fechas,
                             passwordEncoder.encode(contraseniaLimpia)// contrasenia
                     );
