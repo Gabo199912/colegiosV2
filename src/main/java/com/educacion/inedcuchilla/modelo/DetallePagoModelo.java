@@ -21,6 +21,12 @@ public class DetallePagoModelo {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "fecha_pago")
+    private LocalDate fechaPago;
+
+    @Column(name = "pagado")
+    private boolean pagado;
+
     @ManyToOne
     @JoinColumn(name = "fk_id_usuario")
     private UsuarioModelo usuario;
@@ -29,15 +35,6 @@ public class DetallePagoModelo {
     @JoinColumn(name = "fk_id_pago")
     private PagosModelo pagos;
 
-    @Column(name = "fecha_pago")
-    private LocalDate fechaPago;
-
-    @OneToMany
-    @JoinColumn(name = "fk_id_mes")
-    private List<MesModelo> mes;
-
-    @Column(name = "pagado")
-    private boolean pagado;
 
     public DetallePagoModelo() {
     }
@@ -83,13 +80,6 @@ public class DetallePagoModelo {
         this.pagos = pagos;
     }
 
-    public List<MesModelo> getMes() {
-        return mes;
-    }
-
-    public void setMes(List<MesModelo> mes) {
-        this.mes = mes;
-    }
 
     public void setIdDetallePago(Integer idDetallePago) {
         this.idDetallePago = idDetallePago;

@@ -163,7 +163,6 @@ public class MaestroServicio {
                         continue;
                     }
 
-                    //verifica el correo del usuario
                     if (correosUsuario.contains(correo)){
                         errores.add("el correo: " + correo + " ya existe");
                         omitidos++;
@@ -178,7 +177,7 @@ public class MaestroServicio {
                             true,
                             telefono,
                             fechas,
-                            passwordEncoder.encode(contraseniaLimpia)// contrasenia
+                            passwordEncoder.encode(contraseniaLimpia)
                     );
 
                     MaestroModelo maestroCreado = new MaestroModelo(
