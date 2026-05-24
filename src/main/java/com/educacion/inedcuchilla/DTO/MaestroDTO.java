@@ -8,6 +8,8 @@ public class MaestroDTO {
     private UsuarioModelo usuario;
     private MaestroModelo maestro;
 
+
+
     public UsuarioModelo getUsuario() {
         return usuario;
     }

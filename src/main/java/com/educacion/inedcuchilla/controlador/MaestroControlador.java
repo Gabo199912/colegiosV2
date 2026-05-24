@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.controlador;
 
+import com.educacion.inedcuchilla.DTO.AsignarMaestroDTO;
 import com.educacion.inedcuchilla.DTO.MaestroDTO;
 import com.educacion.inedcuchilla.DTO.MaestroJdbcDTO;
 import com.educacion.inedcuchilla.modelo.MaestroModelo;
@@ -69,15 +70,24 @@ public class MaestroControlador {
     }
 
     @PostMapping("/asignar-maestro")
-    public ResponseEntity<?> agregarRolMaestro(@RequestBody MaestroDTO maestro){
-        Optional<UsuarioModelo> usuario  = usuarioServicio.buscarPorNombreUsuario(maestro.getUsuario().getNombreUsuario());
+    public ResponseEntity<?> agregarRolMaestro(@RequestBody AsignarMaestroDTO maestro){
+        Optional<UsuarioModelo> usuario  = usuarioServicio.buscarPorNombreUsuario(maestro.getNombreUsuario());
+        MaestroDTO maestroDTO = new MaestroDTO();
 
         if (usuario.isEmpty()){
             String error = "complete todos los campos.";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError(HttpStatus.BAD_REQUEST, error));
         }
 
-        Map<String, Object> respuesta = maestroServicio.asignarMaestroUsuario(maestro);
+        MaestroModelo maestroModelo = new MaestroModelo();
+        maestroModelo.setCodigoEmpleado(maestro.getCodigoEmpleado());
+        maestroModelo.setFkIdUsuario(usuario.get());
+
+
+        maestroDTO.setUsuario(usuario.get());
+        maestroDTO.setMaestro(maestroModelo);
+
+        Map<String, Object> respuesta = maestroServicio.asignarMaestroUsuario(maestroDTO);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
