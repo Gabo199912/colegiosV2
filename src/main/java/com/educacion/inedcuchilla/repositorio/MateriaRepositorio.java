@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MateriaRepositorio extends JpaRepository<MateriasModelo, Integer> {
+    MateriasModelo findByNombreMateria(String nombreMateria);
+    boolean existsByNombreMateria(String nombreMateria);
 }
