@@ -1,5 +1,7 @@
 package com.educacion.inedcuchilla.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -22,9 +24,11 @@ public class DetallePagoModelo {
     private String descripcion;
 
     @Column(name = "fecha_pago")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDate fechaPago;
 
     @Column(name = "pagado")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean pagado;
 
     @ManyToOne
