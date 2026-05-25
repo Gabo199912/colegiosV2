@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DetalleMesRepositorio extends JpaRepository<DetalleMesModelo, Integer> {
+    DetalleMesModelo findByNombreMes(String nombreMes);
 }

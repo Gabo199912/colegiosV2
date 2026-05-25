@@ -15,11 +15,11 @@ public class DetallePagoMesModelo {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_detalle")
-    private List<DetallePagoModelo> detallePago;
+    private DetallePagoModelo detallePago;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_mes")
-    private List<DetalleMesModelo> detalleMes;
+    private DetalleMesModelo detalleMes;
 
     public Integer getIdDetallePagoMes() {
         return idDetallePagoMes;
@@ -29,19 +29,19 @@ public class DetallePagoMesModelo {
         this.idDetallePagoMes = idDetallePagoMes;
     }
 
-    public List<DetallePagoModelo> getDetallePago() {
+    public DetallePagoModelo getDetallePago() {
         return detallePago;
     }
 
-    public void setDetallePago(List<DetallePagoModelo> detallePago) {
+    public void setDetallePago(DetallePagoModelo detallePago) {
         this.detallePago = detallePago;
     }
 
-    public List<DetalleMesModelo> getDetalleMes() {
+    public DetalleMesModelo getDetalleMes() {
         return detalleMes;
     }
 
-    public void setDetalleMes(List<DetalleMesModelo> detalleMes) {
+    public void setDetalleMes(DetalleMesModelo detalleMes) {
         this.detalleMes = detalleMes;
     }
 }

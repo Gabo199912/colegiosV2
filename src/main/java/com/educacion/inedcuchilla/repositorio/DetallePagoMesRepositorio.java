@@ -1,9 +1,10 @@
 package com.educacion.inedcuchilla.repositorio;
 
+import com.educacion.inedcuchilla.modelo.DetallePagoMesModelo;
 import com.educacion.inedcuchilla.modelo.DetallePagoModelo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DetallePagoMesRepositorio extends JpaRepository<DetallePagoModelo, Integer> {
+public interface DetallePagoMesRepositorio extends JpaRepository<DetallePagoMesModelo, Integer> {
 }

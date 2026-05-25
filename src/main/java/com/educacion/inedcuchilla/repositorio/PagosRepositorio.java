@@ -10,4 +10,5 @@ import java.util.List;
 public interface PagosRepositorio extends JpaRepository<PagosModelo, Integer> {
     PagosModelo findByTipoPago(String tipoPago);
     PagosModelo findByIdPago(Integer idPago);
+    boolean existsByTipoPago(String tipoPago);
 }
