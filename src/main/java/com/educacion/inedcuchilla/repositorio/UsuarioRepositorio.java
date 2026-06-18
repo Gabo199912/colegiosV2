@@ -1,8 +1,6 @@
 package com.educacion.inedcuchilla.repositorio;
 
 
-import com.educacion.inedcuchilla.DTO.AlumnoDTO;
-import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

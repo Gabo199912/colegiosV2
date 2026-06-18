@@ -1,4 +1,4 @@
-package com.educacion.inedcuchilla.servicio;
+package com.educacion.inedcuchilla.SeguridadConfig;
 
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;

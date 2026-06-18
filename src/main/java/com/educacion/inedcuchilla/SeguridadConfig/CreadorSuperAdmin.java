@@ -1,14 +1,11 @@
 package com.educacion.inedcuchilla.SeguridadConfig;
 
 import com.educacion.inedcuchilla.DTO.UsuarioDTO;
+import com.educacion.inedcuchilla.Servicio.RolServicio;
+import com.educacion.inedcuchilla.Servicio.UsuarioServicio;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
-import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
-import com.educacion.inedcuchilla.servicio.RolServicio;
-import com.educacion.inedcuchilla.servicio.UsuarioServicio;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -30,7 +27,7 @@ public class CreadorSuperAdmin implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Boolean existe = usuarioServicio.existeUsuarioPorNombreUsuario("Gabo");
+        Boolean existe = usuarioServicio.existeUsuarioPorNombre("Gabo");
 
         if (existe){
             System.out.println("usuario ADMIN ya creado");

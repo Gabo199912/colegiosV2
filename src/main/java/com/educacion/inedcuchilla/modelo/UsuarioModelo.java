@@ -47,32 +47,12 @@ public class UsuarioModelo {
     private List<UsuarioRolModelo> usuarioRolModelo = new ArrayList<>();
 
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private AlumnoModelo alumno;
+
 
     public UsuarioModelo() {
     }
 
-    public UsuarioModelo(String nombreUsuario, String nombre, String apellido, String email, boolean activo, LocalDate fechaNacimiento, String telefono) {
-        this.nombreUsuario = nombreUsuario;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.activo = activo;
-        this.fechaNacimiento = fechaNacimiento;
-        this.telefono = telefono;
-    }
 
-    public UsuarioModelo(String nombreUsuario, String nombre, String apellido, String email, boolean activo, String telefono, LocalDate fechaNacimiento, String contrasenia) {
-        this.nombreUsuario = nombreUsuario;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.activo = activo;
-        this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
-        this.contrasenia = contrasenia;
-    }
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -146,13 +126,6 @@ public class UsuarioModelo {
         this.contrasenia = contrasenia;
     }
 
-    public AlumnoModelo getAlumno() {
-        return alumno;
-    }
-
-    public void setAlumno(AlumnoModelo alumno) {
-        this.alumno = alumno;
-    }
 
     public List<UsuarioRolModelo> getUsuarioRol() {
         return usuarioRolModelo;
