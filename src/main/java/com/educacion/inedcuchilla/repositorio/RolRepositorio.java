@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface RolRepositorio extends JpaRepository<RolModelo, Integer> {
     RolModelo findByTipoUsuario(String tipoUsuario);
+    RolModelo findByIdRol(Integer idRol);
     boolean existsByIdRol(Integer idRol);
     boolean existsByTipoUsuario(String tipoUsuario);
     List<RolModelo> findAll();

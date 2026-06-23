@@ -1,18 +1,19 @@
 package com.educacion.inedcuchilla.Servicio;
 
 import com.educacion.inedcuchilla.DTO.UsuarioDTO;
+import com.educacion.inedcuchilla.DTO.UsuarioRecordDTO;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
 import com.educacion.inedcuchilla.repositorio.RolRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRolRepositorio;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UsuarioServicio {
@@ -32,24 +33,64 @@ public class UsuarioServicio {
     }
 
 
+
     @Transactional
-    public UsuarioModelo guardarUsuario(@NotNull UsuarioDTO usuarioDTO){
+    public Map<String, Object> guardarUsuario(UsuarioRecordDTO usuario){
+        Map<String, Object> respuesta = new HashMap<>();
+        Integer omitidos = 0;
 
-        String nombreUsuario = usuarioDTO.getUsuario().getNombreUsuario();
-        boolean existeEmail = existeUsuarioPorEmail(usuarioDTO.getUsuario().getEmail());
+        if (usuarioRepositorio.existsByNombreUsuario(usuario.nombreUsuario())){
+            respuesta.put("MENSAJE", "el usuario ya existe.");
+            return respuesta;
+        }
+
+        if (usuarioRepositorio.existsByEmail(usuario.email())){
+            respuesta.put("MENSAJE", "el email ya existe, ingrese uno diferente.");
+            return respuesta;
+        }
+
+        if (usuario.contrasenia().length() < 7){
+            respuesta.put("MENSAJE", "la contraseña dbe tener minimo 7 caracteres");
+            return respuesta;
+        }
+
+        UsuarioModelo usuarioNuevo = new UsuarioModelo();
+        usuarioNuevo.setContrasenia(passwordEncoder.encode(usuario.contrasenia()));
+        usuarioNuevo.setNombreUsuario(usuario.nombreUsuario());
+        usuarioNuevo.setNombre(usuario.nombre());
+        usuarioNuevo.setApellido(usuario.apellido());
+        usuarioNuevo.setEmail(usuario.email());
+        usuarioNuevo.setTelefono(usuario.telefono());
+        usuarioNuevo.setFechaNacimiento(usuario.fechaNacimiento());
+        usuarioNuevo.setActivo(true);
+
+        UsuarioModelo usuarioGuardado = usuarioRepositorio.save(usuarioNuevo);
+
+        /*funciona pero necesita mejora para que sea mas eficiente*/
+        for (Integer rol : usuario.idRoles()){
+            if (rolRepositorio.existsByIdRol(rol)){
+                UsuarioRolModelo usuarioRolModelo = new UsuarioRolModelo();
+                RolModelo rolModelo = rolRepositorio.findByIdRol(rol);
+                usuarioRolModelo.setUsuario(usuarioGuardado);
+                usuarioRolModelo.setRoles(rolModelo);
+                usuarioRolRepositorio.save(usuarioRolModelo);
+            }else {
+                omitidos++;
+            }
+        }
+
+        respuesta.put("MENSAJE", "Usuario creado correctamente.");
+        respuesta.put("USUARIO", usuarioGuardado);
+        respuesta.put("ROLES ", omitidos + " Roles omitidos.");
+        return respuesta;
+    }
+
+
+    @Transactional
+    public Map<String, Object> guardarSuperUsuario(@NonNull UsuarioDTO usuarioDTO){
+        Map<String, Object> respuesta = new HashMap<>();
+
         String contrasenia = usuarioDTO.getUsuario().getContrasenia();
-
-        if (existeUsuarioPorNombreUsuario(nombreUsuario)){
-            throw new RuntimeException("El usuario ya existe");
-        }
-
-        if (existeEmail){
-            throw new RuntimeException("El email ya existe");
-        }
-
-        if (contrasenia.length() < 7){
-            throw new RuntimeException("La contraseña es muy corta");
-        }
 
         usuarioDTO.getUsuario().setContrasenia(passwordEncoder.encode(contrasenia));
 
@@ -65,23 +106,25 @@ public class UsuarioServicio {
             }
         }
 
-
-        return usuarioGuardado;
+        respuesta.put("MENSAJE", "Usuario creado correctamente.");
+        respuesta.put("USUARIO", usuarioGuardado);
+        return respuesta;
     }
 
+    public String desactivarUsuario(String nombreUsuario){
+        Optional<UsuarioModelo> usuario = Optional.of(usuarioRepositorio.findByNombreUsuario(nombreUsuario)
+                .orElseThrow(() -> new NoSuchElementException("El usario no esxiste.")));
 
-    public boolean existeUsuarioPorEmail(String email){
-        boolean existe = usuarioRepositorio.existsByEmail(email);
-        return existe;
+        usuario.get().setActivo(false);
+        usuarioRepositorio.save(usuario.get());
+
+        return "Usuario correctamente desactivado.";
     }
 
-    public boolean existeUsuarioPorNombreUsuario(String nombreUsuario){
+    public boolean buscarPorNombreUsuario(String nombreUsuario){
         boolean existe = usuarioRepositorio.existsByNombreUsuario(nombreUsuario);
         return existe;
     }
 
-    public boolean existeUsuarioPorNombre(String nombre){
-        boolean existe = usuarioRepositorio.existsByNombreUsuario(nombre);
-        return existe;
-    }
+
 }

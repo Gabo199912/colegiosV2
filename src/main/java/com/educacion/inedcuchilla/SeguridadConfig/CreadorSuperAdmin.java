@@ -9,8 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class CreadorSuperAdmin implements CommandLineRunner {
@@ -27,10 +27,10 @@ public class CreadorSuperAdmin implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Boolean existe = usuarioServicio.existeUsuarioPorNombre("Gabo");
+        Boolean existe = usuarioServicio.buscarPorNombreUsuario("Gabo");
 
         if (existe){
-            System.out.println("usuario ADMIN ya creado");
+            System.out.println("usuario SUPER-ADMIN ya creado");
             return;
         }
 
@@ -50,9 +50,9 @@ public class CreadorSuperAdmin implements CommandLineRunner {
 
         usuario.setRoles(roles);
         usuario.setUsuario(superUsuario);
-        usuarioServicio.guardarUsuario(usuario);
+        Map<String, Object> respuesta = usuarioServicio.guardarSuperUsuario(usuario);
 
-        System.out.println("EL USUARIO SUPER ADMIN SE GUARDO CORRECTAMENTE.");
+        System.out.println(respuesta);
 
     }
 }

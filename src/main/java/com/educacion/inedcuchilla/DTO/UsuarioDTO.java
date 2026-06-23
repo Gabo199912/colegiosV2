@@ -3,7 +3,6 @@ package com.educacion.inedcuchilla.DTO;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class UsuarioDTO {
