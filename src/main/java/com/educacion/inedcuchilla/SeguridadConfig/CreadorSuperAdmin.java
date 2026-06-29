@@ -46,7 +46,7 @@ public class CreadorSuperAdmin implements CommandLineRunner {
         superUsuario.setActivo(true);
         superUsuario.setFechaNacimiento(LocalDate.of(1995, 8, 15));
         superUsuario.setContrasenia("1234567");
-        List<RolModelo> roles = rolServicio.listarRoles();
+        List<RolModelo> roles = rolServicio.listarRolesParaSuperAdmin();
 
         usuario.setRoles(roles);
         usuario.setUsuario(superUsuario);

@@ -23,6 +23,13 @@ public class UsuarioRolModelo {
     @JoinColumn(name = "fk_id_rol")
     private RolModelo roles;
 
+    public UsuarioRolModelo() {
+    }
+
+    public UsuarioRolModelo(UsuarioModelo usuario, RolModelo roles) {
+        this.usuario = usuario;
+        this.roles = roles;
+    }
 
     public Integer getIdUsuarioRol() {
         return idUsuarioRol;

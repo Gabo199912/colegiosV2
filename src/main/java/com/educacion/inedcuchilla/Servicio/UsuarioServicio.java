@@ -122,9 +122,26 @@ public class UsuarioServicio {
     }
 
     public boolean buscarPorNombreUsuario(String nombreUsuario){
-        boolean existe = usuarioRepositorio.existsByNombreUsuario(nombreUsuario);
-        return existe;
+        return usuarioRepositorio.existsByNombreUsuario(nombreUsuario);
     }
+
+
+    //continuar despues. 
+//    public Map<String, Object> agregarRoles(List<RolModelo> roles, AsignarRoles usuarioConRoles) {
+//        Set<Integer> idNuevos = new HashSet<>();
+//        Optional<UsuarioModelo> usuario = usuarioRepositorio.findByNombreUsuario(usuarioConRoles.nombreUsuario());
+//        List<UsuarioRolModelo> usuarioRol = new ArrayList<>();
+//
+//        for (RolModelo ur: roles){
+//            idNuevos.add(ur.getIdRol());
+//        }
+//
+//
+//
+//        usuarioRolRepositorio.saveAll(usuarioRol);
+//
+//        return
+//    }
 
 
 }
