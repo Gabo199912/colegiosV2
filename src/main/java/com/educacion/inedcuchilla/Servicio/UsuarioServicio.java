@@ -1,14 +1,20 @@
 package com.educacion.inedcuchilla.Servicio;
 
+import com.educacion.inedcuchilla.DTO.AlumnoUsuarioDTO;
 import com.educacion.inedcuchilla.DTO.UsuarioDTO;
 import com.educacion.inedcuchilla.DTO.UsuarioRecordDTO;
+import com.educacion.inedcuchilla.modelo.AlumnoModelo;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
+import com.educacion.inedcuchilla.repositorio.AlumnoRepositorio;
 import com.educacion.inedcuchilla.repositorio.RolRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRolRepositorio;
+import org.apache.catalina.connector.Response;
 import org.jspecify.annotations.NonNull;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,15 +27,18 @@ public class UsuarioServicio {
     private final PasswordEncoder passwordEncoder;
     private final RolRepositorio rolRepositorio;
     private final UsuarioRolRepositorio usuarioRolRepositorio;
+    private final AlumnoRepositorio alumnoRepositorio;
 
     public UsuarioServicio(UsuarioRepositorio usuarioRepositorio,
                            PasswordEncoder passwordEncoder,
                            RolRepositorio rolRepositorio,
-                           UsuarioRolRepositorio usuarioRolRepositorio){
+                           UsuarioRolRepositorio usuarioRolRepositorio,
+                           AlumnoRepositorio alumnoRepositorio){
         this.usuarioRepositorio = usuarioRepositorio;
         this.passwordEncoder = passwordEncoder;
         this.rolRepositorio = rolRepositorio;
         this.usuarioRolRepositorio = usuarioRolRepositorio;
+        this.alumnoRepositorio = alumnoRepositorio;
     }
 
 
@@ -123,6 +132,45 @@ public class UsuarioServicio {
 
     public boolean buscarPorNombreUsuario(String nombreUsuario){
         return usuarioRepositorio.existsByNombreUsuario(nombreUsuario);
+    }
+
+    @Transactional
+    public ResponseEntity<?> guardarUsuarioConAlumno(AlumnoUsuarioDTO alumnoUsuario){
+        Map<String, Object> respuesta = new HashMap<>();
+        if (usuarioRepositorio.existsByNombreUsuario(alumnoUsuario.nombreUsuario())){
+            respuesta.put("MENSAJE", "el usuario ingresado ya existe.");
+            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+
+        }
+
+        if (usuarioRepositorio.existsByEmail(alumnoUsuario.email())){
+            respuesta.put("MENSAJE", "el email ingresado ya existe.");
+            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+        }
+
+        UsuarioModelo usuarioNuevo = new UsuarioModelo();
+        usuarioNuevo.setNombreUsuario(alumnoUsuario.nombreUsuario());
+        usuarioNuevo.setNombre(alumnoUsuario.nombre());
+        usuarioNuevo.setApellido(alumnoUsuario.apellido());
+        usuarioNuevo.setEmail(alumnoUsuario.email());
+        usuarioNuevo.setTelefono(alumnoUsuario.telefono());
+        usuarioNuevo.setFechaNacimiento(alumnoUsuario.fechaNacimiento());
+        usuarioNuevo.setActivo(true);
+        usuarioNuevo.setContrasenia(passwordEncoder.encode(alumnoUsuario.contrasenia()));
+
+        UsuarioModelo usuarioGuardado = usuarioRepositorio.save(usuarioNuevo);
+
+        AlumnoModelo alumnoNuevo = new AlumnoModelo();
+
+        alumnoNuevo.setCodigoAlumno(alumnoUsuario.codigoAlumno());
+        alumnoNuevo.setGenero(alumnoUsuario.genero());
+        alumnoNuevo.setUsuario(usuarioGuardado);
+        alumnoNuevo.setActivo(true);
+
+        alumnoRepositorio.save(alumnoNuevo);
+
+        respuesta.put("MENSAJE", "el usuario se creo correctamente con el alumno");
+        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
 

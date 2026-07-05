@@ -96,6 +96,25 @@ public class UsuarioControlador {
         }
     }
 
+    @PostMapping("/crear/usuario-con-alumno")
+    public ResponseEntity<?> crearUsuarioConAlumno(@RequestBody AlumnoUsuarioDTO alumnoUsuario){
+        Map<String, Object> respuesta = new HashMap<>();
+        if (alumnoUsuario.nombreUsuario().isEmpty() || alumnoUsuario.nombre().isEmpty() ||
+        alumnoUsuario.apellido().isEmpty() ||
+        alumnoUsuario.email().isEmpty() ||
+        alumnoUsuario.telefono().isEmpty() ||
+        alumnoUsuario.fechaNacimiento().toString().isEmpty() ||
+        alumnoUsuario.contrasenia().isEmpty() ||
+        alumnoUsuario.genero().isEmpty()){
+            respuesta.put("MENSAJE", "complete todos los campos.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+        }
+
+
+        return usuarioServicio.guardarUsuarioConAlumno(alumnoUsuario);
+
+    }
+
 //    @PatchMapping("/asignar/roles") continuar despues
 //    public ResponseEntity<?> asignarRoles(@RequestBody AsignarRoles usuariosConRol){
 //        Map<String, Object> respuesta = new HashMap<>();
