@@ -46,9 +46,6 @@ public class UsuarioModelo {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<UsuarioRolModelo> usuarioRolModelo = new ArrayList<>();
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private AlumnoModelo alumno;
-
 
 
 
@@ -138,11 +135,4 @@ public class UsuarioModelo {
         this.usuarioRolModelo = usuarioRolModelo;
     }
 
-    public AlumnoModelo getAlumno() {
-        return alumno;
-    }
-
-    public void setAlumno(AlumnoModelo alumno) {
-        this.alumno = alumno;
-    }
 }

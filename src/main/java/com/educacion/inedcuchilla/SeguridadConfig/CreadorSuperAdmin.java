@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +51,8 @@ public class CreadorSuperAdmin implements CommandLineRunner {
 
         usuario.setRoles(roles);
         usuario.setUsuario(superUsuario);
-        Map<String, Object> respuesta = usuarioServicio.guardarSuperUsuario(usuario);
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("MENSAJE", usuarioServicio.guardarSuperUsuario(usuario));
 
         System.out.println(respuesta);
 

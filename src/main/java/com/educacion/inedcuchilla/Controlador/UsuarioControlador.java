@@ -4,8 +4,6 @@ import com.educacion.inedcuchilla.DTO.*;
 import com.educacion.inedcuchilla.Servicio.RolServicio;
 import com.educacion.inedcuchilla.Servicio.UsuarioServicio;
 import com.educacion.inedcuchilla.Servicio.UsuarioServicioJDBC;
-import com.educacion.inedcuchilla.modelo.RolModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
 import com.educacion.inedcuchilla.repositorio.UsuarioRolRepositorio;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,24 +94,8 @@ public class UsuarioControlador {
         }
     }
 
-    @PostMapping("/crear/usuario-con-alumno")
-    public ResponseEntity<?> crearUsuarioConAlumno(@RequestBody AlumnoUsuarioDTO alumnoUsuario){
-        Map<String, Object> respuesta = new HashMap<>();
-        if (alumnoUsuario.nombreUsuario().isEmpty() || alumnoUsuario.nombre().isEmpty() ||
-        alumnoUsuario.apellido().isEmpty() ||
-        alumnoUsuario.email().isEmpty() ||
-        alumnoUsuario.telefono().isEmpty() ||
-        alumnoUsuario.fechaNacimiento().toString().isEmpty() ||
-        alumnoUsuario.contrasenia().isEmpty() ||
-        alumnoUsuario.genero().isEmpty()){
-            respuesta.put("MENSAJE", "complete todos los campos.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
-        }
 
 
-        return usuarioServicio.guardarUsuarioConAlumno(alumnoUsuario);
-
-    }
 
 //    @PatchMapping("/asignar/roles") continuar despues
 //    public ResponseEntity<?> asignarRoles(@RequestBody AsignarRoles usuariosConRol){
