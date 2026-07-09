@@ -46,6 +46,8 @@ public class UsuarioModelo {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<UsuarioRolModelo> usuarioRolModelo = new ArrayList<>();
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<DetallePagoModelo> detalles;
 
 
 

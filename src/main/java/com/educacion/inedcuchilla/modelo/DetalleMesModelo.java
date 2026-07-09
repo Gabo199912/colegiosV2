@@ -12,8 +12,8 @@ public class DetalleMesModelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_detalle_mes")
-    private Integer idDetalleMes;
+    @Column(name = "id_mes")
+    private Integer id_mes;
 
     @Column(name = "nombre_mes")
     private String nombreMes;
@@ -31,15 +31,15 @@ public class DetalleMesModelo {
     private Boolean activo;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "detalle")
+    @OneToMany(mappedBy = "mes")
     List<DetallePagoMesModelo> meses;
 
-    public Integer getIdDetalleMes() {
-        return idDetalleMes;
+    public Integer getId_mes() {
+        return id_mes;
     }
 
-    public void setIdDetalleMes(Integer idDetalleMes) {
-        this.idDetalleMes = idDetalleMes;
+    public void setId_mes(Integer id_mes) {
+        this.id_mes = id_mes;
     }
 
     public String getNombreMes() {
@@ -80,5 +80,13 @@ public class DetalleMesModelo {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public List<DetallePagoMesModelo> getMeses() {
+        return meses;
+    }
+
+    public void setMeses(List<DetallePagoMesModelo> meses) {
+        this.meses = meses;
     }
 }

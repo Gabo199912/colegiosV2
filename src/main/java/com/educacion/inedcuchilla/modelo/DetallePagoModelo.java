@@ -20,9 +20,6 @@ public class DetallePagoModelo {
 
     private String descripcion;
 
-    @Column(name = "fecha_pago")
-    private LocalDate fechaPago;
-
     private Boolean pagado;
 
     @JsonIgnore
@@ -30,13 +27,13 @@ public class DetallePagoModelo {
     @JoinColumn(name = "fk_id_pago", nullable = false)
     private PagoModelo pago;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_id_concepto_pago", nullable = false)
-    private ConceptoPagoModelo concepto;
+    @JoinColumn(name = "fk_id_usuario", nullable = false)
+    private UsuarioModelo usuario;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "mes")
+    @OneToMany(mappedBy = "detalle")
     private List<DetallePagoMesModelo> meses;
 
 
@@ -64,14 +61,6 @@ public class DetallePagoModelo {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaPago() {
-        return fechaPago;
-    }
-
-    public void setFechaPago(LocalDate fechaPago) {
-        this.fechaPago = fechaPago;
-    }
-
     public Boolean getPagado() {
         return pagado;
     }
@@ -80,19 +69,27 @@ public class DetallePagoModelo {
         this.pagado = pagado;
     }
 
-    public ConceptoPagoModelo getConcepto() {
-        return concepto;
-    }
-
-    public void setConcepto(ConceptoPagoModelo concepto) {
-        this.concepto = concepto;
-    }
-
     public PagoModelo getPago() {
         return pago;
     }
 
     public void setPago(PagoModelo pago) {
         this.pago = pago;
+    }
+
+    public UsuarioModelo getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioModelo usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<DetallePagoMesModelo> getMeses() {
+        return meses;
+    }
+
+    public void setMeses(List<DetallePagoMesModelo> meses) {
+        this.meses = meses;
     }
 }

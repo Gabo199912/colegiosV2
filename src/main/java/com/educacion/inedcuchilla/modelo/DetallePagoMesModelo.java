@@ -12,12 +12,9 @@ public class DetallePagoMesModelo {
     @Column(name = "id_detalle_pago_mes")
     private Integer idDetallePagoMes;
 
-    @Column(name = "pagado_completo")
-    private boolean pagadoCompleto;
-
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "fk_id_detalle")
+    @JoinColumn(name = "fk_id_detalle_pago")
     private DetallePagoModelo detalle;
 
     @JsonIgnore
@@ -33,13 +30,6 @@ public class DetallePagoMesModelo {
         this.idDetallePagoMes = idDetallePagoMes;
     }
 
-    public boolean isPagadoCompleto() {
-        return pagadoCompleto;
-    }
-
-    public void setPagadoCompleto(boolean pagadoCompleto) {
-        this.pagadoCompleto = pagadoCompleto;
-    }
 
     public DetallePagoModelo getDetalle() {
         return detalle;
