@@ -1,11 +1,10 @@
 package com.educacion.inedcuchilla.Servicio;
 
-import com.educacion.inedcuchilla.DTO.PagoDTO;
-import com.educacion.inedcuchilla.DTO.PagoRespuestaDTO;
+import com.educacion.inedcuchilla.DTO.Pagos.PagoDTO;
+import com.educacion.inedcuchilla.DTO.Pagos.PagoRespuestaDTO;
 import com.educacion.inedcuchilla.DTO.ValidacionMesesPagadosDTO;
 import com.educacion.inedcuchilla.modelo.*;
 import com.educacion.inedcuchilla.repositorio.*;
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -106,7 +105,7 @@ public class PagosServicio {
         detallePagoMesRepositorio.saveAll(detallesPagoMes);
         PagoRespuestaDTO response = new PagoRespuestaDTO(
                 usuario.getNombreUsuario(),
-                tipoPago.getTipo_pago(),
+                tipoPago.getTipoPago(),
                 mesesPagados,
                 pago.total(),
                 pago.descripcion()

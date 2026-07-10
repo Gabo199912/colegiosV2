@@ -1,4 +1,4 @@
-package com.educacion.inedcuchilla.DTO;
+package com.educacion.inedcuchilla.DTO.Usuarios;
 
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;

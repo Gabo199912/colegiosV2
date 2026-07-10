@@ -1,10 +1,9 @@
 package com.educacion.inedcuchilla.Servicio;
 
-import com.educacion.inedcuchilla.DTO.ListarRolesDTO;
+import com.educacion.inedcuchilla.DTO.Roles.ListarRolesDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

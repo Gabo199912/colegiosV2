@@ -1,8 +1,8 @@
 package com.educacion.inedcuchilla.Servicio;
 
-import com.educacion.inedcuchilla.DTO.ListarUsuarioDTO;
-import com.educacion.inedcuchilla.DTO.UsuarioConRolRecordDTO;
-import com.educacion.inedcuchilla.DTO.RolesPorUsuario;
+import com.educacion.inedcuchilla.DTO.Usuarios.ListarUsuarioDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioConRolRecordDTO;
+import com.educacion.inedcuchilla.DTO.Roles.RolesPorUsuario;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.educacion.inedcuchilla.SeguridadConfig;
 
-import com.educacion.inedcuchilla.DTO.UsuarioDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioDTO;
 import com.educacion.inedcuchilla.Servicio.RolServicio;
 import com.educacion.inedcuchilla.Servicio.UsuarioServicio;
 import com.educacion.inedcuchilla.modelo.RolModelo;

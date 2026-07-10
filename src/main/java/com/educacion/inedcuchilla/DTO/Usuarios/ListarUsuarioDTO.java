@@ -1,4 +1,4 @@
-package com.educacion.inedcuchilla.DTO;
+package com.educacion.inedcuchilla.DTO.Usuarios;
 
 import java.time.LocalDate;
 

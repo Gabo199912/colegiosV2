@@ -32,9 +32,16 @@ public class DetallePagoModelo {
     @JoinColumn(name = "fk_id_usuario", nullable = false)
     private UsuarioModelo usuario;
 
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_id_pago_extra", nullable = true)
+    private PagoExtraModelo pagoExtra;
+
     @JsonIgnore
     @OneToMany(mappedBy = "detalle")
     private List<DetallePagoMesModelo> meses;
+
+
 
 
     public Integer getIdDetallePago() {
@@ -91,5 +98,13 @@ public class DetallePagoModelo {
 
     public void setMeses(List<DetallePagoMesModelo> meses) {
         this.meses = meses;
+    }
+
+    public PagoExtraModelo getPagoExtra() {
+        return pagoExtra;
+    }
+
+    public void setPagoExtra(PagoExtraModelo pagoExtra) {
+        this.pagoExtra = pagoExtra;
     }
 }

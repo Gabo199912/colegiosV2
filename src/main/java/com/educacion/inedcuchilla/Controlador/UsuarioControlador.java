@@ -1,6 +1,8 @@
 package com.educacion.inedcuchilla.Controlador;
 
-import com.educacion.inedcuchilla.DTO.*;
+import com.educacion.inedcuchilla.DTO.Usuarios.ListarUsuarioDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioConRolRecordDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioRecordDTO;
 import com.educacion.inedcuchilla.Servicio.RolServicio;
 import com.educacion.inedcuchilla.Servicio.UsuarioServicio;
 import com.educacion.inedcuchilla.Servicio.UsuarioServicioJDBC;

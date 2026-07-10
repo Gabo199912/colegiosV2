@@ -1,11 +1,9 @@
 package com.educacion.inedcuchilla.Controlador;
 
-import com.educacion.inedcuchilla.DTO.CrearRolDTO;
-import com.educacion.inedcuchilla.DTO.DesactivarRolDTO;
-import com.educacion.inedcuchilla.DTO.ListarRolesDTO;
-import com.educacion.inedcuchilla.DTO.ListarUsuarioDTO;
+import com.educacion.inedcuchilla.DTO.Roles.CrearRolDTO;
+import com.educacion.inedcuchilla.DTO.Roles.DesactivarRolDTO;
+import com.educacion.inedcuchilla.DTO.Roles.ListarRolesDTO;
 import com.educacion.inedcuchilla.Servicio.RolServicio;
-import com.educacion.inedcuchilla.modelo.RolModelo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

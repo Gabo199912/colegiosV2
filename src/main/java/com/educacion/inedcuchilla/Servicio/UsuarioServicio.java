@@ -1,8 +1,7 @@
 package com.educacion.inedcuchilla.Servicio;
 
-import com.educacion.inedcuchilla.DTO.AlumnoUsuarioDTO;
-import com.educacion.inedcuchilla.DTO.UsuarioDTO;
-import com.educacion.inedcuchilla.DTO.UsuarioRecordDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioRecordDTO;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
@@ -10,8 +9,6 @@ import com.educacion.inedcuchilla.repositorio.RolRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRolRepositorio;
 import org.jspecify.annotations.NonNull;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

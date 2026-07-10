@@ -1,17 +1,14 @@
 package com.educacion.inedcuchilla.Servicio;
 
-import com.educacion.inedcuchilla.DTO.CrearRolDTO;
-import com.educacion.inedcuchilla.DTO.DesactivarRolDTO;
-import com.educacion.inedcuchilla.DTO.ListarRolesDTO;
-import com.educacion.inedcuchilla.DTO.ListarUsuarioDTO;
+import com.educacion.inedcuchilla.DTO.Roles.CrearRolDTO;
+import com.educacion.inedcuchilla.DTO.Roles.DesactivarRolDTO;
+import com.educacion.inedcuchilla.DTO.Roles.ListarRolesDTO;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.repositorio.RolRepositorio;
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

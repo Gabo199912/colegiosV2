@@ -1,6 +1,4 @@
-package com.educacion.inedcuchilla.DTO;
-
-import java.util.List;
+package com.educacion.inedcuchilla.DTO.Roles;
 
 public record RolesPorUsuario(
         Integer idRol,

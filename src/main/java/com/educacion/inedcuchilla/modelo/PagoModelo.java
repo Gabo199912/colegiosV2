@@ -17,7 +17,7 @@ public class PagoModelo {
     private boolean activo;
 
     @Column(name = "tipo_pago")
-    private String tipo_pago;
+    private String tipoPago;
 
     @JsonIgnore
     @OneToMany(mappedBy = "pago")
@@ -39,11 +39,19 @@ public class PagoModelo {
         this.activo = activo;
     }
 
-    public String getTipo_pago() {
-        return tipo_pago;
+    public String getTipoPago() {
+        return tipoPago;
     }
 
-    public void setTipo_pago(String tipo_pago) {
-        this.tipo_pago = tipo_pago;
+    public void setTipoPago(String tipoPago) {
+        this.tipoPago = tipoPago;
+    }
+
+    public List<DetallePagoModelo> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<DetallePagoModelo> detalles) {
+        this.detalles = detalles;
     }
 }

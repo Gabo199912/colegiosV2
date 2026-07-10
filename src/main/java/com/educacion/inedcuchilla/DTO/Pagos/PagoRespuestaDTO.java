@@ -1,6 +1,4 @@
-package com.educacion.inedcuchilla.DTO;
-
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
+package com.educacion.inedcuchilla.DTO.Pagos;
 
 import java.math.BigDecimal;
 import java.util.List;
