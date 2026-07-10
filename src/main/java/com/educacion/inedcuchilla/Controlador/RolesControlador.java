@@ -23,6 +23,7 @@ public class RolesControlador {
         this.rolServicio = rolServicio;
     }
 
+
     @GetMapping("/listar")
     public ResponseEntity<?> listarRoles() {
         Map<String, Object> respuesta = new HashMap<>();

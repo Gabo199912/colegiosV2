@@ -1,6 +1,7 @@
 package com.educacion.inedcuchilla.Servicio;
 
 import com.educacion.inedcuchilla.DTO.PagoDTO;
+import com.educacion.inedcuchilla.DTO.PagoRespuestaDTO;
 import com.educacion.inedcuchilla.DTO.ValidacionMesesPagadosDTO;
 import com.educacion.inedcuchilla.modelo.*;
 import com.educacion.inedcuchilla.repositorio.*;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -59,9 +61,25 @@ public class PagosServicio {
         List<DetalleMesModelo> meses = detalleMesRepositorio.findAllById(pago.meses());
         List<DetallePagoMesModelo> detallesPagoMes = new ArrayList<>();
 
-       //falta hacer la validacion para los meses que ya se pagaron, primero
-        //buscamos los meses pagados por el usuario y luego comparamos si el id es igual
-        // a los que esta enviando, entonces retornamos que ese mes ya se pago y que elija otro
+        BigDecimal totalValido =
+                BigDecimal.valueOf(meses.size())
+                        .multiply(BigDecimal.valueOf(50));
+
+        if (pago.total().compareTo(totalValido) != 0) {
+            respuesta.put("MENSAJE", "el total ingresado no cuadra con el total de meses a pagar.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+        }
+
+
+        for (ValidacionMesesPagadosDTO validacionMesesPagado : validacionMesesPagados){
+            for (Integer idMes : pago.meses()){
+                if (validacionMesesPagado.idMes().equals(idMes)){
+                    respuesta.put("MENSAJE", "el mes " + validacionMesesPagado.nombreMes() + " ya se pago.");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+                }
+            }
+        }
+
 
         DetallePagoModelo detallePago = new DetallePagoModelo();
 
@@ -75,18 +93,27 @@ public class PagosServicio {
         detallePago.setPago(tipoPago);
 
         DetallePagoModelo detalleGuardado = detallePagoRepositorio.save(detallePago);
+        List<String> mesesPagados = new ArrayList<>();
 
         for (DetalleMesModelo mes : meses){
                 DetallePagoMesModelo detallePagoMesModelo = new DetallePagoMesModelo();
                 detallePagoMesModelo.setMes(mes);
                 detallePagoMesModelo.setDetalle(detalleGuardado);
                 detallesPagoMes.add(detallePagoMesModelo);
+                mesesPagados.add(mes.getNombreMes());
         }
 
         detallePagoMesRepositorio.saveAll(detallesPagoMes);
+        PagoRespuestaDTO response = new PagoRespuestaDTO(
+                usuario.getNombreUsuario(),
+                tipoPago.getTipo_pago(),
+                mesesPagados,
+                pago.total(),
+                pago.descripcion()
+        );
 
         respuesta.put("MENSAJE", "pago guardado correctamente");
-        respuesta.put("PAGO GUARDADO", pago);
+        respuesta.put("PAGO GUARDADO", response);
 
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
