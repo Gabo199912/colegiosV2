@@ -16,9 +16,6 @@ public class InscripcionModelo {
     @Column(name = "inscripcion_activa")
     private Boolean inscripcionActiva;
 
-    @Column(name = "fecha_inscripcion")
-    private LocalDate fechaInscripcion;
-
     @ManyToOne
     @JoinColumn(name = "fk_id_grado_academico")
     private GradoAcademicoModelo gradoAcademico;
@@ -45,14 +42,6 @@ public class InscripcionModelo {
 
     public void setInscripcionActiva(Boolean inscripcionActiva) {
         this.inscripcionActiva = inscripcionActiva;
-    }
-
-    public LocalDate getFechaInscripcion() {
-        return fechaInscripcion;
-    }
-
-    public void setFechaInscripcion(LocalDate fechaInscripcion) {
-        this.fechaInscripcion = fechaInscripcion;
     }
 
     public GradoAcademicoModelo getGradoAcademico() {
