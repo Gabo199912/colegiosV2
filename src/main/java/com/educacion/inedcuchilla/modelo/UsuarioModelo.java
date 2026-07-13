@@ -49,6 +49,9 @@ public class UsuarioModelo {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<DetallePagoModelo> detalles;
 
+    @OneToOne(mappedBy = "usuario")
+    private AlumnoModelo alumno;
+
 
 
     public UsuarioModelo() {
@@ -137,4 +140,27 @@ public class UsuarioModelo {
         this.usuarioRolModelo = usuarioRolModelo;
     }
 
+    public List<UsuarioRolModelo> getUsuarioRolModelo() {
+        return usuarioRolModelo;
+    }
+
+    public void setUsuarioRolModelo(List<UsuarioRolModelo> usuarioRolModelo) {
+        this.usuarioRolModelo = usuarioRolModelo;
+    }
+
+    public List<DetallePagoModelo> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<DetallePagoModelo> detalles) {
+        this.detalles = detalles;
+    }
+
+    public AlumnoModelo getAlumno() {
+        return alumno;
+    }
+
+    public void setAlumno(AlumnoModelo alumno) {
+        this.alumno = alumno;
+    }
 }
