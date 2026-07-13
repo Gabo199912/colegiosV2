@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Mis archivos de configuración ###
+**/resources/application.properties
