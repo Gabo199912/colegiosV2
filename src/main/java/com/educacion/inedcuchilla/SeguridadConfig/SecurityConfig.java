@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/pagos/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/detalle-pago/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/materias/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/grado/**").hasAnyRole("ADMIN", "SUPER_ADMIN", "DIRECTOR")
                           .anyRequest().authenticated())
                         .addFilter(new JWTFiltro(authenticationManager())) // comentar para crear usuario admin
                         .addFilter(new ValidacionFiltro(authenticationManager())) //comentar para crear usuario admin

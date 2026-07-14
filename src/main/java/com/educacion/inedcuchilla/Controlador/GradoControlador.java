@@ -28,6 +28,16 @@ public class GradoControlador {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
+        if (grado.nombreEspecialidad().isEmpty()){
+            respuesta.put("MENSAJE", "La especialidad no puede ir vacía");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+
+        if (grado.nombreSeccion().isEmpty()){
+            respuesta.put("MENSAJE", "La sección no puede ir vacía");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+
         return gradoAcademicoServicio.crearGrado(grado);
     }
 
