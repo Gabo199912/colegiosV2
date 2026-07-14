@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GradoRepositorio extends JpaRepository<GradoModelo, Integer> {
+    Boolean findByGrado(String nombreGrado);
 }
