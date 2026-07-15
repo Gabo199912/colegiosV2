@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EspecialidadRepositorio extends JpaRepository<EspecialidadModelo, Integer> {
-    Boolean findByNombreEspecialidad(String nombreEspecialidad);
+    Boolean existsByNombreEspecialidad(String nombreEspecialidad);
+    EspecialidadModelo findByNombreEspecialidad(String nombreEspecialidad);
 }

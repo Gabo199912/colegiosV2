@@ -13,6 +13,8 @@ public class GradoAcademicoModelo {
     @Column(name = "id_grado_academico")
     private Integer idGradoAcademico;
 
+    private Boolean activo;
+
     @ManyToOne
     @JoinColumn(name = "fk_id_especialidad")
     private EspecialidadModelo especialidad;
@@ -28,6 +30,13 @@ public class GradoAcademicoModelo {
     @OneToMany(mappedBy = "gradoAcademico")
     private List<InscripcionModelo> inscripciones;
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 
     public SeccionModelo getSeccion() {
         return seccion;
