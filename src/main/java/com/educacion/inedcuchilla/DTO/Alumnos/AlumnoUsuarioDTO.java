@@ -1,7 +1,8 @@
 package com.educacion.inedcuchilla.DTO.Alumnos;
 
-import java.time.LocalDate;
 
+
+import java.time.LocalDate;
 public record AlumnoUsuarioDTO(
         String nombreUsuario,
         String nombre,
@@ -14,3 +15,4 @@ public record AlumnoUsuarioDTO(
         String genero
 ) {
 }
+
