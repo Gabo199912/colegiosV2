@@ -2,6 +2,7 @@ package com.educacion.inedcuchilla.Servicio;
 
 import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioDTO;
 import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioRecordDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioResponseDTO;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
@@ -79,8 +80,16 @@ public class UsuarioServicio {
             }
         }
 
+        UsuarioResponseDTO responseUsuario = new UsuarioResponseDTO(
+                usuarioGuardado.getNombreUsuario(),
+                usuarioGuardado.getNombre(),
+                usuarioGuardado.getApellido(),
+                usuarioGuardado.getEmail(),
+                usuarioGuardado.getTelefono()
+        );
+
         respuesta.put("MENSAJE", "Usuario creado correctamente.");
-        respuesta.put("USUARIO", usuarioGuardado);
+        respuesta.put("USUARIO", responseUsuario);
         respuesta.put("ROLES ", omitidos + " Roles omitidos.");
         return respuesta;
     }
