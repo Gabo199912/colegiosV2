@@ -75,4 +75,6 @@ public class AlumnoModelo {
     public void setInscripciones(List<InscripcionModelo> inscripciones) {
         this.inscripciones = inscripciones;
     }
+
+
 }
