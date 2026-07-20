@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.Servicio;
 
+import com.educacion.inedcuchilla.DTO.Alumnos.AlumnoListas;
 import com.educacion.inedcuchilla.DTO.Alumnos.AlumnoResponseDTO;
 import com.educacion.inedcuchilla.DTO.Alumnos.AlumnoUsuarioRequestDTO;
 import com.educacion.inedcuchilla.DTO.Alumnos.ConvertirAlumnoDTO;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,17 +26,20 @@ public class AlumnoServicio {
     private final InscripcionRepositorio inscripcionRepositorio;
     private final RolRepositorio rolRepositorio;
     private final UsuarioRolRepositorio usuarioRolRepositorio;
+    private final AlumnoServicioJDBC alumnoServicioJDBC;
 
     public AlumnoServicio(UsuarioRepositorio usuarioRepositorio,
                           AlumnoRepositorio alumnoRepositorio,
                           InscripcionRepositorio inscripcionRepositorio,
                           RolRepositorio rolRepositorio,
-                          UsuarioRolRepositorio usuarioRolRepositorio){
+                          UsuarioRolRepositorio usuarioRolRepositorio,
+                          AlumnoServicioJDBC alumnoServicioJDBC){
         this.usuarioRepositorio = usuarioRepositorio;
         this.alumnoRepositorio = alumnoRepositorio;
         this.inscripcionRepositorio = inscripcionRepositorio;
         this.rolRepositorio = rolRepositorio;
         this.usuarioRolRepositorio = usuarioRolRepositorio;
+        this.alumnoServicioJDBC = alumnoServicioJDBC;
     }
 
 
@@ -126,6 +131,18 @@ public class AlumnoServicio {
         respuesta.put("MENSAJE", "El usuario se guardo correctamente como alumno.");
         respuesta.put("ALUMNO", alumnoResponse);
 
+        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+    }
+
+    public ResponseEntity<Map<String, Object>> listarAlumnos(){
+        Map<String, Object> respuesta = new HashMap<>();
+        List<AlumnoListas> alumnos = alumnoServicioJDBC.listarAlumnos();
+        if (alumnos.isEmpty()){
+            respuesta.put("MENSAJE", "No existe ningun alumno registrado, ingresre uno y vuelva a intentar.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+
+        respuesta.put("ALUMNOS: ", alumnos);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 

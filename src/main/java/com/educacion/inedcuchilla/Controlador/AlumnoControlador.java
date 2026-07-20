@@ -4,6 +4,7 @@ import com.educacion.inedcuchilla.DTO.Alumnos.AlumnoResponseDTO;
 import com.educacion.inedcuchilla.DTO.Alumnos.AlumnoUsuarioRequestDTO;
 import com.educacion.inedcuchilla.DTO.Alumnos.ConvertirAlumnoDTO;
 import com.educacion.inedcuchilla.Servicio.AlumnoServicio;
+import com.educacion.inedcuchilla.Servicio.AlumnoServicioJDBC;
 import jakarta.validation.Valid;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,11 @@ public class AlumnoControlador {
 
     public AlumnoControlador(AlumnoServicio alumnoServicio){
         this.alumnoServicio = alumnoServicio;
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<Map<String, Object>> listarAlumno(){
+        return alumnoServicio.listarAlumnos();
     }
 
     @PostMapping("/crear")
