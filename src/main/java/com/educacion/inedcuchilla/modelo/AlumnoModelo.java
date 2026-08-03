@@ -2,6 +2,7 @@ package com.educacion.inedcuchilla.modelo;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,8 +25,8 @@ public class AlumnoModelo {
     @JoinColumn(name = "fk_id_usuario", nullable = false, unique = true)
     private UsuarioModelo usuario;
 
-    @OneToMany(mappedBy = "alumno")
-    private List<InscripcionModelo> inscripciones;
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InscripcionModelo> inscripciones = new ArrayList<>();
 
 
     public Integer getIdAlumno() {

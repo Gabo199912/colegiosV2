@@ -49,7 +49,7 @@ public class UsuarioModelo {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<DetallePagoModelo> detalles;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private AlumnoModelo alumno;
 
 

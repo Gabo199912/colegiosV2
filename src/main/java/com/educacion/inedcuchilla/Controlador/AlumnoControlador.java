@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,21 @@ public class AlumnoControlador {
         return alumnoServicio.convertirAlumno(convertirAlumno);
     }
 
+    @PostMapping("/cargar-masivo")
+    public ResponseEntity<Map<String, Object>> cargarMasivamentePDF(@RequestParam("archivo")MultipartFile archivo){
+        Map<String,Object> respuesta = new HashMap<>();
+        try{
+
+            if (archivo.isEmpty()){
+                respuesta.put("MENSAJE", "El archivo esta vacío, carga uno nuevo.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+            }
+
+            return alumnoServicio.cargarMasivo(archivo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 }

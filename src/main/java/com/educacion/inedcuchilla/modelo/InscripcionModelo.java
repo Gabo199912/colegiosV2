@@ -2,8 +2,6 @@ package com.educacion.inedcuchilla.modelo;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-
 @Entity
 @Table(name = "inscripcion")
 public class InscripcionModelo {
@@ -26,7 +24,7 @@ public class InscripcionModelo {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_ciclo_escolar")
-    private CicloEscolar cicloEscolar;
+    private CicloEscolarModelo cicloEscolar;
 
     public Integer getIdInscripcion() {
         return idInscripcion;
@@ -52,11 +50,11 @@ public class InscripcionModelo {
         this.gradoAcademico = gradoAcademico;
     }
 
-    public CicloEscolar getCicloEscolar() {
+    public CicloEscolarModelo getCicloEscolar() {
         return cicloEscolar;
     }
 
-    public void setCicloEscolar(CicloEscolar cicloEscolar) {
+    public void setCicloEscolar(CicloEscolarModelo cicloEscolar) {
         this.cicloEscolar = cicloEscolar;
     }
 
