@@ -9,4 +9,6 @@ import java.util.List;
 public interface UsuarioRolRepositorio extends JpaRepository<UsuarioRolModelo, Integer> {
 
     List<UsuarioRolModelo> findAllByUsuario(UsuarioModelo usuario);
+
+    UsuarioRolModelo usuario(UsuarioModelo usuario);r
 }

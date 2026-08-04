@@ -52,6 +52,9 @@ public class UsuarioModelo {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private AlumnoModelo alumno;
 
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private MaestroModelo maestro;
+
 
 
     public UsuarioModelo() {
@@ -162,5 +165,13 @@ public class UsuarioModelo {
 
     public void setAlumno(AlumnoModelo alumno) {
         this.alumno = alumno;
+    }
+
+    public MaestroModelo getMaestro() {
+        return maestro;
+    }
+
+    public void setMaestro(MaestroModelo maestro) {
+        this.maestro = maestro;
     }
 }
