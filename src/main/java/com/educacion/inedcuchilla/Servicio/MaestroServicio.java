@@ -53,6 +53,7 @@ public class MaestroServicio {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
         }
 
+
         UsuarioModelo usuarioNuevo = new UsuarioModelo();
         usuarioNuevo.setNombreUsuario(maestroRequest.nombreUsuario());
         usuarioNuevo.setNombre(maestroRequest.nombre());

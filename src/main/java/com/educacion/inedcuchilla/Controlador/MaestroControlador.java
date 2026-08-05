@@ -2,6 +2,7 @@ package com.educacion.inedcuchilla.Controlador;
 
 import com.educacion.inedcuchilla.DTO.Maestros.MaestroRequest;
 import com.educacion.inedcuchilla.Servicio.MaestroServicio;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/maestro")
@@ -23,10 +25,8 @@ public class MaestroControlador {
 
 
     @PostMapping("/crear")
-    public ResponseEntity<?> crearMaestro(@RequestBody MaestroRequest maestroRequest){
-        Map<String, Object> respuesta = new HashMap<>();
-
-        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+    public ResponseEntity<?> crearMaestro(@Valid @RequestBody MaestroRequest maestroRequest){
+            return maestroServicio.crearMaestro(maestroRequest);
 
     }
 }

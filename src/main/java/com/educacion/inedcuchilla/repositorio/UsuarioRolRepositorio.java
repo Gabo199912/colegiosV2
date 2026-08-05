@@ -10,5 +10,5 @@ public interface UsuarioRolRepositorio extends JpaRepository<UsuarioRolModelo, I
 
     List<UsuarioRolModelo> findAllByUsuario(UsuarioModelo usuario);
 
-    UsuarioRolModelo usuario(UsuarioModelo usuario);r
+    UsuarioRolModelo usuario(UsuarioModelo usuario);
 }
