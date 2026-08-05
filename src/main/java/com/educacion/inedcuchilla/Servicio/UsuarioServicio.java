@@ -96,9 +96,7 @@ public class UsuarioServicio {
 
 
     @Transactional
-    public Map<String, Object> guardarSuperUsuario(@NonNull UsuarioDTO usuarioDTO){
-        Map<String, Object> respuesta = new HashMap<>();
-
+    public UsuarioModelo guardarSuperUsuario(@NonNull UsuarioDTO usuarioDTO){
         String contrasenia = usuarioDTO.getUsuario().getContrasenia();
 
         usuarioDTO.getUsuario().setContrasenia(passwordEncoder.encode(contrasenia));
@@ -115,9 +113,7 @@ public class UsuarioServicio {
             }
         }
 
-        respuesta.put("MENSAJE", "Usuario creado correctamente.");
-        respuesta.put("USUARIO", usuarioGuardado);
-        return respuesta;
+        return usuarioGuardado;
     }
 
     public String desactivarUsuario(String nombreUsuario){

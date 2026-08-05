@@ -5,6 +5,7 @@ import com.educacion.inedcuchilla.Servicio.RolServicio;
 import com.educacion.inedcuchilla.Servicio.UsuarioServicio;
 import com.educacion.inedcuchilla.modelo.RolModelo;
 import com.educacion.inedcuchilla.modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -48,13 +49,16 @@ public class CreadorSuperAdmin implements CommandLineRunner {
         superUsuario.setFechaNacimiento(LocalDate.of(1995, 8, 15));
         superUsuario.setContrasenia("1234567");
         List<RolModelo> roles = rolServicio.listarRolesParaSuperAdmin();
+        UsuarioRolModelo usuarioRolModelo = new UsuarioRolModelo();
+
+
 
         usuario.setRoles(roles);
         usuario.setUsuario(superUsuario);
-        Map<String, Object> respuesta = new HashMap<>();
-        respuesta.put("MENSAJE", usuarioServicio.guardarSuperUsuario(usuario));
 
-        System.out.println(respuesta);
+        UsuarioModelo usuarioGuardado = usuarioServicio.guardarSuperUsuario(usuario);
+
+        System.out.println("Super usuario: " + usuarioGuardado.getNombreUsuario() + " Creado correctamente.");
 
     }
 }
