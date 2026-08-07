@@ -62,7 +62,7 @@ public class UsuarioServicioJDBC {
 
 
     public List<RolesPorUsuario> buscarRolesPorUsuario(String nombreUsuario){
-        String sql = "rol.id_rol, " +
+        String sql = "select rol.id_rol, " +
                     "rol.tipo_usuario " +
                     "from usuario " +
                     "INNER JOIN usuario_rol " +

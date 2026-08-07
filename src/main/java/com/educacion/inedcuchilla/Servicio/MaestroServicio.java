@@ -103,31 +103,33 @@ public class MaestroServicio {
     public ResponseEntity<Map<String, Object>> convertirUsuarioMaestro(ConvertirMaestro convertirMaestro) {
         Map<String, Object> respuesta = new HashMap<>();
         Optional<UsuarioModelo> usuario = usuarioRepositorio.findByNombreUsuario(convertirMaestro.nombreUsuario());
+        UsuarioRolModelo usuarioRolModelo = new UsuarioRolModelo();
+        RolModelo rolModelo = rolRepositorio.findByIdRol(3);
 
         if (usuario.isEmpty()){
             respuesta.put("MENSAJE", "El nombre de usuario ingresado no existe en el sistema, pruebe con otro");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
-        Set<RolesPorUsuario> roles =
-                new HashSet<>(usuarioServicioJDBC.buscarRolesPorUsuario(convertirMaestro.nombreUsuario()));
+         List<RolesPorUsuario> roles = usuarioServicioJDBC.buscarRolesPorUsuario(convertirMaestro.nombreUsuario());
 
 
-        if (!roles.contains("MAESTRO")){
-            RolModelo rol = rolRepositorio.findByIdRol(3);
-            UsuarioRolModelo usuarioRolModelo = new UsuarioRolModelo();
-
-            usuarioRolModelo.setUsuario(usuario.get());
-            usuarioRolModelo.setRoles(rol);
-
-            usuarioRolRepositorio.save(usuarioRolModelo);
+        for (RolesPorUsuario rol: roles){
+            if (rol.idRol().equals(3)){
+                respuesta.put("MENSAJE", "El usuario ya tiene rol de maestro.");
+                return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+            }
         }
+
 
 
         MaestroModelo maestroNuevo = new MaestroModelo();
         maestroNuevo.setUsuario(usuario.get());
-        maestroNuevo.setCodigoEmpleado(maestroNuevo.getCodigoEmpleado());
+        maestroNuevo.setCodigoEmpleado(convertirMaestro.codigoEmpleado());
 
+        usuarioRolModelo.setRoles(rolModelo);
+        usuarioRolModelo.setUsuario(usuario.get());
+        usuarioRolRepositorio.save(usuarioRolModelo);
 
 
         maestroRepositorio.save(maestroNuevo);
