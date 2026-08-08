@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 @Table(name = "usuario_rol")
 public class UsuarioRolModelo {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore

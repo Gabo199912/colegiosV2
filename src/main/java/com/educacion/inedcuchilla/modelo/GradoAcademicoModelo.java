@@ -30,6 +30,9 @@ public class GradoAcademicoModelo {
     @OneToMany(mappedBy = "gradoAcademico")
     private List<InscripcionModelo> inscripciones;
 
+    @OneToMany(mappedBy = "gradoAcademico", cascade = CascadeType.ALL)
+    private List<MateriaModelo> materias;
+
     public Boolean getActivo() {
         return activo;
     }
@@ -76,5 +79,13 @@ public class GradoAcademicoModelo {
 
     public void setInscripciones(List<InscripcionModelo> inscripciones) {
         this.inscripciones = inscripciones;
+    }
+
+    public List<MateriaModelo> getMaterias() {
+        return materias;
+    }
+
+    public void setMaterias(List<MateriaModelo> materias) {
+        this.materias = materias;
     }
 }
