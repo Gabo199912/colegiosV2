@@ -1,6 +1,8 @@
-package com.educacion.inedcuchilla.modelo;
+package com.educacion.inedcuchilla.Modelo;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "materia")
@@ -14,9 +16,9 @@ public class MateriaModelo {
     @Column(name = "nombre_materia")
     private String nombreMateria;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_id_grado_academico")
-    private GradoAcademicoModelo gradoAcademico;
+    @OneToMany(mappedBy = "materia")
+    private List<GradoAcademicoMateriaModelo> gradoAcademicoMateria;
+
 
     public Integer getIdMateria() {
         return idMateria;
@@ -34,13 +36,11 @@ public class MateriaModelo {
         this.nombreMateria = nombreMateria;
     }
 
-    public GradoAcademicoModelo getGradoAcademico() {
-        return gradoAcademico;
+    public List<GradoAcademicoMateriaModelo> getGradoAcademicoMateria() {
+        return gradoAcademicoMateria;
     }
 
-    public void setGradoAcademico(GradoAcademicoModelo gradoAcademico) {
-        this.gradoAcademico = gradoAcademico;
+    public void setGradoAcademicoMateria(List<GradoAcademicoMateriaModelo> gradoAcademicoMateria) {
+        this.gradoAcademicoMateria = gradoAcademicoMateria;
     }
-
-    
 }

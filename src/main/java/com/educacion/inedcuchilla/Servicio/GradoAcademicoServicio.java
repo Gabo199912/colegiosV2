@@ -1,21 +1,19 @@
 package com.educacion.inedcuchilla.Servicio;
 
 import com.educacion.inedcuchilla.DTO.Grado.GradoDTO;
-import com.educacion.inedcuchilla.modelo.EspecialidadModelo;
-import com.educacion.inedcuchilla.modelo.GradoAcademicoModelo;
-import com.educacion.inedcuchilla.modelo.GradoModelo;
-import com.educacion.inedcuchilla.modelo.SeccionModelo;
+import com.educacion.inedcuchilla.Modelo.EspecialidadModelo;
+import com.educacion.inedcuchilla.Modelo.GradoAcademicoModelo;
+import com.educacion.inedcuchilla.Modelo.GradoModelo;
+import com.educacion.inedcuchilla.Modelo.SeccionModelo;
 import com.educacion.inedcuchilla.repositorio.EspecialidadRepositorio;
 import com.educacion.inedcuchilla.repositorio.GradoAcademicoRepositorio;
 import com.educacion.inedcuchilla.repositorio.GradoRepositorio;
 import com.educacion.inedcuchilla.repositorio.SeccionRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

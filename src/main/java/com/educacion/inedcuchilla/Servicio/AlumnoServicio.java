@@ -2,7 +2,7 @@ package com.educacion.inedcuchilla.Servicio;
 
 import com.educacion.inedcuchilla.DTO.Alumnos.*;
 import com.educacion.inedcuchilla.Funciones.Fechas;
-import com.educacion.inedcuchilla.modelo.*;
+import com.educacion.inedcuchilla.Modelo.*;
 import com.educacion.inedcuchilla.repositorio.*;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;

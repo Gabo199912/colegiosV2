@@ -1,4 +1,4 @@
-package com.educacion.inedcuchilla.modelo;
+package com.educacion.inedcuchilla.Modelo;
 
 import jakarta.persistence.*;
 

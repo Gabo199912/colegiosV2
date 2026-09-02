@@ -1,4 +1,4 @@
-package com.educacion.inedcuchilla.modelo;
+package com.educacion.inedcuchilla.Modelo;
 
 import jakarta.persistence.*;
 
@@ -30,8 +30,9 @@ public class GradoAcademicoModelo {
     @OneToMany(mappedBy = "gradoAcademico")
     private List<InscripcionModelo> inscripciones;
 
-    @OneToMany(mappedBy = "gradoAcademico", cascade = CascadeType.ALL)
-    private List<MateriaModelo> materias;
+    @OneToMany(mappedBy = "gradoAcademico")
+    private List<GradoAcademicoMateriaModelo> gradoAcademicoMateria;
+
 
     public Boolean getActivo() {
         return activo;
@@ -81,11 +82,11 @@ public class GradoAcademicoModelo {
         this.inscripciones = inscripciones;
     }
 
-    public List<MateriaModelo> getMaterias() {
-        return materias;
+    public List<GradoAcademicoMateriaModelo> getGradoAcademicoMateria() {
+        return gradoAcademicoMateria;
     }
 
-    public void setMaterias(List<MateriaModelo> materias) {
-        this.materias = materias;
+    public void setGradoAcademicoMateria(List<GradoAcademicoMateriaModelo> gradoAcademicoMateria) {
+        this.gradoAcademicoMateria = gradoAcademicoMateria;
     }
 }

@@ -4,14 +4,15 @@ import com.educacion.inedcuchilla.DTO.Maestros.ConvertirMaestro;
 import com.educacion.inedcuchilla.DTO.Maestros.MaestroRequest;
 import com.educacion.inedcuchilla.DTO.Maestros.MaestroResponse;
 import com.educacion.inedcuchilla.DTO.Roles.RolesPorUsuario;
-import com.educacion.inedcuchilla.modelo.MaestroModelo;
-import com.educacion.inedcuchilla.modelo.RolModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
+import com.educacion.inedcuchilla.Modelo.MaestroModelo;
+import com.educacion.inedcuchilla.Modelo.RolModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioRolModelo;
 import com.educacion.inedcuchilla.repositorio.MaestroRepositorio;
 import com.educacion.inedcuchilla.repositorio.RolRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRolRepositorio;
+import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -136,5 +137,8 @@ public class MaestroServicio {
         respuesta.put("MENSAJE", "El maestro fue agregado correctamente.");
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
+
+
+//    public ResponseEntity<Map<String, Object>> maestrosMasivo()
 
 }

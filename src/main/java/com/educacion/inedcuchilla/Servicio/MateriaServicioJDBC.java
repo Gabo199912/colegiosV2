@@ -1,7 +1,10 @@
 package com.educacion.inedcuchilla.Servicio;
 
+import com.educacion.inedcuchilla.DTO.Grado.GradoResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MateriaServicioJDBC {
@@ -12,21 +15,29 @@ public class MateriaServicioJDBC {
     }
 
 
-    public Integer idGradoAcademico(String grado, String nombreEspecialidad){
-        String sql = " SELECT " +
-                " ga.id_grado_academico, " +
-                " from grado_academico ga " +
-                "INNER JOIN especialidad e " +
-                "ON ga.fk_id_especialidad = e.id_especialidad " +
-                "INNER JOIN seccion s " +
-                "ON ga.fk_id_seccion = s.id_seccion " +
-                "INNER JOIN grado g " +
-                "ON ga.fk_id_grado = g.id_grado where grado = ? AND nombre_especialidad = ?";
+    public List<GradoResponse> buscarGrados(String nombreEspecialidad, String grado){
+        String sql = "select grado_academico.id_grado_academico as idGradoAcademico, " +
+                "   grado.grado, " +
+                "   especialidad.nombre_especialidad as nombreEspecialidad, " +
+                "       seccion.seccion " +
+                "       from grado_academico " +
+                "inner join grado " +
+                "on grado_academico.fk_id_grado = grado.id_grado " +
+                "inner join especialidad " +
+                "on grado_academico.fk_id_especialidad = especialidad.id_especialidad " +
+                "inner join seccion " +
+                "on grado_academico.fk_id_seccion = seccion.id_seccion " +
+                "where especialidad.nombre_especialidad = ? and grado.grado = ?";
 
 
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->{
-            Integer idGradoAcad = rs.getInt(1);
-            return idGradoAcad;
-        }, grado, nombreEspecialidad);
+        return jdbcTemplate.query(sql, (rs, rowNum) ->{
+            GradoResponse grados = new GradoResponse(
+                    rs.getInt("idGradoAcademico"),
+                    rs.getString("grado"),
+                    rs.getString("nombreEspecialidad"),
+                    rs.getString("seccion")
+            );
+            return grados;
+        }, nombreEspecialidad, grado);
     }
 }

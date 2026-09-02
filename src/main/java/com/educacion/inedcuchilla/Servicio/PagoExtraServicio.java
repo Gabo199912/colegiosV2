@@ -2,10 +2,10 @@ package com.educacion.inedcuchilla.Servicio;
 
 import com.educacion.inedcuchilla.DTO.Pagos.PagoExtraDTO;
 import com.educacion.inedcuchilla.DTO.Pagos.ResponsePagoExtraDTO;
-import com.educacion.inedcuchilla.modelo.DetallePagoModelo;
-import com.educacion.inedcuchilla.modelo.PagoExtraModelo;
-import com.educacion.inedcuchilla.modelo.PagoModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.Modelo.DetallePagoModelo;
+import com.educacion.inedcuchilla.Modelo.PagoExtraModelo;
+import com.educacion.inedcuchilla.Modelo.PagoModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.repositorio.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

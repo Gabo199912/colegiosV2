@@ -1,7 +1,7 @@
 package com.educacion.inedcuchilla.DTO.Usuarios;
 
-import com.educacion.inedcuchilla.modelo.RolModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.Modelo.RolModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioModelo;
 
 import java.util.List;
 

@@ -3,16 +3,14 @@ package com.educacion.inedcuchilla.SeguridadConfig;
 import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioDTO;
 import com.educacion.inedcuchilla.Servicio.RolServicio;
 import com.educacion.inedcuchilla.Servicio.UsuarioServicio;
-import com.educacion.inedcuchilla.modelo.RolModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
+import com.educacion.inedcuchilla.Modelo.RolModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioRolModelo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class CreadorSuperAdmin implements CommandLineRunner {

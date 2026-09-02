@@ -1,6 +1,6 @@
 package com.educacion.inedcuchilla.repositorio;
 
-import com.educacion.inedcuchilla.modelo.DetallePagoMesModelo;
+import com.educacion.inedcuchilla.Modelo.DetallePagoMesModelo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

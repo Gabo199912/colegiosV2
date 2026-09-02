@@ -3,7 +3,7 @@ package com.educacion.inedcuchilla.Servicio;
 import com.educacion.inedcuchilla.DTO.Roles.CrearRolDTO;
 import com.educacion.inedcuchilla.DTO.Roles.DesactivarRolDTO;
 import com.educacion.inedcuchilla.DTO.Roles.ListarRolesDTO;
-import com.educacion.inedcuchilla.modelo.RolModelo;
+import com.educacion.inedcuchilla.Modelo.RolModelo;
 import com.educacion.inedcuchilla.repositorio.RolRepositorio;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

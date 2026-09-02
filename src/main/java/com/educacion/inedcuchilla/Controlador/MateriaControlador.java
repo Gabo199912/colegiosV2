@@ -1,11 +1,13 @@
 package com.educacion.inedcuchilla.Controlador;
 
+import com.educacion.inedcuchilla.DTO.Materias.MateriaRequest;
 import com.educacion.inedcuchilla.Servicio.MateriaServicio;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/materias")
@@ -16,12 +18,18 @@ public class MateriaControlador {
         this.materiaServicio = materiaServicio;
     }
 
-    @GetMapping("/prueba")
-    public void pruebaExcel(@RequestParam("MATERIAS") MultipartFile archivo){
-        try {
-            materiaServicio.crearMateria(archivo);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+    @PostMapping("/crear")
+    public ResponseEntity<Map<String, Object>> crearMateria(@Valid @RequestBody MateriaRequest materia){
+        return materiaServicio.crearMateria(materia);
     }
+
+//    @GetMapping("/prueba")
+//    public void pruebaExcel(@RequestParam("MATERIAS") MultipartFile archivo){
+//        try {
+//            materiaServicio.crearMateria(archivo);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }
