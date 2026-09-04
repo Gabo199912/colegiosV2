@@ -2,6 +2,8 @@ package com.educacion.inedcuchilla.Modelo;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "maestro")
 public class MaestroModelo {
@@ -17,6 +19,9 @@ public class MaestroModelo {
     @OneToOne
     @JoinColumn(name = "fk_id_usuario", nullable = false, unique = true)
     private UsuarioModelo usuario;
+
+    @OneToMany(mappedBy = "maestro")
+    private List<MaestroMateriaModelo> maestroMaterias;
 
     public String getCodigoEmpleado() {
         return codigoEmpleado;
@@ -40,5 +45,13 @@ public class MaestroModelo {
 
     public void setUsuario(UsuarioModelo usuario) {
         this.usuario = usuario;
+    }
+
+    public List<MaestroMateriaModelo> getMaestroMaterias() {
+        return maestroMaterias;
+    }
+
+    public void setMaestroMaterias(List<MaestroMateriaModelo> maestroMaterias) {
+        this.maestroMaterias = maestroMaterias;
     }
 }

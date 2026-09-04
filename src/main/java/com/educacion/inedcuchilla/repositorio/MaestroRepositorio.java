@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MaestroRepositorio extends JpaRepository<MaestroModelo, Integer> {
+    boolean existsByCodigoEmpleado(String codigoEmpleado);
+    MaestroModelo findByCodigoEmpleado(String codigoEmpleado);
 }

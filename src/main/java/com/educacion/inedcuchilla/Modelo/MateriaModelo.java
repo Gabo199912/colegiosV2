@@ -19,6 +19,9 @@ public class MateriaModelo {
     @OneToMany(mappedBy = "materia")
     private List<GradoAcademicoMateriaModelo> gradoAcademicoMateria;
 
+    @OneToMany(mappedBy = "materia")
+    private List<MaestroMateriaModelo> maestroMateria;
+
 
     public Integer getIdMateria() {
         return idMateria;
@@ -42,5 +45,13 @@ public class MateriaModelo {
 
     public void setGradoAcademicoMateria(List<GradoAcademicoMateriaModelo> gradoAcademicoMateria) {
         this.gradoAcademicoMateria = gradoAcademicoMateria;
+    }
+
+    public List<MaestroMateriaModelo> getMaestroMateria() {
+        return maestroMateria;
+    }
+
+    public void setMaestroMateria(List<MaestroMateriaModelo> maestroMateria) {
+        this.maestroMateria = maestroMateria;
     }
 }

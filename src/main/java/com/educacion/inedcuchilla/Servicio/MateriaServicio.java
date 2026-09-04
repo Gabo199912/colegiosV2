@@ -3,6 +3,8 @@ package com.educacion.inedcuchilla.Servicio;
 import com.educacion.inedcuchilla.DTO.Grado.GradoResponse;
 import com.educacion.inedcuchilla.DTO.Materias.MateriaRequest;
 import com.educacion.inedcuchilla.Modelo.GradoAcademicoMateriaModelo;
+import com.educacion.inedcuchilla.Modelo.MaestroMateriaModelo;
+import com.educacion.inedcuchilla.Modelo.MaestroModelo;
 import com.educacion.inedcuchilla.Modelo.MateriaModelo;
 import com.educacion.inedcuchilla.repositorio.*;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,8 @@ public class MateriaServicio {
     private final CicloEscolarRepositorio cicloEscolarRepositorio;
     private final GradoAcademicoRepositorio gradoAcademicoRepositorio;
     private final GradoAcademicoMateriaRepositorio gradoAcademicoMateriaRepositorio;
+    private final MaestroRepositorio maestroRepositorio;
+    private final MaestroMateriaRepositorio maestroMateriaRepositorio;
 
     public MateriaServicio(MateriaRepositorio materiaRepositorio,
                            SeccionRepositorio seccionRepositorio,
@@ -34,7 +38,9 @@ public class MateriaServicio {
                            MateriaServicioJDBC materiaServicioJDBC,
                            CicloEscolarRepositorio cicloEscolarRepositorio,
                            GradoAcademicoRepositorio gradoAcademicoRepositorio,
-                           GradoAcademicoMateriaRepositorio gradoAcademicoMateriaRepositorio){
+                           GradoAcademicoMateriaRepositorio gradoAcademicoMateriaRepositorio,
+                           MaestroRepositorio maestroRepositorio,
+                           MaestroMateriaRepositorio maestroMateriaRepositorio){
         this.materiaRepositorio = materiaRepositorio;
         this.seccionRepositorio = seccionRepositorio;
         this.gradoRepositorio = gradoRepositorio;
@@ -43,6 +49,8 @@ public class MateriaServicio {
         this.cicloEscolarRepositorio = cicloEscolarRepositorio;
         this.gradoAcademicoRepositorio = gradoAcademicoRepositorio;
         this.gradoAcademicoMateriaRepositorio = gradoAcademicoMateriaRepositorio;
+        this.maestroRepositorio = maestroRepositorio;
+        this.maestroMateriaRepositorio = maestroMateriaRepositorio;
     }
 
 
@@ -60,7 +68,13 @@ public class MateriaServicio {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
+        if(!maestroRepositorio.existsByCodigoEmpleado(materia.codigoProfesor())){
+            respuesta.put("MENSAJE", "El codigo de profesor ingresado no existe, favor de crearlo y probar de nuevo.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+
         List<GradoResponse> listaGrados = materiaServicioJDBC.buscarGrados(materia.especialidad().toUpperCase(), materia.grado().toUpperCase());
+        MaestroModelo maestro = maestroRepositorio.findByCodigoEmpleado(materia.codigoProfesor());
         MateriaModelo materiaNueva = new MateriaModelo();
         List<GradoAcademicoMateriaModelo> listaGradoAcademicoMateria = new ArrayList<>();
 
@@ -73,6 +87,12 @@ public class MateriaServicio {
             gradoAcademicoMateria.setGradoAcademico(gradoAcademicoRepositorio.findByIdGradoAcademico(grado.idGradoAcademico()));
             listaGradoAcademicoMateria.add(gradoAcademicoMateria);
         }
+
+        MaestroMateriaModelo maestroMateria = new MaestroMateriaModelo();
+        maestroMateria.setMaestro(maestro);
+        maestroMateria.setMateria(materiaGuardada);
+
+        maestroMateriaRepositorio.save(maestroMateria);
 
         gradoAcademicoMateriaRepositorio.saveAll(listaGradoAcademicoMateria);
         respuesta.put("MENSAJE", "MATERIA GUARDADA PARA TODOS LOS GRADOS SELECCIONADOS.");
