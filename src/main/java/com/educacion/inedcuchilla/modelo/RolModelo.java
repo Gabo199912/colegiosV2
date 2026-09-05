@@ -1,4 +1,4 @@
-package com.educacion.inedcuchilla.modelo;
+package com.educacion.inedcuchilla.Modelo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -17,6 +17,9 @@ public class RolModelo {
     @Column(name = "tipo_usuario")
     private String tipoUsuario;
 
+    @Column(name = "descripcion")
+    private String descripcion;
+
     @Column(name = "estado")
     private Boolean estado;
 
@@ -25,6 +28,23 @@ public class RolModelo {
     private List<UsuarioRolModelo> usuarioRolModelo;
 
     public RolModelo() {
+    }
+
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<UsuarioRolModelo> getUsuarioRolModelo() {
+        return usuarioRolModelo;
+    }
+
+    public void setUsuarioRolModelo(List<UsuarioRolModelo> usuarioRolModelo) {
+        this.usuarioRolModelo = usuarioRolModelo;
     }
 
     public Integer getIdRol() {

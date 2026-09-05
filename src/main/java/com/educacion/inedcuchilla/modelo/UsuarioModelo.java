@@ -1,4 +1,4 @@
-package com.educacion.inedcuchilla.modelo;
+package com.educacion.inedcuchilla.Modelo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -46,6 +46,14 @@ public class UsuarioModelo {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<UsuarioRolModelo> usuarioRolModelo = new ArrayList<>();
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<DetallePagoModelo> detalles;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AlumnoModelo alumno;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private MaestroModelo maestro;
 
 
 
@@ -133,5 +141,37 @@ public class UsuarioModelo {
 
     public void setUsuarioRol(List<UsuarioRolModelo> usuarioRolModelo) {
         this.usuarioRolModelo = usuarioRolModelo;
+    }
+
+    public List<UsuarioRolModelo> getUsuarioRolModelo() {
+        return usuarioRolModelo;
+    }
+
+    public void setUsuarioRolModelo(List<UsuarioRolModelo> usuarioRolModelo) {
+        this.usuarioRolModelo = usuarioRolModelo;
+    }
+
+    public List<DetallePagoModelo> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<DetallePagoModelo> detalles) {
+        this.detalles = detalles;
+    }
+
+    public AlumnoModelo getAlumno() {
+        return alumno;
+    }
+
+    public void setAlumno(AlumnoModelo alumno) {
+        this.alumno = alumno;
+    }
+
+    public MaestroModelo getMaestro() {
+        return maestro;
+    }
+
+    public void setMaestro(MaestroModelo maestro) {
+        this.maestro = maestro;
     }
 }
