@@ -1,6 +1,6 @@
 package com.educacion.inedcuchilla.SeguridadConfig;
 
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioModelo;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 

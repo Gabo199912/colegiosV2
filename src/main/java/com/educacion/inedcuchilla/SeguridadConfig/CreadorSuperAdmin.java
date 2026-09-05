@@ -1,16 +1,16 @@
 package com.educacion.inedcuchilla.SeguridadConfig;
 
-import com.educacion.inedcuchilla.DTO.UsuarioDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioDTO;
 import com.educacion.inedcuchilla.Servicio.RolServicio;
 import com.educacion.inedcuchilla.Servicio.UsuarioServicio;
-import com.educacion.inedcuchilla.modelo.RolModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.Modelo.RolModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioRolModelo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class CreadorSuperAdmin implements CommandLineRunner {
@@ -46,13 +46,17 @@ public class CreadorSuperAdmin implements CommandLineRunner {
         superUsuario.setActivo(true);
         superUsuario.setFechaNacimiento(LocalDate.of(1995, 8, 15));
         superUsuario.setContrasenia("1234567");
-        List<RolModelo> roles = rolServicio.listarRoles();
+        List<RolModelo> roles = rolServicio.listarRolesParaSuperAdmin();
+        UsuarioRolModelo usuarioRolModelo = new UsuarioRolModelo();
+
+
 
         usuario.setRoles(roles);
         usuario.setUsuario(superUsuario);
-        Map<String, Object> respuesta = usuarioServicio.guardarSuperUsuario(usuario);
 
-        System.out.println(respuesta);
+        UsuarioModelo usuarioGuardado = usuarioServicio.guardarSuperUsuario(usuario);
+
+        System.out.println("Super usuario: " + usuarioGuardado.getNombreUsuario() + " Creado correctamente.");
 
     }
 }

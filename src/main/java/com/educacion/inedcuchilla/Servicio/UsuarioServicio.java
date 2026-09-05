@@ -1,10 +1,11 @@
 package com.educacion.inedcuchilla.Servicio;
 
-import com.educacion.inedcuchilla.DTO.UsuarioDTO;
-import com.educacion.inedcuchilla.DTO.UsuarioRecordDTO;
-import com.educacion.inedcuchilla.modelo.RolModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
-import com.educacion.inedcuchilla.modelo.UsuarioRolModelo;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioRecordDTO;
+import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioResponseDTO;
+import com.educacion.inedcuchilla.Modelo.RolModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioRolModelo;
 import com.educacion.inedcuchilla.repositorio.RolRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRolRepositorio;
@@ -79,17 +80,23 @@ public class UsuarioServicio {
             }
         }
 
+        UsuarioResponseDTO responseUsuario = new UsuarioResponseDTO(
+                usuarioGuardado.getNombreUsuario(),
+                usuarioGuardado.getNombre(),
+                usuarioGuardado.getApellido(),
+                usuarioGuardado.getEmail(),
+                usuarioGuardado.getTelefono()
+        );
+
         respuesta.put("MENSAJE", "Usuario creado correctamente.");
-        respuesta.put("USUARIO", usuarioGuardado);
+        respuesta.put("USUARIO", responseUsuario);
         respuesta.put("ROLES ", omitidos + " Roles omitidos.");
         return respuesta;
     }
 
 
     @Transactional
-    public Map<String, Object> guardarSuperUsuario(@NonNull UsuarioDTO usuarioDTO){
-        Map<String, Object> respuesta = new HashMap<>();
-
+    public UsuarioModelo guardarSuperUsuario(@NonNull UsuarioDTO usuarioDTO){
         String contrasenia = usuarioDTO.getUsuario().getContrasenia();
 
         usuarioDTO.getUsuario().setContrasenia(passwordEncoder.encode(contrasenia));
@@ -106,9 +113,7 @@ public class UsuarioServicio {
             }
         }
 
-        respuesta.put("MENSAJE", "Usuario creado correctamente.");
-        respuesta.put("USUARIO", usuarioGuardado);
-        return respuesta;
+        return usuarioGuardado;
     }
 
     public String desactivarUsuario(String nombreUsuario){
@@ -122,9 +127,25 @@ public class UsuarioServicio {
     }
 
     public boolean buscarPorNombreUsuario(String nombreUsuario){
-        boolean existe = usuarioRepositorio.existsByNombreUsuario(nombreUsuario);
-        return existe;
+        return usuarioRepositorio.existsByNombreUsuario(nombreUsuario);
     }
+
+    //continuar despues. 
+//    public Map<String, Object> agregarRoles(List<RolModelo> roles, AsignarRoles usuarioConRoles) {
+//        Set<Integer> idNuevos = new HashSet<>();
+//        Optional<UsuarioModelo> usuario = usuarioRepositorio.findByNombreUsuario(usuarioConRoles.nombreUsuario());
+//        List<UsuarioRolModelo> usuarioRol = new ArrayList<>();
+//
+//        for (RolModelo ur: roles){
+//            idNuevos.add(ur.getIdRol());
+//        }
+//
+//
+//
+//        usuarioRolRepositorio.saveAll(usuarioRol);
+//
+//        return
+//    }
 
 
 }

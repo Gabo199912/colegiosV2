@@ -1,7 +1,7 @@
 package com.educacion.inedcuchilla.filtro;
 
 import com.educacion.inedcuchilla.Llaves.JWTLlave;
-import com.educacion.inedcuchilla.modelo.UsuarioModelo;
+import com.educacion.inedcuchilla.Modelo.UsuarioModelo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
