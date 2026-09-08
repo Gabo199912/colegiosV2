@@ -28,9 +28,7 @@ public record MaestroRequest (
         LocalDate fechaNacimiento,
 
         @NotBlank(message = "La contraseña no puede estar vacía")
-        String contrasenia,
+        String contrasenia
 
-        @NotBlank(message = "El codigo de empleado no puede estar vacío")
-        String codigoEmpleado
 ){
 }

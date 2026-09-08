@@ -75,7 +75,7 @@ public class MaestroServicio {
 
         MaestroModelo maestroNuevo = new MaestroModelo();
         maestroNuevo.setUsuario(usuarioNuevo);
-        maestroNuevo.setCodigoEmpleado(maestroRequest.codigoEmpleado());
+        maestroNuevo.setCodigoEmpleado("agregar codigo de maestro");
 
         usuarioNuevo.setMaestro(maestroNuevo);
         UsuarioModelo usuarioGuardado = usuarioRepositorio.save(usuarioNuevo);
