@@ -22,9 +22,7 @@ public class InscripcionModelo {
     @JoinColumn(name = "fk_id_alumno")
     private AlumnoModelo alumno;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_id_ciclo_escolar")
-    private CicloEscolarModelo cicloEscolar;
+
 
     public Integer getIdInscripcion() {
         return idInscripcion;
@@ -50,13 +48,7 @@ public class InscripcionModelo {
         this.gradoAcademico = gradoAcademico;
     }
 
-    public CicloEscolarModelo getCicloEscolar() {
-        return cicloEscolar;
-    }
 
-    public void setCicloEscolar(CicloEscolarModelo cicloEscolar) {
-        this.cicloEscolar = cicloEscolar;
-    }
 
     public AlumnoModelo getAlumno() {
         return alumno;

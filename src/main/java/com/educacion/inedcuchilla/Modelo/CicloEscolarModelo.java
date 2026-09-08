@@ -16,8 +16,7 @@ public class CicloEscolarModelo {
     private Integer anio;
     private Boolean activo;
 
-    @OneToMany(mappedBy = "cicloEscolar")
-    private List<InscripcionModelo> inscripciones;
+
 
     public Integer getIdCicloEscolar() {
         return idCicloEscolar;
@@ -43,11 +42,5 @@ public class CicloEscolarModelo {
         this.activo = activo;
     }
 
-    public List<InscripcionModelo> getInscripciones() {
-        return inscripciones;
-    }
 
-    public void setInscripciones(List<InscripcionModelo> inscripciones) {
-        this.inscripciones = inscripciones;
-    }
 }

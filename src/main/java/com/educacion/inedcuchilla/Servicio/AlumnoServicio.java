@@ -228,7 +228,6 @@ public class AlumnoServicio {
                         inscripcion.setAlumno(alumnoNuevo);
                         inscripcion.setGradoAcademico(grado.get());
                         inscripcion.setInscripcionActiva(true);
-                        inscripcion.setCicloEscolar(cicloEscolar);
                         alumnoNuevo.getInscripciones().add(inscripcion);
 
                         listaUsuarios.add(usuarioNuevo);
