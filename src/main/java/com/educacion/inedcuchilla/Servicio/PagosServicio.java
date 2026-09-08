@@ -36,85 +36,26 @@ public class PagosServicio {
     }
 
 
+    //buscar los datos
+    // validar que el usuario no duplique pagos,
+    //
     @Transactional
     public ResponseEntity<?> pagarMeses(PagoDTO pago){
         Map<String, Object> respuesta = new HashMap<>();
-        Set<Integer> mesesUnicos = new HashSet<>(pago.meses());
 
-        if (mesesUnicos.size() != pago.meses().size()){
-            respuesta.put("MENSAJE", "No pueden ir meses repetidos para el pago.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
-        }
 
-        if (!usuarioRepositorio.existsById(pago.idUsuario())){
-            respuesta.put("MENSAJE", "el usuario ingresado no existe.");
+        if (usuarioRepositorio.existsByNombreUsuario(pago.nombreUsuario())){
+            respuesta.put("MENSAJE", "el usuario que intentas crear como alumno ya existe.");
+            respuesta.put("COMO_PROCEDER", "puedes utilizar la opcion de crear usuario para continuar." );
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
-        if (!pagoRepositorio.existsById(pago.idPago())){
-            respuesta.put("MENSAJE", "el pago ingresado no existe.");
+        if (usuarioRepositorio.existsByEmail(pago.correoUsuario())){
+            respuesta.put("MENSAJE", "el correo que intentas crear como alumno ya existe.");
+            respuesta.put("COMO_PROCEDER", "puedes utilizar la opcion de crear usuario para continuar." );
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
-        List<ValidacionMesesPagadosDTO> validacionMesesPagados = pagoServicioJDBC.mesesPagados(pago.idUsuario());
-        List<DetalleMesModelo> meses = detalleMesRepositorio.findAllById(pago.meses());
-        List<DetallePagoMesModelo> detallesPagoMes = new ArrayList<>();
-
-        BigDecimal totalValido =
-                BigDecimal.valueOf(meses.size())
-                        .multiply(BigDecimal.valueOf(50));
-
-        if (pago.total().compareTo(totalValido) != 0) {
-            respuesta.put("MENSAJE", "el total ingresado no cuadra con el total de meses a pagar.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
         }
-
-
-        for (ValidacionMesesPagadosDTO validacionMesesPagado : validacionMesesPagados){
-            for (Integer idMes : pago.meses()){
-                if (validacionMesesPagado.idMes().equals(idMes)){
-                    respuesta.put("MENSAJE", "el mes " + validacionMesesPagado.nombreMes() + " ya se pago.");
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
-                }
-            }
-        }
-
-
-        DetallePagoModelo detallePago = new DetallePagoModelo();
-
-        UsuarioModelo usuario = usuarioRepositorio.findByIdUsuario(pago.idUsuario());
-        PagoModelo tipoPago = pagoRepositorio.findByIdPago(pago.idPago());
-
-        detallePago.setTotal(pago.total());
-        detallePago.setDescripcion(pago.descripcion());
-        detallePago.setPagado(true);
-        detallePago.setUsuario(usuario);
-        detallePago.setPago(tipoPago);
-
-        DetallePagoModelo detalleGuardado = detallePagoRepositorio.save(detallePago);
-        List<String> mesesPagados = new ArrayList<>();
-
-        for (DetalleMesModelo mes : meses){
-                DetallePagoMesModelo detallePagoMesModelo = new DetallePagoMesModelo();
-                detallePagoMesModelo.setMes(mes);
-                detallePagoMesModelo.setDetalle(detalleGuardado);
-                detallesPagoMes.add(detallePagoMesModelo);
-                mesesPagados.add(mes.getNombreMes());
-        }
-
-        detallePagoMesRepositorio.saveAll(detallesPagoMes);
-        PagoRespuestaDTO response = new PagoRespuestaDTO(
-                usuario.getNombreUsuario(),
-                tipoPago.getTipoPago(),
-                mesesPagados,
-                pago.total(),
-                pago.descripcion()
-        );
-
-        respuesta.put("MENSAJE", "pago guardado correctamente");
-        respuesta.put("PAGO GUARDADO", response);
-
-        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
-    }
 
 }

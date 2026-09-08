@@ -29,23 +29,6 @@ public class PagoControlador {
 
     @PostMapping("/pagar-meses")
     public ResponseEntity<?> crearPago(@RequestBody PagoDTO pago){
-        Map<String, Object> respuesta = new HashMap<>();
-
-        if (pago.meses().size() < 1){
-            respuesta.put("MENSAJE", "Debe elejir almenos un mes para poder agregar un pago");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
-        }
-
-        if (pago.idUsuario().toString().isEmpty()){
-            respuesta.put("MENSAJE", "Debe ingresar un usuario.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
-        }
-
-        if (pago.idPago().toString().isEmpty()){
-            respuesta.put("MENSAJE", "El metodo de pago no puede estar vacío.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
-        }
-
         return pagosServicio.pagarMeses(pago);
 
     }
