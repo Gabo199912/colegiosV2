@@ -1,6 +1,6 @@
 package com.educacion.inedcuchilla.Servicio;
 
-import com.educacion.inedcuchilla.DTO.ValidacionMesesPagadosDTO;
+import com.educacion.inedcuchilla.DTO.Pagos.ValidacionMesesPagadosDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 

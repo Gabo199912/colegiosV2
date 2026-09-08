@@ -2,7 +2,7 @@ package com.educacion.inedcuchilla.Servicio;
 
 import com.educacion.inedcuchilla.DTO.Pagos.PagoDTO;
 import com.educacion.inedcuchilla.DTO.Pagos.PagoRespuestaDTO;
-import com.educacion.inedcuchilla.DTO.ValidacionMesesPagadosDTO;
+import com.educacion.inedcuchilla.DTO.Pagos.ValidacionMesesPagadosDTO;
 import com.educacion.inedcuchilla.Modelo.*;
 import com.educacion.inedcuchilla.repositorio.*;
 import org.springframework.http.HttpStatus;
