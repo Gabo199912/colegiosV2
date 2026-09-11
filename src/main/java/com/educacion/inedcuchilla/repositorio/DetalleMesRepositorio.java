@@ -10,4 +10,6 @@ import java.util.List;
 public interface DetalleMesRepositorio extends JpaRepository<DetalleMesModelo, Integer> {
     List<DetalleMesModelo> findAllById(Iterable<Integer> ids);
 
+
+    boolean existsByIdMes(Integer idMes);
 }

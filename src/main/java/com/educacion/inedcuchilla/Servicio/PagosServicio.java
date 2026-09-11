@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.Servicio;
 
+import com.educacion.inedcuchilla.DTO.Meses.MesesDTO;
 import com.educacion.inedcuchilla.DTO.Pagos.PagoDTO;
 import com.educacion.inedcuchilla.DTO.Pagos.PagoRespuestaDTO;
 import com.educacion.inedcuchilla.DTO.Pagos.ValidacionMesesPagadosDTO;
@@ -56,6 +57,33 @@ public class PagosServicio {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
+        if (pagoRepositorio.existsByTipoPago(pago.tipoDePago())){
+            respuesta.put("MENSAJE", "El pago seleccionado no existe.");
+            respuesta.put("COMO_PROCEDER", "Crea este tipo de pago o selecciona uno ya existente.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
+
+        List<DetalleMesModelo> meses = new ArrayList<>();
+        int cantidadMeses = 0;
+
+        for (MesesDTO mes : pago.meses()){
+            if (detalleMesRepositorio.existsByIdMes(mes.getIdMes())){
+                Optional<DetalleMesModelo> mesEncontrado = detalleMesRepositorio.findById(mes.getIdMes());
+                meses.add(mesEncontrado.get());
+                cantidadMeses++;
+            }
+        }
+
+        BigDecimal subTotal = BigDecimal.valueOf(meses.size() * 50.00);
+
+        if (!subTotal.equals(pago.total())){
+            respuesta.put("MENSAJE", "El total no cuadra con los meses ingresados");
+            respuesta.put("COMO_PROCEDER", "El total debe cuadrar con los meses ingresados, cada mes vale 50");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+
+    }
 
 }

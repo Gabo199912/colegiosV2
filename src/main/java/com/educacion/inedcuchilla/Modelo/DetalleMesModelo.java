@@ -13,7 +13,7 @@ public class DetalleMesModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_mes")
-    private Integer id_mes;
+    private Integer idMes;
 
     @Column(name = "nombre_mes")
     private String nombreMes;
@@ -34,12 +34,12 @@ public class DetalleMesModelo {
     @OneToMany(mappedBy = "mes")
     List<DetallePagoMesModelo> meses;
 
-    public Integer getId_mes() {
-        return id_mes;
+    public Integer getIdMes() {
+        return idMes;
     }
 
-    public void setId_mes(Integer id_mes) {
-        this.id_mes = id_mes;
+    public void setIdMes(Integer idMes) {
+        this.idMes = idMes;
     }
 
     public String getNombreMes() {
