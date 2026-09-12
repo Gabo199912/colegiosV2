@@ -17,6 +17,8 @@ public class DetallePagoMesModelo {
     @JoinColumn(name = "fk_id_detalle_pago")
     private DetallePagoModelo detalle;
 
+    private boolean pagado;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_id_mes")
@@ -37,6 +39,15 @@ public class DetallePagoMesModelo {
 
     public void setDetalle(DetallePagoModelo detalle) {
         this.detalle = detalle;
+    }
+
+
+    public boolean isPagado() {
+        return pagado;
+    }
+
+    public void setPagado(boolean pagado) {
+        this.pagado = pagado;
     }
 
     public DetalleMesModelo getMes() {

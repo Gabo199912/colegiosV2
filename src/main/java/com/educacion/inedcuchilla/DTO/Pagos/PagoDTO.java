@@ -9,7 +9,7 @@ import java.util.List;
 
 public record PagoDTO(
 
-        @NotBlank(message = "El total no puede estar vacío")
+        @NotNull(message = "El total no puede ir vacio.")
         BigDecimal total,
 
         @NotBlank(message = "La descripción no puede estar vacío")

@@ -4,6 +4,7 @@ import com.educacion.inedcuchilla.DTO.Pagos.PagoDTO;
 import com.educacion.inedcuchilla.DTO.Pagos.PagoExtraDTO;
 import com.educacion.inedcuchilla.Servicio.PagoExtraServicio;
 import com.educacion.inedcuchilla.Servicio.PagosServicio;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,7 @@ public class PagoControlador {
     }
 
     @PostMapping("/pagar-meses")
-    public ResponseEntity<?> crearPago(@RequestBody PagoDTO pago){
+    public ResponseEntity<?> crearPago(@Valid @RequestBody PagoDTO pago){
         return pagosServicio.pagarMeses(pago);
 
     }
