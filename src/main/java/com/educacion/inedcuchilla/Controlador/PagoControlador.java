@@ -36,29 +36,7 @@ public class PagoControlador {
 
 
     @PostMapping("/pago-extra")
-    public ResponseEntity<?> crearPagoExtra(@RequestBody PagoExtraDTO pagoExtra){
-        Map<String, Object> respuesta = new HashMap<>();
-
-        if (pagoExtra.idPagoExtra().toString().isEmpty()){
-            respuesta.put("MENSAJE", "Este pago no se puede realizar, ingresse un pago.");
-            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
-        }
-
-        if (pagoExtra.idUsuario().toString().isEmpty()){
-            respuesta.put("MENSAJE", "El usuario no puede ir vacío.");
-            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
-        }
-
-        if (pagoExtra.idPago().toString().isEmpty()){
-            respuesta.put("MENSAJE", "Elija un metodo de pago que exista o cree uno nuevo.");
-            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
-        }
-
-        if (pagoExtra.total().compareTo(BigDecimal.ZERO) <= 0) {
-            respuesta.put("MENSAJE", "El total a ingresar no puede ser 0 o menor.");
-            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
-        }
-
+    public ResponseEntity<?> crearPagoExtra(@Valid @RequestBody PagoExtraDTO pagoExtra){
         return pagoExtraServicio.agregarPagoExtra(pagoExtra);
     }
 }

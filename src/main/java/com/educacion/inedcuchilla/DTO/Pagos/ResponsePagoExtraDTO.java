@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public record ResponsePagoExtraDTO(
         String nombreUsuario,
-        String tipoPago,
+        String pagoRealizado,
         String metodoPago,
         String descripcion,
         BigDecimal total

@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PagoExtraRepositorio extends JpaRepository<PagoExtraModelo, Integer> {
-    PagoExtraModelo findByIdPagoExtra(Integer idPagoExtra);
+    boolean existsByTipoPago(String tipoPago);
+
+    PagoExtraModelo findByTipoPago(String tipoPago);
 }

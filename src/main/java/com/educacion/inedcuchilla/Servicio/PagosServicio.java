@@ -45,14 +45,8 @@ public class PagosServicio {
         Map<String, Object> respuesta = new HashMap<>();
 
 
-        if (!usuarioRepositorio.existsByNombreUsuario(pago.nombreUsuario())){
-            respuesta.put("MENSAJE", "el usuario que intentas crear como alumno ya existe.");
-            respuesta.put("COMO_PROCEDER", "puedes utilizar la opcion de crear usuario para continuar." );
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
-        }
-
-        if (!usuarioRepositorio.existsByEmail(pago.correoUsuario())){
-            respuesta.put("MENSAJE", "el correo que intentas crear como alumno ya existe.");
+        if (!usuarioRepositorio.existsByNombreUsuario(pago.nombreUsuario()) && !usuarioRepositorio.existsByEmail(pago.correoUsuario())){
+            respuesta.put("MENSAJE", "el usuario o el email no existen.");
             respuesta.put("COMO_PROCEDER", "puedes utilizar la opcion de crear usuario para continuar." );
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
@@ -66,13 +60,11 @@ public class PagosServicio {
         List<DetalleMesModelo> meses = new ArrayList<>();
         Set<String> mesesPagados = pagoServicioJDBC.mesesPagados(pago.nombreUsuario());
 
-        int cantidadMeses = 0;
 
         for (MesesDTO mes : pago.meses()){
             if (detalleMesRepositorio.existsByIdMes(mes.getIdMes()) && !mesesPagados.contains(mes.getNombreMes())){
                 Optional<DetalleMesModelo> mesEncontrado = detalleMesRepositorio.findById(mes.getIdMes());
                 meses.add(mesEncontrado.get());
-                cantidadMeses++;
             }else {
                 respuesta.put("MENSAJE", "El mes: " + mes.getNombreMes() + " ya esta pagado.");
                 respuesta.put("COMO_PROCEDER", "Agregue este pago como pago extra para continuar.");

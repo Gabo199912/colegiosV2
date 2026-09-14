@@ -2,6 +2,8 @@ package com.educacion.inedcuchilla.Modelo;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "pago_extra")
 public class PagoExtraModelo {
@@ -17,8 +19,8 @@ public class PagoExtraModelo {
     @Column(name = "pago_vigente")
     private Boolean pagoVigente;
 
-    @OneToOne(mappedBy = "pagoExtra")
-    private DetallePagoModelo detalles;
+    @OneToMany(mappedBy = "pagoExtra")
+    private List<DetallePagoModelo> detalles;
 
 
     public Integer getIdPagoExtra() {
@@ -45,11 +47,11 @@ public class PagoExtraModelo {
         this.pagoVigente = pagoVigente;
     }
 
-    public DetallePagoModelo getDetalles() {
+    public List<DetallePagoModelo> getDetalles() {
         return detalles;
     }
 
-    public void setDetalles(DetallePagoModelo detalles) {
+    public void setDetalles(List<DetallePagoModelo> detalles) {
         this.detalles = detalles;
     }
 }

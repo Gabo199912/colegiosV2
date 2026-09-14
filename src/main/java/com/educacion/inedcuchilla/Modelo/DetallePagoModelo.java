@@ -32,7 +32,7 @@ public class DetallePagoModelo {
     private UsuarioModelo usuario;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_id_pago_extra", nullable = true)
     private PagoExtraModelo pagoExtra;
 

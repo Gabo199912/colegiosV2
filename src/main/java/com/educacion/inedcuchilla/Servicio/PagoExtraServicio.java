@@ -11,8 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PagoExtraServicio {
@@ -35,49 +34,50 @@ public class PagoExtraServicio {
     public ResponseEntity<?> agregarPagoExtra(PagoExtraDTO pagoExtra){
         Map<String, Object> respuesta = new HashMap<>();
 
-        if (!usuarioRepositorio.existsById(pagoExtra.idUsuario())){
-            respuesta.put("MENSAJE", "El usuario ingresado no existe.");
+        if(!usuarioRepositorio.existsByNombreUsuario(pagoExtra.nombreUsuario()) && !usuarioRepositorio.existsByEmail(pagoExtra.correoUsuario())){
+            respuesta.put("MENSAJE", "El nombre de usuario o el email no existe.");
+            respuesta.put("COMO_PROCEDER", "Ingrese un nombre existente por favor.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
-        if (!pagoRepositorio.existsById(pagoExtra.idPago())){
-            respuesta.put("MENSAJE", "el metodo de pago ingresado no existe, favor crealo e intenta de nuevo");
+        if (!pagoExtraRepositorio.existsByTipoPago(pagoExtra.pagoExtra())){
+            respuesta.put("MENSAJE", "El pago extra agregado no existe.");
+            respuesta.put("COMO_PROCEDER", "Crea el pago o elije uno que si exista.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
-        if (!pagoExtraRepositorio.existsById(pagoExtra.idPagoExtra())){
-            respuesta.put("MENSAJE", "El tipo de pago que desea pagar no existe, favor crealo e intenta de nuevo. ");
+        if (!pagoRepositorio.existsByTipoPago(pagoExtra.tipoPago())){
+            respuesta.put("MENSAJE", "El metodo de pago no existe.");
+            respuesta.put("COMO_PROCEDER", "Elija uno existente o cree un metodo nuevo.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
-        DetallePagoModelo detalle = new DetallePagoModelo();
+        Optional<UsuarioModelo> usuario = usuarioRepositorio.findByNombreUsuario(pagoExtra.nombreUsuario());
+        PagoExtraModelo pagoExtraBuscado = pagoExtraRepositorio.findByTipoPago(pagoExtra.pagoExtra());
+        Optional<PagoModelo> pagoBuscado = pagoRepositorio.findByTipoPago(pagoExtra.tipoPago());
 
-        UsuarioModelo usuario = usuarioRepositorio.findByIdUsuario(pagoExtra.idUsuario());
-        PagoExtraModelo tipoPagoExtra = pagoExtraRepositorio.findByIdPagoExtra(pagoExtra.idPagoExtra());
-        PagoModelo metodoPago = pagoRepositorio.findByIdPago(pagoExtra.idPago());
+        DetallePagoModelo detalleNuevo = new DetallePagoModelo();
+        detalleNuevo.setTotal(pagoExtra.total());
+        detalleNuevo.setDescripcion(pagoExtra.descripcion());
+        detalleNuevo.setPagado(true);
+        detalleNuevo.setUsuario(usuario.get());
+        detalleNuevo.setPagoExtra(pagoExtraBuscado);
+        detalleNuevo.setPago(pagoBuscado.get());
 
-        detalle.setTotal(pagoExtra.total());
-        detalle.setDescripcion(pagoExtra.descripcion());
-        detalle.setPagado(true);
-        detalle.setUsuario(usuario);
-        detalle.setPago(metodoPago);
-        detalle.setPagoExtra(tipoPagoExtra);
+        DetallePagoModelo detalleGuardado = detallePagoRepositorio.save(detalleNuevo);
 
-        DetallePagoModelo pagoGuardado = detallePagoRepositorio.save(detalle);
-
-        ResponsePagoExtraDTO response = new ResponsePagoExtraDTO(
-                pagoGuardado.getUsuario().getNombreUsuario(),
-                pagoGuardado.getPago().getTipoPago(),
-                pagoGuardado.getPagoExtra().getTipoPago(),
-                pagoGuardado.getDescripcion(),
-                pagoGuardado.getTotal()
+        ResponsePagoExtraDTO detalle = new ResponsePagoExtraDTO(
+            usuario.get().getNombreUsuario(),
+            pagoExtraBuscado.getTipoPago(),
+                pagoBuscado.get().getTipoPago(),
+                detalleGuardado.getDescripcion(),
+                detalleGuardado.getTotal()
         );
 
-        respuesta.put("MENSAJE", "El pago se guardo correctamente.");
-        respuesta.put("PAGO", response);
+        respuesta.put("MENSAJE", "Pago: " + detalleGuardado.getPagoExtra().getTipoPago() + " agregado correctamente.");
+        respuesta.put("PAGO_EXTRA", detalle);
 
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
-
     }
 
 
