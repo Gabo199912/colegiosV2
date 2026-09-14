@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.Servicio;
 
+import com.educacion.inedcuchilla.DTO.Roles.RolDTO;
 import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioDTO;
 import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioRecordDTO;
 import com.educacion.inedcuchilla.DTO.Usuarios.UsuarioResponseDTO;
@@ -68,10 +69,10 @@ public class UsuarioServicio {
         UsuarioModelo usuarioGuardado = usuarioRepositorio.save(usuarioNuevo);
 
         /*funciona pero necesita mejora para que sea mas eficiente*/
-        for (Integer rol : usuario.idRoles()){
-            if (rolRepositorio.existsByIdRol(rol)){
+        for (RolDTO rol : usuario.roles()){
+            if (rolRepositorio.existsByIdRol(rol.getIdRol())){
                 UsuarioRolModelo usuarioRolModelo = new UsuarioRolModelo();
-                RolModelo rolModelo = rolRepositorio.findByIdRol(rol);
+                RolModelo rolModelo = rolRepositorio.findByIdRol(rol.getIdRol());
                 usuarioRolModelo.setUsuario(usuarioGuardado);
                 usuarioRolModelo.setRoles(rolModelo);
                 usuarioRolRepositorio.save(usuarioRolModelo);

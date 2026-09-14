@@ -1,5 +1,6 @@
 package com.educacion.inedcuchilla.DTO.Usuarios;
 
+import com.educacion.inedcuchilla.DTO.Roles.RolDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -31,7 +32,7 @@ public record UsuarioRecordDTO(
         @NotBlank(message = "El nombre de usuario no puede estar vacío")
         String contrasenia,
 
-        List<Integer> idRoles
+        List<RolDTO> roles
 ) {
 
 }
