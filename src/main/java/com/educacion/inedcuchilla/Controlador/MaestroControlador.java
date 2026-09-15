@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +55,18 @@ public class MaestroControlador {
         respuesta.put("MAESTROS", maestros);
 
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+    }
+
+    @PostMapping("/crear/masivo")
+    public ResponseEntity<?> crearMaestroMasivo(@RequestParam("maestros")MultipartFile archivo){
+        Map<String, Object> respuesta  = new HashMap<>();
+        try {
+            return maestroServicio.maestrosMasivo(archivo);
+        }catch (Exception e){
+            respuesta.put("MENSAJE", "ALGO OCURRIO MAL.");
+            System.out.println(e.getCause() + " " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+        }
     }
 
 }

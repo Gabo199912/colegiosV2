@@ -13,11 +13,16 @@ import com.educacion.inedcuchilla.repositorio.RolRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRepositorio;
 import com.educacion.inedcuchilla.repositorio.UsuarioRolRepositorio;
 import org.apache.catalina.connector.Response;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -139,6 +144,52 @@ public class MaestroServicio {
     }
 
 
-//    public ResponseEntity<Map<String, Object>> maestrosMasivo()
+    public ResponseEntity<Map<String, Object>> maestrosMasivo(MultipartFile archivo) throws Exception{
+        Map<String, Object> respuesta = new HashMap<>();
+        Workbook excelMaestro = new XSSFWorkbook(archivo.getInputStream());
+        List<UsuarioModelo> listaUsuarios = new ArrayList<>();
+
+        RolModelo rol = rolRepositorio.findByIdRol(3);
+
+        for (int i = 0; i < excelMaestro.getNumberOfSheets(); i++){
+            Sheet hoja = excelMaestro.getSheetAt(i);
+
+            for (Row fila : hoja){
+                try {
+                    if (fila.getRowNum() == 0) continue;
+
+                    System.out.println(fila.getCell(1).getStringCellValue());
+
+                    if (usuarioRepositorio.existsByNombreUsuario(fila.getCell(1).getStringCellValue())){
+                        respuesta.put("MENSAJE", "El nombre de usuario ya existe, elija otro nombre para el maestro en el excel.");
+                        respuesta.put("MAESTRO", "Maestro: " + fila.getCell(1).getStringCellValue());
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+                    }
+
+                    if(usuarioRepositorio.existsByEmail(fila.getCell(4).getStringCellValue())){
+                        respuesta.put("MENSAJE", "El correo del maestro: " + fila.getCell(1).getStringCellValue() + " ya existe.");
+                        respuesta.put("COMO_PROCEDER", "Utilice otro correo para este maestro");
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+                    }
+
+
+
+
+
+                    MaestroModelo maestroNuevo = new MaestroModelo();
+                    UsuarioModelo usuarioNuevo = new UsuarioModelo();
+
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+
+            }
+        }
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+    }
 
 }
